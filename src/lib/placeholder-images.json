@@ -1,3 +1,58 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "home-hero",
+      "description": "A modern logistics warehouse with shelves stacked high with packages and workers moving around.",
+      "imageUrl": "https://images.unsplash.com/photo-1627309366653-2dedc084cdf1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxsb2dpc3RpY3MlMjB3YXJlaG91c2V8ZW58MHx8fHwxNzY0MTg1MjU2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "logistics warehouse"
+    },
+    {
+      "id": "feature-maritime",
+      "description": "A large cargo ship sailing on the open ocean under a clear sky.",
+      "imageUrl": "https://images.unsplash.com/photo-1613690399151-65ea69478674?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjYXJnbyUyMHNoaXB8ZW58MHx8fHwxNzY0MTg0MTk1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cargo ship"
+    },
+    {
+      "id": "feature-air",
+      "description": "A cargo plane being loaded with containers at an airport tarmac at dusk.",
+      "imageUrl": "https://images.unsplash.com/photo-1675296904760-f7a57b368eda?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2FyZ28lMjBwbGFuZXxlbnwwfHx8fDE3NjQxODUyNTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cargo plane"
+    },
+    {
+      "id": "feature-road",
+      "description": "A modern semi-truck driving on a highway through a scenic landscape.",
+      "imageUrl": "https://images.unsplash.com/photo-1709735133497-bbead76953a9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHx0cnVjayUyMGhpZ2h3YXl8ZW58MHx8fHwxNzY0MTEyMjEyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "truck highway"
+    },
+    {
+      "id": "cta-background",
+      "description": "An aerial view of a busy port with stacks of colorful shipping containers.",
+      "imageUrl": "https://images.unsplash.com/photo-1605745341112-85968b19335b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxzaGlwcGluZyUyMGNvbnRhaW5lcnN8ZW58MHx8fHwxNzY0MTg1MjU3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "shipping containers"
+    },
+    {
+      "id": "tracking-page-bg",
+      "description": "A stylized world map with glowing destination points and connecting lines.",
+      "imageUrl": "https://images.unsplash.com/photo-1754299744365-1ca79c4a750d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bWFwJTIwZGVzdGluYXRpb258ZW58MHx8fHwxNzY0MTg1MjU3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "map destination"
+    },
+    {
+      "id": "quote-page-bg",
+      "description": "A person using a laptop to fill out a form, with shipping boxes in the background.",
+      "imageUrl": "https://images.unsplash.com/photo-1517971129774-8a2b38fa128e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxwZXJzb24lMjB3cml0aW5nfGVufDB8fHx8MTc2NDA5Nzc3Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person writing"
+    },
+    {
+      "id": "route-optimizer-bg",
+      "description": "A complex intersection of highways and road signs pointing in different directions.",
+      "imageUrl": "https://images.unsplash.com/photo-1582211713340-dec9934f6b48?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxyb2FkJTIwc2lnbnN8ZW58MHx8fHwxNzY0MTg1MjU2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "road signs"
+    },
+    {
+      "id": "user-avatar",
+      "description": "A placeholder avatar for a user profile.",
+      "imageUrl": "https://images.unsplash.com/photo-1540569014015-19a7be504e3a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwZXJzb24lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjQxNDg4ODd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person portrait"
+    }
+  ]
 }
