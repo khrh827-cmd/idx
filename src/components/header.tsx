@@ -40,11 +40,6 @@ export default function Header() {
 
   const desktopAuthLinks = (
     <div className="flex items-center gap-2">
-       <Button variant="ghost" asChild>
-        <Link href="/client-area" className={cn('text-foreground/80', userAreaActive ? 'font-semibold text-foreground' : '')}>
-            <UserIcon className="mr-2 h-4 w-4" />Àrea Clients
-        </Link>
-      </Button>
       {!isClient || isUserLoading ? (
         <div className="h-9 w-44 rounded-md bg-gray-200 animate-pulse" />
       ) : user ? (
@@ -169,15 +164,27 @@ export default function Header() {
                 </nav>
                 <div className="mt-auto border-t p-4">
                     <div className="flex flex-col gap-2">
-                         <SheetClose asChild>
+                        {user ? (
+                           <SheetClose asChild>
+                           <Link
+                           href="/dashboard"
+                           className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                           >
+                           <LayoutDashboard />
+                           Panell de Client
+                           </Link>
+                       </SheetClose>
+                        ): (
+                          <SheetClose asChild>
                             <Link
-                            href="/client-area"
-                            className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-                            >
-                            <UserIcon />
-                            Àrea Clients
+                                href="/client-area"
+                                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                                >
+                                <UserIcon />
+                                Àrea Clients
                             </Link>
-                        </SheetClose>
+                          </SheetClose>
+                        )}
                         <div className="my-2 border-t -mx-4"></div>
                         {mobileAuthLinks}
                     </div>
