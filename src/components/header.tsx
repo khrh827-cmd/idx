@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
-import { Globe, Menu, Home, Briefcase, Users, Mail, Newspaper } from 'lucide-react';
+import { Globe, Menu, Home, Briefcase, Users, Mail, Newspaper, User } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
@@ -14,6 +14,7 @@ const navLinks = [
   { href: '/about', label: 'Qui Som', icon: <Users className="h-5 w-5" /> },
   { href: '/contact', label: 'Contacte', icon: <Mail className="h-5 w-5" /> },
   { href: '/blog', label: 'Blog', icon: <Newspaper className="h-5 w-5" /> },
+  { href: '/client-area', label: 'Àrea Clients', icon: <User className="h-5 w-5" /> },
 ];
 
 export default function Header() {
