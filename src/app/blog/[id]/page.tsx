@@ -7,6 +7,12 @@ import { Calendar, User } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
+export async function generateStaticParams() {
+  return blogPosts.map((post) => ({
+    id: post.id.toString(),
+  }));
+}
+
 export default function BlogPostPage({ params }: { params: { id: string } }) {
   const post = blogPosts.find((p) => p.id.toString() === params.id);
 
