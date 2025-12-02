@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
-import { Menu, Home, Briefcase, Users, Mail, Newspaper, User as UserIcon, LogIn, UserPlus, LayoutDashboard, LogOut } from 'lucide-react';
+import { Menu, Home, Briefcase, Users, Mail, Newspaper, LogIn, UserPlus, LayoutDashboard, LogOut } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useState, Fragment, useEffect } from 'react';
@@ -36,10 +36,8 @@ export default function Header() {
     router.push('/');
   };
 
-  const userAreaActive = pathname.startsWith('/client-area') || pathname.startsWith('/dashboard') || pathname.startsWith('/login') || pathname.startsWith('/register');
-
   const desktopAuthLinks = (
-    <div className="flex items-center gap-2">
+    <>
       {!isClient || isUserLoading ? (
         <div className="h-9 w-44 rounded-md bg-gray-200 animate-pulse" />
       ) : user ? (
@@ -63,7 +61,7 @@ export default function Header() {
           </Button>
         </>
       )}
-    </div>
+    </>
   );
 
   const mobileAuthLinks = (
@@ -115,7 +113,7 @@ export default function Header() {
             </span>
         </Link>
         
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium flex-1">
+        <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -130,8 +128,8 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center justify-end gap-2 md:flex-1">
-          <div className="hidden md:flex">
+        <div className="flex flex-1 items-center justify-end">
+          <div className="hidden md:flex items-center gap-4">
             {desktopAuthLinks}
           </div>
           <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
@@ -164,28 +162,7 @@ export default function Header() {
                 </nav>
                 <div className="mt-auto border-t p-4">
                     <div className="flex flex-col gap-2">
-                        {user ? (
-                           <SheetClose asChild>
-                           <Link
-                           href="/dashboard"
-                           className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-                           >
-                           <LayoutDashboard />
-                           Panell de Client
-                           </Link>
-                       </SheetClose>
-                        ): (
-                          <SheetClose asChild>
-                            <Link
-                                href="/client-area"
-                                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-                                >
-                                <UserIcon />
-                                Àrea Clients
-                            </Link>
-                          </SheetClose>
-                        )}
-                        <div className="my-2 border-t -mx-4"></div>
+                         <div className="my-2 border-t -mx-4"></div>
                         {mobileAuthLinks}
                     </div>
                 </div>
