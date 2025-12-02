@@ -3,15 +3,17 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
-import { Globe, Menu, Package, Milestone, DraftingCompass, Calculator } from 'lucide-react';
+import { Globe, Menu, Home, Briefcase, Users, Mail, Newspaper } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 
 const navLinks = [
-  { href: '/tracking', label: 'Track Shipment', icon: <Package className="h-5 w-5" /> },
-  { href: '/quote', label: 'Get a Quote', icon: <Calculator className="h-5 w-5" /> },
-  { href: '/route-optimizer', label: 'Route Optimizer', icon: <DraftingCompass className="h-5 w-5" /> },
+  { href: '/', label: 'Inici', icon: <Home className="h-5 w-5" /> },
+  { href: '/services', label: 'Serveis', icon: <Briefcase className="h-5 w-5" /> },
+  { href: '/about', label: 'Qui Som', icon: <Users className="h-5 w-5" /> },
+  { href: '/contact', label: 'Contacte', icon: <Mail className="h-5 w-5" /> },
+  { href: '/blog', label: 'Blog', icon: <Newspaper className="h-5 w-5" /> },
 ];
 
 export default function Header() {
@@ -25,7 +27,7 @@ export default function Header() {
           <Link href="/" className="flex items-center gap-2">
             <Globe className="h-7 w-7 text-primary" />
             <span className="hidden font-bold sm:inline-block font-headline text-lg">
-              Global Logistics Pro
+              Global Cargocare
             </span>
           </Link>
         </div>
@@ -46,14 +48,6 @@ export default function Header() {
         </nav>
 
         <div className="flex flex-1 items-center justify-end gap-2">
-          <div className="hidden md:flex items-center gap-2">
-            <Button variant="ghost" asChild>
-              <Link href="/login">Login</Link>
-            </Button>
-            <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
-              <Link href="/signup">Sign Up</Link>
-            </Button>
-          </div>
           <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
             <SheetTrigger asChild className="md:hidden">
               <Button variant="ghost" size="icon">
@@ -65,7 +59,7 @@ export default function Header() {
                 <div className="border-b pb-4">
                   <Link href="/" className="flex items-center gap-2" onClick={() => setIsSheetOpen(false)}>
                     <Globe className="h-7 w-7 text-primary" />
-                    <span className="font-bold font-headline text-lg">Global Logistics Pro</span>
+                    <span className="font-bold font-headline text-lg">Global Cargocare</span>
                   </Link>
                 </div>
                 <nav className="flex flex-col gap-4 py-4">
@@ -81,18 +75,6 @@ export default function Header() {
                     </SheetClose>
                   ))}
                 </nav>
-                <div className="mt-auto flex flex-col gap-2 border-t pt-4">
-                    <SheetClose asChild>
-                        <Button variant="outline" asChild>
-                            <Link href="/login">Login</Link>
-                        </Button>
-                    </SheetClose>
-                    <SheetClose asChild>
-                        <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
-                            <Link href="/signup">Sign Up</Link>
-                        </Button>
-                    </SheetClose>
-                </div>
               </div>
             </SheetContent>
           </Sheet>
