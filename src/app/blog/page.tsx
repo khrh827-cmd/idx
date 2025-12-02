@@ -19,7 +19,7 @@ const blogPosts = [
     description: 'Una guia completa sobre les últimes actualitzacions dels termes comercials internacionals i el seu impacte.',
     date: '01 de Juliol, 2024',
     author: 'Expert Logístic',
-    imageUrl: 'https://picsum.photos/seed/container-port/800/600',
+    imageUrl: 'https://watermark.lovepik.com/photo/20211202/large/lovepik-yangshan-deepwater-port-automated-container-picture_501398411.jpg',
     imageHint: 'container port',
   },
   {
