@@ -31,7 +31,9 @@ export default function Header() {
   }, []);
 
   const handleSignOut = async () => {
-    await auth.signOut();
+    if (auth) {
+        await auth.signOut();
+    }
     setIsSheetOpen(false);
     router.push('/');
   };
@@ -59,7 +61,7 @@ export default function Header() {
           <Button variant="ghost" asChild>
             <Link href="/login">Iniciar sessió</Link>
           </Button>
-          <Button asChild>
+          <Button asChild className="ml-6">
             <Link href="/register">Registrar-se</Link>
           </Button>
         </>
@@ -116,7 +118,7 @@ export default function Header() {
             </span>
         </Link>
         
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
+        <nav className="hidden md:flex flex-1 items-center gap-6 text-sm font-medium">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -131,12 +133,12 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="flex flex-1 items-center justify-end">
-          <div className="hidden md:flex items-center gap-4">
+        <div className="flex items-center justify-end ml-auto">
+          <div className="hidden md:flex items-center">
             {desktopAuthLinks}
           </div>
           <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-            <SheetTrigger asChild className="md:hidden">
+            <SheetTrigger asChild className="md:hidden ml-4">
               <Button variant="ghost" size="icon">
                 <Menu />
               </Button>
