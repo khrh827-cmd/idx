@@ -3,11 +3,12 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
-import { Menu, Home, Briefcase, Users, Mail, Newspaper, User } from 'lucide-react';
-import { usePathname } from 'next/navigation';
+import { Menu, Home, Briefcase, Users, Mail, Newspaper, User as UserIcon, LogIn, UserPlus, LayoutDashboard, LogOut } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import { Logo } from './logo';
+import { useUser, useAuth } from '@/firebase';
 
 const navLinks = [
   { href: '/', label: 'Inici', icon: <Home className="h-5 w-5" /> },
@@ -15,12 +16,84 @@ const navLinks = [
   { href: '/about', label: 'Qui Som', icon: <Users className="h-5 w-5" /> },
   { href: '/contact', label: 'Contacte', icon: <Mail className="h-5 w-5" /> },
   { href: '/blog', label: 'Blog', icon: <Newspaper className="h-5 w-5" /> },
-  { href: '/client-area', label: 'Àrea Clients', icon: <User className="h-5 w-5" /> },
 ];
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const { user, isUserLoading } = useUser();
+  const auth = useAuth();
+
+  const handleSignOut = async () => {
+    await auth.signOut();
+    setIsSheetOpen(false);
+    router.push('/');
+  };
+
+  const desktopAuthLinks = (
+    <div className="flex items-center gap-2">
+      {isUserLoading ? (
+        <div className="h-9 w-24 rounded-md bg-gray-200 animate-pulse" />
+      ) : user ? (
+        <>
+          <Button variant="ghost" asChild>
+            <Link href="/dashboard">
+              <LayoutDashboard className="mr-2 h-4 w-4" /> Panell
+            </Link>
+          </Button>
+          <Button onClick={handleSignOut}>
+            <LogOut className="mr-2 h-4 w-4" /> Sortir
+          </Button>
+        </>
+      ) : (
+        <>
+          <Button variant="ghost" asChild>
+            <Link href="/login">Iniciar sessió</Link>
+          </Button>
+          <Button asChild>
+            <Link href="/register">Registrar-se</Link>
+          </Button>
+        </>
+      )}
+    </div>
+  );
+
+  const mobileAuthLinks = (
+    <>
+      <div className="my-4 border-t -mx-4"></div>
+      {isUserLoading ? (
+        <div className="flex flex-col gap-2 px-3">
+            <div className="h-9 w-full rounded-md bg-gray-200 animate-pulse" />
+            <div className="h-9 w-full rounded-md bg-gray-200 animate-pulse" />
+        </div>
+      ) : user ? (
+        <>
+          <SheetClose asChild>
+            <Link href="/dashboard" className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+              <LayoutDashboard /> Panell de Client
+            </Link>
+          </SheetClose>
+          <button onClick={handleSignOut} className="w-full flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+             <LogOut /> Tancar Sessió
+          </button>
+        </>
+      ) : (
+        <>
+          <SheetClose asChild>
+            <Link href="/login" className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+              <LogIn /> Iniciar Sessió
+            </Link>
+          </SheetClose>
+          <SheetClose asChild>
+            <Link href="/register" className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+              <UserPlus /> Registrar-se
+            </Link>
+          </SheetClose>
+        </>
+      )}
+    </>
+  );
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -47,22 +120,30 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
+           <Link href="/client-area" className={cn(
+                'transition-colors hover:text-foreground/80',
+                pathname.startsWith('/client-area') || pathname.startsWith('/dashboard') || pathname.startsWith('/login') || pathname.startsWith('/register') ? 'text-foreground' : 'text-foreground/60'
+              )}>Àrea Clients</Link>
         </nav>
 
         <div className="flex flex-1 items-center justify-end gap-2">
+          <div className="hidden md:flex">
+            {desktopAuthLinks}
+          </div>
           <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
             <SheetTrigger asChild className="md:hidden">
               <Button variant="ghost" size="icon">
                 <Menu />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right">
-              <div className="flex flex-col h-full">
+            <SheetContent side="right" className="flex flex-col">
                 <div className="border-b pb-4">
-                  <Link href="/" className="flex items-center gap-2" onClick={() => setIsSheetOpen(false)}>
-                    <Logo className="h-8 w-8" />
-                    <span className="font-bold font-headline text-lg">Global Cargocare</span>
-                  </Link>
+                  <SheetClose asChild>
+                    <Link href="/" className="flex items-center gap-2">
+                      <Logo className="h-8 w-8" />
+                      <span className="font-bold font-headline text-lg">Global Cargocare</span>
+                    </Link>
+                  </SheetClose>
                 </div>
                 <nav className="flex flex-col gap-4 py-4">
                   {navLinks.map((link) => (
@@ -76,8 +157,19 @@ export default function Header() {
                         </Link>
                     </SheetClose>
                   ))}
+                   <SheetClose asChild>
+                        <Link
+                        href="/client-area"
+                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                        >
+                        <UserIcon />
+                        Àrea Clients
+                        </Link>
+                    </SheetClose>
                 </nav>
-              </div>
+                <div className="mt-auto">
+                    {mobileAuthLinks}
+                </div>
             </SheetContent>
           </Sheet>
         </div>
