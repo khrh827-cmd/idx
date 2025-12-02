@@ -6,7 +6,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/s
 import { Menu, Home, Briefcase, Users, Mail, Newspaper, User as UserIcon, LogIn, UserPlus, LayoutDashboard, LogOut } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { useState, Fragment } from 'react';
+import { useState, Fragment, useEffect } from 'react';
 import { Logo } from './logo';
 import { useUser, useAuth } from '@/firebase';
 
@@ -24,6 +24,11 @@ export default function Header() {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const { user, isUserLoading } = useUser();
   const auth = useAuth();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handleSignOut = async () => {
     await auth.signOut();
@@ -33,7 +38,7 @@ export default function Header() {
 
   const desktopAuthLinks = (
     <div className="flex items-center gap-4">
-      {isUserLoading ? (
+      {!isClient || isUserLoading ? (
         <div className="h-9 w-24 rounded-md bg-gray-200 animate-pulse" />
       ) : user ? (
         <>
@@ -62,7 +67,7 @@ export default function Header() {
   const mobileAuthLinks = (
     <>
       <div className="my-4 border-t -mx-4"></div>
-      {isUserLoading ? (
+      {!isClient || isUserLoading ? (
         <div className="flex flex-col gap-2 px-3">
             <div className="h-9 w-full rounded-md bg-gray-200 animate-pulse" />
             <div className="h-9 w-full rounded-md bg-gray-200 animate-pulse" />
