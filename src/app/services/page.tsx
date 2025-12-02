@@ -89,7 +89,7 @@ export default function ServicesPage() {
             </CardContent>
             <CardFooter>
               <Button asChild className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/80">
-                  <Link href="/contact?service_ref={service.ref}">Sol·licitar Cotització</Link>
+                  <Link href={`/contact?service_ref=${service.ref}`}>Sol·licitar Cotització</Link>
               </Button>
             </CardFooter>
           </Card>
