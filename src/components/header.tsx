@@ -46,7 +46,7 @@ export default function Header() {
             <div className="h-9 w-28 rounded-md bg-gray-200 animate-pulse" />
         </div>
       ) : user ? (
-        <>
+        <div className="flex items-center gap-4">
           <Button variant="outline" asChild>
             <Link href="/dashboard">
               <LayoutDashboard className="mr-2 h-4 w-4" /> Panell
@@ -55,16 +55,16 @@ export default function Header() {
           <Button onClick={handleSignOut}>
             <LogOut className="mr-2 h-4 w-4" /> Sortir
           </Button>
-        </>
+        </div>
       ) : (
-        <>
+        <div className="flex items-center gap-6">
           <Button variant="ghost" asChild>
             <Link href="/login">Iniciar sessió</Link>
           </Button>
-          <Button asChild className="ml-6">
+          <Button asChild>
             <Link href="/register">Registrar-se</Link>
           </Button>
-        </>
+        </div>
       )}
     </>
   );
