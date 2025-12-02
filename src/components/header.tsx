@@ -118,7 +118,7 @@ export default function Header() {
             </span>
         </Link>
         
-        <nav className="hidden md:flex flex-1 items-center gap-6 text-sm font-medium">
+        <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -133,12 +133,11 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center justify-end ml-auto">
-          <div className="hidden md:flex items-center">
+        <div className="hidden md:flex items-center ml-auto">
             {desktopAuthLinks}
-          </div>
-          <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-            <SheetTrigger asChild className="md:hidden ml-4">
+        </div>
+        <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+            <SheetTrigger asChild className="md:hidden ml-auto">
               <Button variant="ghost" size="icon">
                 <Menu />
               </Button>
@@ -173,7 +172,6 @@ export default function Header() {
                 </div>
             </SheetContent>
           </Sheet>
-        </div>
       </div>
     </header>
   );
