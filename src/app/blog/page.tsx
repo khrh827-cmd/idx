@@ -28,8 +28,8 @@ const blogPosts = [
     description: 'Explorem les iniciatives i pràctiques per a una logística més verda i responsable.',
     date: '20 de Juny, 2024',
     author: 'Equip Global Cargocare',
-    imageUrl: 'https://picsum.photos/seed/electric-truck/800/600',
-    imageHint: 'electric truck',
+    imageUrl: 'https://eco1stlogistics.com/wp-content/uploads/2022/10/img-about1.jpg',
+    imageHint: 'sustainable logistics',
   },
 ];
 
