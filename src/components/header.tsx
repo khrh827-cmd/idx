@@ -36,13 +36,20 @@ export default function Header() {
     router.push('/');
   };
 
+  const userAreaActive = pathname.startsWith('/client-area') || pathname.startsWith('/dashboard') || pathname.startsWith('/login') || pathname.startsWith('/register');
+
   const desktopAuthLinks = (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-2">
+       <Button variant="ghost" asChild>
+        <Link href="/client-area" className={cn(userAreaActive ? 'font-semibold' : '')}>
+            <UserIcon className="mr-2 h-4 w-4" />Àrea Clients
+        </Link>
+      </Button>
       {!isClient || isUserLoading ? (
-        <div className="h-9 w-24 rounded-md bg-gray-200 animate-pulse" />
+        <div className="h-9 w-44 rounded-md bg-gray-200 animate-pulse" />
       ) : user ? (
         <>
-          <Button variant="ghost" asChild>
+          <Button variant="outline" asChild>
             <Link href="/dashboard">
               <LayoutDashboard className="mr-2 h-4 w-4" /> Panell
             </Link>
@@ -66,7 +73,6 @@ export default function Header() {
 
   const mobileAuthLinks = (
     <>
-      <div className="my-4 border-t -mx-4"></div>
       {!isClient || isUserLoading ? (
         <div className="flex flex-col gap-2 px-3">
             <div className="h-9 w-full rounded-md bg-gray-200 animate-pulse" />
@@ -107,15 +113,13 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
-        <div className="mr-4 flex">
-          <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2 mr-6">
             <Logo className="h-8 w-8" />
             <span className="hidden font-bold sm:inline-block font-headline text-lg">
-              Global Cargocare
+            Global Cargocare
             </span>
-          </Link>
-        </div>
-
+        </Link>
+        
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium flex-1">
           {navLinks.map((link) => (
             <Link
@@ -129,13 +133,9 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
-           <Link href="/client-area" className={cn(
-                'transition-colors hover:text-foreground/80',
-                pathname.startsWith('/client-area') || pathname.startsWith('/dashboard') || pathname.startsWith('/login') || pathname.startsWith('/register') ? 'text-foreground' : 'text-foreground/60'
-              )}>Àrea Clients</Link>
         </nav>
 
-        <div className="flex flex-1 items-center justify-end gap-2">
+        <div className="flex items-center justify-end gap-2">
           <div className="hidden md:flex">
             {desktopAuthLinks}
           </div>
@@ -145,8 +145,8 @@ export default function Header() {
                 <Menu />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="flex flex-col">
-                <div className="border-b pb-4">
+            <SheetContent side="right" className="flex flex-col p-0">
+                <div className="border-b p-4">
                   <SheetClose asChild>
                     <Link href="/" className="flex items-center gap-2">
                       <Logo className="h-8 w-8" />
@@ -154,7 +154,7 @@ export default function Header() {
                     </Link>
                   </SheetClose>
                 </div>
-                <nav className="flex flex-col gap-4 py-4">
+                <nav className="flex flex-col gap-1 p-4">
                   {navLinks.map((link) => (
                     <SheetClose key={link.href} asChild>
                         <Link
@@ -166,18 +166,21 @@ export default function Header() {
                         </Link>
                     </SheetClose>
                   ))}
-                   <SheetClose asChild>
-                        <Link
-                        href="/client-area"
-                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-                        >
-                        <UserIcon />
-                        Àrea Clients
-                        </Link>
-                    </SheetClose>
                 </nav>
-                <div className="mt-auto">
-                    {mobileAuthLinks}
+                <div className="mt-auto border-t p-4">
+                    <div className="flex flex-col gap-2">
+                         <SheetClose asChild>
+                            <Link
+                            href="/client-area"
+                            className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                            >
+                            <UserIcon />
+                            Àrea Clients
+                            </Link>
+                        </SheetClose>
+                        <div className="my-2 border-t -mx-4"></div>
+                        {mobileAuthLinks}
+                    </div>
                 </div>
             </SheetContent>
           </Sheet>
