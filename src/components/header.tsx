@@ -41,7 +41,7 @@ export default function Header() {
   const desktopAuthLinks = (
     <div className="flex items-center gap-2">
        <Button variant="ghost" asChild>
-        <Link href="/client-area" className={cn(userAreaActive ? 'font-semibold' : '')}>
+        <Link href="/client-area" className={cn('text-foreground/80', userAreaActive ? 'font-semibold text-foreground' : '')}>
             <UserIcon className="mr-2 h-4 w-4" />Àrea Clients
         </Link>
       </Button>
@@ -135,7 +135,7 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center justify-end gap-2">
+        <div className="flex items-center justify-end gap-2 md:flex-1">
           <div className="hidden md:flex">
             {desktopAuthLinks}
           </div>
