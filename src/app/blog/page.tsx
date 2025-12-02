@@ -10,7 +10,7 @@ const blogPosts = [
     description: 'Descobreix com la tecnologia està transformant la logística i com la teva empresa se\'n pot beneficiar.',
     date: '15 de Juliol, 2024',
     author: 'Equip Global Cargocare',
-    imageUrl: 'https://picsum.photos/seed/warehouse-automation/800/600',
+    imageUrl: 'https://estonetech.eu/wp-content/uploads/2025/10/mw-100_warehouseuse.png',
     imageHint: 'warehouse automation',
   },
   {
