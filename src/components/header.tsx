@@ -32,7 +32,7 @@ export default function Header() {
   };
 
   const desktopAuthLinks = (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-4">
       {isUserLoading ? (
         <div className="h-9 w-24 rounded-md bg-gray-200 animate-pulse" />
       ) : user ? (
@@ -79,18 +79,22 @@ export default function Header() {
           </button>
         </>
       ) : (
-        <>
+        <div className="flex flex-col gap-2 px-3">
           <SheetClose asChild>
-            <Link href="/login" className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-              <LogIn /> Iniciar Sessió
-            </Link>
+            <Button asChild variant="outline">
+                <Link href="/login" className="w-full">
+                <LogIn className="mr-2"/> Iniciar Sessió
+                </Link>
+            </Button>
           </SheetClose>
           <SheetClose asChild>
-            <Link href="/register" className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-              <UserPlus /> Registrar-se
-            </Link>
+            <Button asChild>
+                <Link href="/register" className="w-full">
+                <UserPlus className="mr-2"/> Registrar-se
+                </Link>
+            </Button>
           </SheetClose>
-        </>
+        </div>
       )}
     </>
   );
