@@ -10,8 +10,8 @@ const blogPosts = [
     description: 'Descobreix com la tecnologia està transformant la logística i com la teva empresa se\'n pot beneficiar.',
     date: '15 de Juliol, 2024',
     author: 'Equip Global Cargocare',
-    imageUrl: 'https://picsum.photos/seed/blog1/800/600',
-    imageHint: 'digital technology',
+    imageUrl: 'https://picsum.photos/seed/logistics-tech/800/600',
+    imageHint: 'logistics technology',
   },
   {
     id: 2,
@@ -19,8 +19,8 @@ const blogPosts = [
     description: 'Una guia completa sobre les últimes actualitzacions dels termes comercials internacionals i el seu impacte.',
     date: '01 de Juliol, 2024',
     author: 'Expert Logístic',
-    imageUrl: 'https://picsum.photos/seed/blog2/800/600',
-    imageHint: 'shipping documents',
+    imageUrl: 'https://picsum.photos/seed/cargo-ship/800/600',
+    imageHint: 'cargo ship',
   },
   {
     id: 3,
@@ -28,8 +28,8 @@ const blogPosts = [
     description: 'Explorem les iniciatives i pràctiques per a una logística més verda i responsable.',
     date: '20 de Juny, 2024',
     author: 'Equip Global Cargocare',
-    imageUrl: 'https://picsum.photos/seed/blog3/800/600',
-    imageHint: 'green energy',
+    imageUrl: 'https://picsum.photos/seed/green-logistics/800/600',
+    imageHint: 'green logistics',
   },
 ];
 
