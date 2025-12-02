@@ -39,7 +39,10 @@ export default function Header() {
   const desktopAuthLinks = (
     <>
       {!isClient || isUserLoading ? (
-        <div className="h-9 w-44 rounded-md bg-gray-200 animate-pulse" />
+         <div className="flex items-center gap-4">
+            <div className="h-9 w-24 rounded-md bg-gray-200 animate-pulse" />
+            <div className="h-9 w-28 rounded-md bg-gray-200 animate-pulse" />
+        </div>
       ) : user ? (
         <>
           <Button variant="outline" asChild>
