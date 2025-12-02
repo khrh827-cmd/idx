@@ -18,7 +18,6 @@ const formSchema = z.object({
 });
 
 export default function ContactPage() {
-  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -28,15 +27,6 @@ export default function ContactPage() {
       message: '',
     },
   });
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    toast({
-      title: 'Missatge Enviat!',
-      description: 'Gràcies per contactar-nos. Et respondrem aviat.',
-    });
-    form.reset();
-  }
 
   return (
     <div className="container mx-auto px-4 py-16 md:py-24">
@@ -54,52 +44,25 @@ export default function ContactPage() {
             <CardDescription>Respondrem la teva consulta el més aviat possible.</CardDescription>
           </CardHeader>
           <CardContent>
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Nom</FormLabel>
-                      <FormControl>
-                        <Input placeholder="El teu nom" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Correu Electrònic</FormLabel>
-                      <FormControl>
-                        <Input placeholder="el.teu@correu.com" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="message"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Missatge</FormLabel>
-                      <FormControl>
-                        <Textarea placeholder="Com et podem ajudar?" className="min-h-[120px]" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button type="submit" className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
-                  Enviar Missatge
-                </Button>
-              </form>
-            </Form>
+            <form action="https://formspree.io/f/xeoykrej" method="POST">
+                <div className="space-y-6">
+                    <div>
+                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Nom</label>
+                        <Input id="name" name="name" placeholder="El teu nom" required minLength={2} />
+                    </div>
+                    <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Correu Electrònic</label>
+                        <Input id="email" name="email" type="email" placeholder="el.teu@correu.com" required />
+                    </div>
+                    <div>
+                        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Missatge</label>
+                        <Textarea id="message" name="message" placeholder="Com et podem ajudar?" className="min-h-[120px]" required minLength={10} />
+                    </div>
+                    <Button type="submit" className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
+                      Enviar Missatge
+                    </Button>
+                </div>
+            </form>
           </CardContent>
         </Card>
 
