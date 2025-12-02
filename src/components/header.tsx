@@ -3,10 +3,11 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
-import { Globe, Menu, Home, Briefcase, Users, Mail, Newspaper, User } from 'lucide-react';
+import { Menu, Home, Briefcase, Users, Mail, Newspaper, User } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
+import { Logo } from './logo';
 
 const navLinks = [
   { href: '/', label: 'Inici', icon: <Home className="h-5 w-5" /> },
@@ -26,7 +27,7 @@ export default function Header() {
       <div className="container flex h-16 items-center">
         <div className="mr-4 flex">
           <Link href="/" className="flex items-center gap-2">
-            <Globe className="h-7 w-7 text-primary" />
+            <Logo className="h-8 w-8" />
             <span className="hidden font-bold sm:inline-block font-headline text-lg">
               Global Cargocare
             </span>
@@ -59,7 +60,7 @@ export default function Header() {
               <div className="flex flex-col h-full">
                 <div className="border-b pb-4">
                   <Link href="/" className="flex items-center gap-2" onClick={() => setIsSheetOpen(false)}>
-                    <Globe className="h-7 w-7 text-primary" />
+                    <Logo className="h-8 w-8" />
                     <span className="font-bold font-headline text-lg">Global Cargocare</span>
                   </Link>
                 </div>
