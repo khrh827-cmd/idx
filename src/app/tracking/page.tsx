@@ -134,7 +134,7 @@ export default function TrackingPage() {
                 </div>
                 <Progress value={progress} className={cn("h-3", color)} />
                  <div className="flex justify-between text-xs text-muted-foreground mt-2">
-                    <span>Recollit</span>
+                    <span>En magatzem</span>
                     <span>En trànsit</span>
                     <span>Lliurat</span>
                 </div>
