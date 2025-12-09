@@ -13,7 +13,7 @@ import { Badge } from '@/components/ui/badge';
 
 async function getTrackingData(): Promise<Shipment[]> {
   try {
-    const res = await fetch('https://sheetdb.io/api/v1/ycafzp3o2dxfp');
+    const res = await fetch('https://sheetdb.io/api/v1/er0kamuesu5gk');
     if (!res.ok) {
       throw new Error('Failed to fetch data');
     }
@@ -79,15 +79,15 @@ export default async function TrackingPage() {
                 {shipments.length > 0 ? (
                     shipments.map((shipment) => (
                     <TableRow key={shipment.tracking_code}>
-                        <TableCell className="font-medium">{shipment.tracking_code}</TableCell>
-                        <TableCell>{shipment.client}</TableCell>
-                        <TableCell>{shipment.origin}</TableCell>
-                        <TableCell>{shipment.destination}</TableCell>
+                        <TableCell className="font-medium">{shipment.tracking_code || 'N/A'}</TableCell>
+                        <TableCell>{shipment.client || 'N/A'}</TableCell>
+                        <TableCell>{shipment.origin || 'N/A'}</TableCell>
+                        <TableCell>{shipment.destination || 'N/A'}</TableCell>
                         <TableCell>
                             <Badge variant={getStatusVariant(shipment.status)}>{shipment.status || 'N/A'}</Badge>
                         </TableCell>
-                        <TableCell>{shipment.location}</TableCell>
-                        <TableCell>{shipment.eta}</TableCell>
+                        <TableCell>{shipment.location || 'N/A'}</TableCell>
+                        <TableCell>{shipment.eta || 'N/A'}</TableCell>
                     </TableRow>
                     ))
                 ) : (
