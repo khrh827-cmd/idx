@@ -29,7 +29,7 @@ export default function TrackingPage() {
     setSearched(true);
 
     try {
-      const res = await fetch(`https://sheetdb.io/api/v1/rfrrfpwkyw0pb/search?tracking_code=${trackingCode}`);
+      const res = await fetch(`https://sheetdb.io/api/v1/2kd07izw1k26k/search?tracking_code=${trackingCode}`);
       if (!res.ok) {
         throw new Error("No s'ha pogut contactar amb el servidor de seguiment.");
       }
