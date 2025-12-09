@@ -1,7 +1,42 @@
 # Settings to manage and configure a Firebase App Hosting backend.
 # https://firebase.google.com/docs/app-hosting/configure
-
 runConfig:
   # Increase this value if you'd like to automatically spin up
   # more instances in response to increased traffic.
   maxInstances: 1
+# Serve locally using the Firebase Emulator Suite.
+# https://firebase.google.com/docs/emulator-suite
+#
+# By default, App Hosting will start your application using `npm run dev`.
+# To run with a different command, set the following:
+#
+# serveCommand: <your command here>
+#
+# App Hosting will use 'start' by default for production.
+# To run with a different command, set the following:
+#
+# startCommand: <your command here>
+#
+# If your application requires any of these reserved environment variables to be
+# set during development, you can set them here.
+#
+# These are provided automatically in production, and should not be set in
+# your application code.
+#
+# https://firebase.google.com/docs/app-hosting/configure-backend#reserved-env
+#
+# env:
+#  - variable: 'API_KEY'
+#    value: '<your api key>'
+#  - variable: 'AUTH_DOMAIN'
+#    value: '<your auth domain>'
+#  - variable: 'PROJECT_ID'
+#    value: '<your project id>'
+#  - variable: 'STORAGE_BUCKET'
+#    value: '<your storage bucket>'
+#  - variable: 'MESSAGING_SENDER_ID'
+#    value: '<your messaging sender id>'
+#  - variable: 'APP_ID'
+#    value: '<your app id>'
+#  - variable: 'MEASUREMENT_ID'
+#    value: '<your measurement id>'
