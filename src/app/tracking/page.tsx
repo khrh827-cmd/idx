@@ -27,6 +27,9 @@ async function getTrackingData(): Promise<Shipment[]> {
 }
 
 function getStatusVariant(status: string) {
+    if (!status) {
+        return 'secondary';
+    }
     switch (status.toLowerCase()) {
         case 'entregat':
             return 'default';
@@ -81,7 +84,7 @@ export default async function TrackingPage() {
                         <TableCell>{shipment.origin}</TableCell>
                         <TableCell>{shipment.destination}</TableCell>
                         <TableCell>
-                            <Badge variant={getStatusVariant(shipment.status)}>{shipment.status}</Badge>
+                            <Badge variant={getStatusVariant(shipment.status)}>{shipment.status || 'N/A'}</Badge>
                         </TableCell>
                         <TableCell>{shipment.location}</TableCell>
                         <TableCell>{shipment.eta}</TableCell>
