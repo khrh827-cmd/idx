@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
-import { Menu, Home, Briefcase, Users, Mail, Newspaper, LogIn, UserPlus, LayoutDashboard, LogOut } from 'lucide-react';
+import { Menu, Home, Briefcase, Users, Mail, Newspaper, LogIn, UserPlus, LayoutDashboard, LogOut, Truck } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useState, Fragment, useEffect } from 'react';
@@ -14,6 +14,7 @@ const navLinks = [
   { href: '/', label: 'Inici', icon: <Home className="h-5 w-5" /> },
   { href: '/services', label: 'Serveis', icon: <Briefcase className="h-5 w-5" /> },
   { href: '/about', label: 'Qui Som', icon: <Users className="h-5 w-5" /> },
+  { href: '/tracking', label: 'Seguiment', icon: <Truck className="h-5 w-5" /> },
   { href: '/contact', label: 'Contacte', icon: <Mail className="h-5 w-5" /> },
   { href: '/blog', label: 'Blog', icon: <Newspaper className="h-5 w-5" /> },
 ];
@@ -39,14 +40,14 @@ export default function Header() {
   };
 
   const desktopAuthLinks = (
-    <>
+    <div className="flex items-center gap-4">
       {!isClient || isUserLoading ? (
-         <div className="flex items-center gap-4">
+         <>
             <div className="h-9 w-24 rounded-md bg-gray-200 animate-pulse" />
             <div className="h-9 w-28 rounded-md bg-gray-200 animate-pulse" />
-        </div>
+        </>
       ) : user ? (
-        <div className="flex items-center gap-4">
+        <>
           <Button variant="outline" asChild>
             <Link href="/dashboard">
               <LayoutDashboard className="mr-2 h-4 w-4" /> Panell
@@ -55,18 +56,18 @@ export default function Header() {
           <Button onClick={handleSignOut}>
             <LogOut className="mr-2 h-4 w-4" /> Sortir
           </Button>
-        </div>
+        </>
       ) : (
-        <div className="flex items-center gap-6">
+        <>
           <Button variant="ghost" asChild>
             <Link href="/login">Iniciar sessió</Link>
           </Button>
           <Button asChild>
             <Link href="/register">Registrar-se</Link>
           </Button>
-        </div>
+        </>
       )}
-    </>
+    </div>
   );
 
   const mobileAuthLinks = (
@@ -118,7 +119,7 @@ export default function Header() {
             </span>
         </Link>
         
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
+        <nav className="hidden md:flex flex-1 items-center gap-6 text-sm font-medium">
           {navLinks.map((link) => (
             <Link
               key={link.href}
