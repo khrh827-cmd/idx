@@ -14,8 +14,11 @@ export function Logo({ className }: { className?: string }) {
         </linearGradient>
       </defs>
       <g>
+        {/* Anell exterior taronja */}
         <circle cx="50" cy="50" r="48" stroke="#F39200" strokeWidth="4" fill="none" />
+        {/* Fons circular blau */}
         <circle cx="50" cy="50" r="45" fill="#0072CE" />
+        {/* Globus amb gradient */}
         <path
           fill="url(#grad1)"
           d="M50,15.1c-19.3,0-35,15.7-35,35s15.7,35,35,35s35-15.7,35-35S69.3,15.1,50,15.1z M25.8,50c0-3.3,0.5-6.5,1.5-9.5h45.5
