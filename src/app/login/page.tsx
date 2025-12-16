@@ -6,37 +6,56 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { useToast } from '@/hooks/use-toast';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { initiateEmailSignIn, useAuth } from '@/firebase';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useState } from 'react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { AlertCircle } from 'lucide-react';
 
 const formSchema = z.object({
-  email: z.string().email({ message: 'El format del correu electrònic no és vàlid.' }),
-  password: z.string().min(6, { message: 'La contrasenya ha de tenir almenys 6 caràcters.' }),
+  username: z.string().min(1, { message: 'El camp d\'usuari és obligatori.' }),
+  password: z.string().min(1, { message: 'El camp de contrasenya és obligatori.' }),
 });
 
 export default function LoginPage() {
-  const { toast } = useToast();
-  const auth = useAuth();
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: '',
+      username: '',
       password: '',
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    initiateEmailSignIn(auth, values.email, values.password);
-    toast({
-      title: 'Iniciant sessió...',
-      description: 'Si les teves credencials són correctes, seràs redirigit aviat.',
-    });
-    // The onAuthStateChanged listener in the provider will handle the redirect
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
+    setError(null);
+
+    const apiUrl = `https://sheetdb.io/api/v1/2kd07izw1k26k/search?usuari=${encodeURIComponent(values.username)}&password=${encodeURIComponent(values.password)}&sheet=usuaris`;
+
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error('Hi ha hagut un problema amb la connexió a la base de dades.');
+      }
+      const data = await response.json();
+
+      if (data.length > 0) {
+        const user = data[0];
+        localStorage.setItem('user', JSON.stringify({ name: user.nom, company: user.empresa }));
+        router.push('/dashboard');
+      } else {
+        setError('Les dades introduïdes són incorrectes. Si us plau, torna a intentar-ho.');
+      }
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Ha ocorregut un error inesperat.');
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -51,12 +70,12 @@ export default function LoginPage() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
                 control={form.control}
-                name="email"
+                name="username"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Correu Electrònic</FormLabel>
+                    <FormLabel>Usuari</FormLabel>
                     <FormControl>
-                      <Input placeholder="el.teu@correu.com" {...field} />
+                      <Input placeholder="El teu usuari" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -75,8 +94,16 @@ export default function LoginPage() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full">
-                Entrar
+              
+              {error && (
+                <Alert variant="destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              )}
+
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? 'Entrant...' : 'Entrar'}
               </Button>
             </form>
           </Form>

@@ -1,25 +1,31 @@
 'use client';
 
-import { useUser } from '@/firebase';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { LogIn, UserPlus, Home } from 'lucide-react';
+import { LogIn, UserPlus } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useState } from 'react';
 
 export default function ClientAreaPage() {
-  const { user, isUserLoading } = useUser();
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    if (!isUserLoading && user) {
+    const user = localStorage.getItem('user');
+    if (user) {
+      setIsLoggedIn(true);
       router.replace('/dashboard');
+    } else {
+      setIsLoggedIn(false);
     }
-  }, [user, isUserLoading, router]);
+    setIsLoading(false);
+  }, [router]);
 
-  if (isUserLoading || user) {
+  if (isLoading || isLoggedIn) {
     return (
       <div className="container mx-auto px-4 py-16 md:py-24 flex items-center justify-center">
         <div className="w-full max-w-md">
