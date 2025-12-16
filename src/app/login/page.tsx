@@ -46,7 +46,7 @@ export default function LoginPage() {
 
       if (data.length > 0) {
         const user = data[0];
-        localStorage.setItem('user', JSON.stringify({ name: user.nom, company: user.empresa }));
+        localStorage.setItem('user', JSON.stringify({ name: user.nom, company: user.empresa, role: user.rol }));
         router.push('/dashboard');
       } else {
         setError('Les dades introduïdes són incorrectes. Si us plau, torna a intentar-ho.');
