@@ -126,6 +126,8 @@ export default function DashboardPage() {
     );
   }
 
+  const userRole = user.role?.toLowerCase();
+
   return (
     <div className="container mx-auto px-4 py-16 md:py-24">
         <div className="w-full max-w-4xl mx-auto">
@@ -144,9 +146,9 @@ export default function DashboardPage() {
                     </div>
                 </CardHeader>
                 <CardContent>
-                   {user.role === 'Administrador' && <AdminDashboard />}
-                   {user.role === 'Treballador' && <WorkerDashboard />}
-                   {user.role !== 'Administrador' && user.role !== 'Treballador' && (
+                   {userRole === 'administrador' && <AdminDashboard />}
+                   {userRole === 'treballador' && <WorkerDashboard />}
+                   {userRole !== 'administrador' && userRole !== 'treballador' && (
                        <p>Rol no reconegut. Contacta amb el suport tècnic.</p>
                    )}
                 </CardContent>
