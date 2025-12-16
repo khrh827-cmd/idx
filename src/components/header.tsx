@@ -63,7 +63,7 @@ export default function Header() {
           <Button variant="ghost" className="text-white hover:bg-white/10 hover:text-white" asChild>
             <Link href="/login">Iniciar sessió</Link>
           </Button>
-          <Button className="bg-[#ff9900] text-blue-900 hover:bg-[#ff9900]/90" asChild>
+          <Button className="bg-[#ff9900] text-primary-foreground hover:bg-[#ff9900]/90" asChild>
             <Link href="/register">Registrar-se</Link>
           </Button>
         </>
@@ -111,7 +111,7 @@ export default function Header() {
   );
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-[#0a2a4a]">
+    <header className="sticky top-0 z-50 w-full border-b bg-primary">
       <div className="container flex h-16 items-center">
         <Link href="/" className="flex items-center gap-2 mr-6">
             <Logo className="h-12 w-auto" />
@@ -123,8 +123,8 @@ export default function Header() {
               key={link.href}
               href={link.href}
               className={cn(
-                'transition-colors text-white hover:text-[#ff9900] font-bold',
-                pathname === link.href ? 'text-[#ff9900]' : 'text-white/80'
+                'transition-colors text-primary-foreground hover:text-[#ff9900] font-bold',
+                pathname === link.href ? 'text-[#ff9900]' : 'text-primary-foreground/80'
               )}
             >
               {link.label}
@@ -141,7 +141,7 @@ export default function Header() {
                 <Menu />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="flex flex-col p-0 bg-[#0a2a4a] text-white border-l-0">
+            <SheetContent side="right" className="flex flex-col p-0 bg-primary text-primary-foreground border-l-0">
                 <div className="border-b border-white/20 p-4">
                   <SheetClose asChild>
                     <Link href="/" className="flex items-center gap-2">
@@ -154,9 +154,9 @@ export default function Header() {
                     <SheetClose key={link.href} asChild>
                         <Link
                         href={link.href}
-                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-white/80 transition-all hover:text-[#ff9900]"
+                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-primary-foreground/80 transition-all hover:text-[#ff9900]"
                         >
-                        {React.cloneElement(link.icon as React.ReactElement, { className: "h-5 w-5 text-white/80" })}
+                        {React.cloneElement(link.icon as React.ReactElement, { className: "h-5 w-5 text-primary-foreground/80" })}
                         {link.label}
                         </Link>
                     </SheetClose>
