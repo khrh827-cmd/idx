@@ -3,19 +3,22 @@ import { Logo } from './logo';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-white">
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
-          <div className="flex items-center gap-2 mb-4 md:mb-0">
+    <footer className="bg-primary text-primary-foreground">
+      <div className="container mx-auto px-4 py-6">
+        <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+          <div className="flex items-center gap-2">
             <Logo className="h-10 w-auto" />
+            <span className="font-bold">Global Cargocare</span>
           </div>
-          <nav className="flex gap-4 mb-4 md:mb-0">
-            <Link href="#" className="text-sm hover:underline">Avís Legal</Link>
-            <Link href="#" className="text-sm hover:underline">Privacitat</Link>
-            <Link href="#" className="text-sm hover:underline">Cookies</Link>
+
+          <nav className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm">
+            <Link href="#" className="text-gray-300 hover:underline">Avís Legal</Link>
+            <Link href="#" className="text-gray-300 hover:underline">Privacitat</Link>
+            <Link href="#" className="text-gray-300 hover:underline">Cookies</Link>
           </nav>
-          <p className="text-sm text-gray-400">
-            © {new Date().getFullYear()} Global Cargocare. Tots els drets reservats. ver. 1.0 – data 2 de desembre 2025
+
+          <p className="text-center text-sm text-gray-400 md:text-right">
+            © 2025 Global Cargocare. Tots els drets reservats.<br className="sm:hidden" /> ver. 1.0 – data 2 de desembre 2025
           </p>
         </div>
       </div>
