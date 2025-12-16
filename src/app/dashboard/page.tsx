@@ -1,109 +1,74 @@
 'use client';
 
-import { useUser, useAuth } from '@/firebase';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { FileText, ListOrdered, PlusCircle, LogOut } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { LogOut } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function DashboardPage() {
-  const { user, isUserLoading } = useUser();
   const router = useRouter();
-  const auth = useAuth();
+  const [userName, setUserName] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!isUserLoading && !user) {
-      router.replace('/client-area');
+    const userString = localStorage.getItem('user');
+    if (!userString) {
+      router.replace('/login');
+    } else {
+      try {
+        const user = JSON.parse(userString);
+        setUserName(user.name);
+      } catch (error) {
+        console.error("Failed to parse user data from localStorage", error);
+        localStorage.removeItem('user');
+        router.replace('/login');
+      }
     }
-  }, [user, isUserLoading, router]);
+    setIsLoading(false);
+  }, [router]);
 
-  const handleSignOut = async () => {
-    await auth.signOut();
-    router.push('/');
+  const handleSignOut = () => {
+    localStorage.removeItem('user');
+    router.push('/login');
   };
 
-  if (isUserLoading || !user) {
+  if (isLoading || !userName) {
     return (
-        <div className="container mx-auto px-4 py-16 md:py-24">
-            <div className="flex justify-between items-center mb-8">
-                <Skeleton className="h-10 w-1/4" />
-                <Skeleton className="h-10 w-24" />
-            </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {[...Array(3)].map((_, i) => (
-                    <Card key={i}>
-                        <CardHeader>
-                            <Skeleton className="h-6 w-1/2 mb-2" />
-                            <Skeleton className="h-4 w-full" />
-                        </CardHeader>
-                        <CardContent>
-                            <Skeleton className="h-20 w-full" />
-                        </CardContent>
-                    </Card>
-                ))}
+        <div className="container mx-auto px-4 py-16 md:py-24 flex items-center justify-center">
+            <div className="w-full max-w-2xl">
+                <Card>
+                    <CardHeader>
+                        <Skeleton className="h-10 w-3/4 mb-2" />
+                        <Skeleton className="h-4 w-1/2" />
+                    </CardHeader>
+                    <CardContent className="flex flex-col items-center justify-center p-8 space-y-4">
+                        <Skeleton className="h-10 w-32" />
+                    </CardContent>
+                </Card>
             </div>
         </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-16 md:py-24">
-      <div className="flex flex-col md:flex-row justify-between md:items-center mb-8 gap-4">
-        <div>
-            <h1 className="text-4xl font-bold font-headline text-gray-800">Panell de Client</h1>
-            <p className="mt-2 text-lg text-muted-foreground">
-            Benvingut/da, {user.displayName || user.email}!
-            </p>
+    <div className="container mx-auto px-4 py-16 md:py-24 flex items-center justify-center">
+        <div className="w-full max-w-2xl">
+            <Card className="text-center shadow-lg">
+                <CardHeader>
+                    <CardTitle className="text-4xl font-bold font-headline">Benvingut a la teva zona privada, {userName}!</CardTitle>
+                    <CardDescription className="text-muted-foreground pt-2">
+                        Aquí podràs gestionar els teus enviaments i documents.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent className="flex flex-col items-center justify-center p-8">
+                    <Button onClick={handleSignOut} variant="outline">
+                        <LogOut className="mr-2" /> Sortir
+                    </Button>
+                </CardContent>
+            </Card>
         </div>
-        <Button variant="outline" onClick={handleSignOut}>
-            <LogOut className="mr-2 h-4 w-4" /> Tancar Sessió
-        </Button>
-      </div>
-
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <Card className="shadow-lg">
-          <CardHeader>
-            <div className="flex items-center gap-4">
-                <ListOrdered className="h-8 w-8 text-primary" />
-                <CardTitle>Estat de les Comandes</CardTitle>
-            </div>
-            <CardDescription className="pt-2">Fes el seguiment dels teus enviaments en temps real.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-gray-600">Actualment no hi ha comandes actives per mostrar.</p>
-          </CardContent>
-        </Card>
-
-        <Card className="shadow-lg">
-          <CardHeader>
-             <div className="flex items-center gap-4">
-                <FileText className="h-8 w-8 text-primary" />
-                <CardTitle>Els Meus Documents</CardTitle>
-            </div>
-            <CardDescription className="pt-2">Accedeix a CMRs, Bill of Lading i factures.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-gray-600">No tens documents disponibles en aquest moment.</p>
-          </CardContent>
-        </Card>
-
-        <Card className="shadow-lg">
-          <CardHeader>
-             <div className="flex items-center gap-4">
-                <PlusCircle className="h-8 w-8 text-primary" />
-                <CardTitle>Nova Cotització</CardTitle>
-            </div>
-            <CardDescription className="pt-2">Sol·licita un pressupost per a un nou enviament.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button className="w-full" onClick={() => router.push('/contact')}>
-              Sol·licitar Cotització
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
     </div>
   );
 }
