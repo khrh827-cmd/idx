@@ -13,7 +13,8 @@ const Footer = () => {
           <nav className="flex gap-4 mb-4 md:mb-0">
             <Link href="#" className="text-sm hover:underline">Avís Legal</Link>
             <Link href="#" className="text-sm hover:underline">Privacitat</Link>
-            <Link href="#" className="text-sm hover:underline">Cookies</Link>
+            <Link href="#" className="text-sm hover Vull tornar al disseny anterior. No vull cap canvi de logo ni cap modificació visual. Deixa-ho com estava abans, amb el logo original i el menú tal com estava.
+:underline">Cookies</Link>
           </nav>
           <div className="text-sm text-gray-400 text-center md:text-right">
             <p>© {new Date().getFullYear()} Global Cargocare. Tots els drets reservats.</p>
