@@ -1,5 +1,6 @@
 'use client';
 
+import * as React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
@@ -59,10 +60,10 @@ export default function Header() {
         </>
       ) : (
         <>
-          <Button variant="ghost" asChild>
+          <Button variant="ghost" className="text-white hover:bg-white/10 hover:text-white" asChild>
             <Link href="/login">Iniciar sessió</Link>
           </Button>
-          <Button asChild>
+          <Button className="bg-[#ff9900] text-blue-900 hover:bg-[#ff9900]/90" asChild>
             <Link href="/register">Registrar-se</Link>
           </Button>
         </>
@@ -110,11 +111,11 @@ export default function Header() {
   );
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-[#0a2a4a]">
       <div className="container flex h-16 items-center">
         <Link href="/" className="flex items-center gap-2 mr-6">
-            <Logo className="h-8 w-8" />
-            <span className="hidden font-bold sm:inline-block font-headline text-lg">
+            <Logo className="h-10 w-10" />
+            <span className="hidden font-bold sm:inline-block font-headline text-lg text-white">
             Global Cargocare
             </span>
         </Link>
@@ -125,8 +126,8 @@ export default function Header() {
               key={link.href}
               href={link.href}
               className={cn(
-                'transition-colors hover:text-foreground/80',
-                pathname === link.href ? 'text-foreground' : 'text-foreground/60'
+                'transition-colors text-white hover:text-[#ff9900] font-bold',
+                pathname === link.href ? 'text-[#ff9900]' : 'text-white/80'
               )}
             >
               {link.label}
@@ -139,15 +140,15 @@ export default function Header() {
         </div>
         <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
             <SheetTrigger asChild className="md:hidden ml-auto">
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon" className="text-white hover:bg-white/10 hover:text-white">
                 <Menu />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="flex flex-col p-0">
-                <div className="border-b p-4">
+            <SheetContent side="right" className="flex flex-col p-0 bg-[#0a2a4a] text-white border-l-0">
+                <div className="border-b border-white/20 p-4">
                   <SheetClose asChild>
                     <Link href="/" className="flex items-center gap-2">
-                      <Logo className="h-8 w-8" />
+                      <Logo className="h-10 w-10" />
                       <span className="font-bold font-headline text-lg">Global Cargocare</span>
                     </Link>
                   </SheetClose>
@@ -157,17 +158,17 @@ export default function Header() {
                     <SheetClose key={link.href} asChild>
                         <Link
                         href={link.href}
-                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-white/80 transition-all hover:text-[#ff9900]"
                         >
-                        {link.icon}
+                        {React.cloneElement(link.icon as React.ReactElement, { className: "h-5 w-5 text-white/80" })}
                         {link.label}
                         </Link>
                     </SheetClose>
                   ))}
                 </nav>
-                <div className="mt-auto border-t p-4">
+                <div className="mt-auto border-t border-white/20 p-4">
                     <div className="flex flex-col gap-2">
-                         <div className="my-2 border-t -mx-4"></div>
+                         <div className="my-2 border-t -mx-4 border-white/20"></div>
                         {mobileAuthLinks}
                     </div>
                 </div>

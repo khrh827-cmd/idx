@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { Ship, Truck, Warehouse, CheckCircle } from 'lucide-react';
+import { Ship, Truck, Warehouse, Check } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -81,7 +81,7 @@ export default function ServicesPage() {
               <ul className="space-y-2 text-sm text-gray-600">
                 {service.features.map(feature => (
                   <li key={feature} className="flex items-start">
-                    <CheckCircle className="h-4 w-4 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
+                    <Check className="h-4 w-4 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
                     <span>{feature}</span>
                   </li>
                 ))}
