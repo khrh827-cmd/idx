@@ -63,7 +63,7 @@ export default function Header() {
           <Button variant="ghost" className="text-white hover:bg-white/10 hover:text-white" asChild>
             <Link href="/login">Iniciar sessió</Link>
           </Button>
-          <Button className="bg-[#ff9900] text-primary-foreground hover:bg-[#ff9900]/90" asChild>
+          <Button className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
             <Link href="/register">Registrar-se</Link>
           </Button>
         </>
@@ -115,6 +115,7 @@ export default function Header() {
       <div className="container flex h-16 items-center">
         <Link href="/" className="flex items-center gap-2 mr-6">
             <Logo className="h-12 w-auto" />
+             <span className="text-xl font-bold text-primary-foreground">Global Cargocare</span>
         </Link>
         
         <nav className="hidden md:flex flex-1 items-center gap-6 text-sm font-medium">
@@ -123,8 +124,8 @@ export default function Header() {
               key={link.href}
               href={link.href}
               className={cn(
-                'transition-colors text-primary-foreground hover:text-[#ff9900] font-bold',
-                pathname === link.href ? 'text-[#ff9900]' : 'text-primary-foreground/80'
+                'transition-colors text-primary-foreground hover:text-primary-foreground/80',
+                pathname === link.href ? 'text-primary-foreground' : 'text-primary-foreground/60'
               )}
             >
               {link.label}
@@ -141,11 +142,12 @@ export default function Header() {
                 <Menu />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="flex flex-col p-0 bg-primary text-primary-foreground border-l-0">
-                <div className="border-b border-white/20 p-4">
+            <SheetContent side="right" className="flex flex-col p-0 bg-background">
+                <div className="border-b p-4">
                   <SheetClose asChild>
                     <Link href="/" className="flex items-center gap-2">
                       <Logo className="h-10 w-auto" />
+                       <span className="text-xl font-bold">Global Cargocare</span>
                     </Link>
                   </SheetClose>
                 </div>
@@ -154,17 +156,16 @@ export default function Header() {
                     <SheetClose key={link.href} asChild>
                         <Link
                         href={link.href}
-                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-primary-foreground/80 transition-all hover:text-[#ff9900]"
+                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
                         >
-                        {React.cloneElement(link.icon as React.ReactElement, { className: "h-5 w-5 text-primary-foreground/80" })}
+                        {link.icon}
                         {link.label}
                         </Link>
                     </SheetClose>
                   ))}
                 </nav>
-                <div className="mt-auto border-t border-white/20 p-4">
+                <div className="mt-auto border-t p-4">
                     <div className="flex flex-col gap-2">
-                         <div className="my-2 border-t -mx-4 border-white/20"></div>
                         {mobileAuthLinks}
                     </div>
                 </div>
