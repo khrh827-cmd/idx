@@ -8,24 +8,35 @@ export function Logo({ className }: { className?: string }) {
       className={cn('h-8 w-8', className)}
     >
       <defs>
-        <linearGradient id="grad1" x1="0%" y1="50%" x2="100%" y2="50%">
+        <linearGradient id="grad_logo" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" style={{ stopColor: '#F29100', stopOpacity: 1 }} />
           <stop offset="100%" style={{ stopColor: '#53A646', stopOpacity: 1 }} />
         </linearGradient>
       </defs>
-      <g>
-        <circle cx="50" cy="50" r="48" stroke="#F39200" strokeWidth="4" fill="none" />
-        <circle cx="50" cy="50" r="45" fill="#0072CE" />
-        <path 
-            fill="url(#grad1)"
-            d="M50,15.1c-19.3,0-35,15.7-35,35s15.7,35,35,35s35-15.7,35-35S69.3,15.1,50,15.1z M25.8,50c0-3.3,0.5-6.5,1.5-9.5h45.5
-            c1,3,1.5,6.2,1.5,9.5s-0.5,6.5-1.5,9.5H27.3C26.3,56.5,25.8,53.3,25.8,50z M50,83.5c-5.5,0-10.6-1.4-15-3.8V62.2h30v17.5
-            C60.6,82.1,55.5,83.5,50,83.5z M65,59.2H35V39.3h30V59.2z M50,16.5c5.5,0,10.6,1.4,15,3.8v17.5H35V20.3
-            C39.4,17.9,44.5,16.5,50,16.5z M29,22.2c-2.4,3.2-4.2,7-5.2,11.3h10.1v-9C32.1,23.7,30.4,22.8,29,22.2z M23.8,64.5
-            c1,4.3,2.8,8.1,5.2,11.3c1.4-0.6,3.1-1.5,4.8-2.6V64.5H23.8z M66.2,73.2c1.7,1.1,3.4,2,4.8,2.6c2.4-3.2,4.2-7,5.2-11.3H66.2V73.2
-            z M76.2,33.5c-1-4.3-2.8-8.1-5.2-11.3c-1.4,0.6-3.1,1.5-4.8,2.6v9H76.2z"
-        />
-      </g>
+      <circle cx="50" cy="50" r="48" fill="#F39200" />
+      <circle cx="50" cy="50" r="45" fill="#0a2a4a" />
+      <path
+        d="M50,15
+           C30,15 15,30 15,50
+           C15,70 30,85 50,85
+           C70,85 85,70 85,50
+           C85,30 70,15 50,15 Z"
+        fill="url(#grad_logo)"
+      />
+      <path
+        d="M50,15
+           C60,25 65,38 65,50
+           C65,62 60,75 50,85
+           C40,75 35,62 35,50
+           C35,38 40,25 50,15 Z"
+        fill="none"
+        stroke="white"
+        strokeWidth="1"
+        strokeOpacity="0.5"
+      />
+      <line x1="20" y1="50" x2="80" y2="50" stroke="white" strokeWidth="1" strokeOpacity="0.5" />
+      <line x1="28" y1="30" x2="72" y2="70" stroke="white" strokeWidth="0.5" strokeOpacity="0.3" />
+      <line x1="28" y1="70" x2="72" y2="30" stroke="white" strokeWidth="0.5" strokeOpacity="0.3" />
     </svg>
   );
 }
