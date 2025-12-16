@@ -7,8 +7,7 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
           <div className="flex items-center gap-2 mb-4 md:mb-0">
-            <Logo className="h-7 w-7" />
-            <p className="text-lg font-semibold font-headline">Global Cargocare</p>
+            <Logo className="h-10 w-auto" />
           </div>
           <nav className="flex gap-4 mb-4 md:mb-0">
             <Link href="#" className="text-sm hover:underline">Avís Legal</Link>
