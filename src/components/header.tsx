@@ -60,10 +60,10 @@ export default function Header() {
         </>
       ) : (
         <>
-          <Button variant="ghost" className="text-white hover:bg-white/10 hover:text-white" asChild>
+          <Button variant="ghost" className="text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground" asChild>
             <Link href="/login">Iniciar sessió</Link>
           </Button>
-          <Button className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
+          <Button className="bg-accent text-accent-foreground hover:bg-accent/90" asChild>
             <Link href="/register">Registrar-se</Link>
           </Button>
         </>
@@ -99,7 +99,7 @@ export default function Header() {
             </Button>
           </SheetClose>
           <SheetClose asChild>
-            <Button asChild>
+            <Button asChild className="bg-accent text-accent-foreground hover:bg-accent/90">
                 <Link href="/register" className="w-full">
                 <UserPlus className="mr-2"/> Registrar-se
                 </Link>
@@ -124,8 +124,8 @@ export default function Header() {
               key={link.href}
               href={link.href}
               className={cn(
-                'transition-colors text-primary-foreground hover:text-primary-foreground/80',
-                pathname === link.href ? 'text-primary-foreground' : 'text-primary-foreground/60'
+                'transition-colors text-primary-foreground/70 hover:text-primary-foreground',
+                pathname === link.href && 'text-primary-foreground'
               )}
             >
               {link.label}
