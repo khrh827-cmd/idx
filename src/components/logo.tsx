@@ -8,25 +8,28 @@ export function Logo({ className }: { className?: string }) {
       className={cn('h-8 w-8', className)}
     >
       <defs>
-        <linearGradient id="swirl1" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style={{ stopColor: '#FDB813' }} />
-          <stop offset="100%" style={{ stopColor: '#F58220' }} />
-        </linearGradient>
-        <linearGradient id="swirl2" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style={{ stopColor: '#00A651' }} />
+        <linearGradient id="globeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style={{ stopColor: '#F58220' }} />
           <stop offset="100%" style={{ stopColor: '#8DC63F' }} />
         </linearGradient>
-         <linearGradient id="swirl3" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style={{ stopColor: '#0072CE' }} />
-          <stop offset="100%" style={{ stopColor: '#00AEEF' }} />
-        </linearGradient>
       </defs>
-      <g transform="translate(50,50) scale(0.9)">
-        <path d="M0-45 A45 45 0 0 1 0 45 A45 45 0 0 1 0-45" fill="none" />
-        <path d="M-35,35 A50 50 0 0 1 35,-35" stroke="url(#swirl1)" strokeWidth="12" fill="none" strokeLinecap="round" />
-        <path d="M-40,15 A50 50 0 0 1 40,-15" stroke="url(#swirl3)" strokeWidth="12" fill="none" strokeLinecap="round" />
-        <path d="M-40,-10 A50 50 0 0 0 40,10" stroke="url(#swirl2)" strokeWidth="12" fill="none" strokeLinecap="round" />
-      </g>
+      <circle cx="50" cy="50" r="49" fill="none" stroke="#F58220" strokeWidth="2" />
+      <circle cx="50" cy="50" r="45" fill="#0072CE" />
+      <mask id="globeMask">
+        <rect width="100" height="100" fill="white" />
+        <g stroke="black" strokeWidth="4" strokeLinecap="round">
+          {/* Vertical lines */}
+          <path d="M50 10 V 90" />
+          <path d="M30 15 C 30 50, 70 50, 70 85" />
+          <path d="M70 15 C 70 50, 30 50, 30 85" />
+
+          {/* Horizontal lines */}
+          <path d="M15 30 Q 50 25, 85 30" />
+          <path d="M10 50 H 90" />
+          <path d="M15 70 Q 50 75, 85 70" />
+        </g>
+      </mask>
+      <circle cx="50" cy="50" r="40" fill="url(#globeGradient)" mask="url(#globeMask)" />
     </svg>
   );
 }
