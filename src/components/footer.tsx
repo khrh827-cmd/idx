@@ -15,10 +15,9 @@ const Footer = () => {
             <Link href="#" className="text-sm hover:underline">Privacitat</Link>
             <Link href="#" className="text-sm hover:underline">Cookies</Link>
           </nav>
-          <div className="text-sm text-gray-400 text-center md:text-right">
-            <p>© {new Date().getFullYear()} Global Cargocare. Tots els drets reservats.</p>
-            <p>ver. 1.0 – data 2 de desembre 2025</p>
-          </div>
+          <p className="text-sm text-gray-400">
+            © {new Date().getFullYear()} Global Cargocare. Tots els drets reservats.
+          </p>
         </div>
       </div>
     </footer>
