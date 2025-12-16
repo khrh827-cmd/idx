@@ -7,37 +7,29 @@ export function Logo({ className }: { className?: string }) {
       viewBox="0 0 100 100"
       className={cn('h-8 w-8', className)}
     >
-      {/* Anell exterior blau fosc */}
-      <circle cx="50" cy="50" r="48" fill="none" stroke="#003366" strokeWidth="4" />
+      <defs>
+        <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style={{ stopColor: '#FDD835', stopOpacity: 1 }} />
+          <stop offset="100%" style={{ stopColor: '#6DB33F', stopOpacity: 1 }} />
+        </linearGradient>
+      </defs>
       
-      {/* Fons blanc */}
-      <circle cx="50" cy="50" r="42" fill="white" />
+      {/* Anell exterior groc */}
+      <circle cx="50" cy="50" r="47" fill="none" stroke="#FDB813" strokeWidth="6" />
       
-      {/* Globus terraqüi estilitzat */}
-      <path
-        fill="#0072CE"
-        d="M50,15c-19.33,0-35,15.67-35,35s15.67,35,35,35s35-15.67,35-35S69.33,15,50,15z M50,75c-13.81,0-25-11.19-25-25
-	s11.19-25,25-25s25,11.19,25,25S63.81,75,50,75z"
-      />
-      {/* Línies de meridià i paral·lel */}
-      <path
-        fill="none"
-        stroke="#FFFFFF"
-        strokeWidth="2"
-        d="M50,15v70 M15,50h70 M27.5,27.5c11.25-6.49,23.75-6.49,35,0 M27.5,72.5c11.25,6.49,23.75,6.49,35,0"
-      />
-       <path
-        fill="none"
-        stroke="#FFFFFF"
-        strokeWidth="2"
-        d="M50,15c-9.62,0-18.4,3.92-24.75,10.25 M50,15c9.62,0,18.4,3.92,24.75,10.25"
-      />
-       <path
-        fill="none"
-        stroke="#FFFFFF"
-        strokeWidth="2"
-        d="M50,85c-9.62,0-18.4-3.92-24.75-10.25 M50,85c9.62,0,18.4-3.92,24.75-10.25"
-      />
+      {/* Anell interior blau */}
+      <circle cx="50" cy="50" r="40" fill="none" stroke="#0072CE" strokeWidth="8" />
+
+      {/* Fons amb degradat */}
+      <circle cx="50" cy="50" r="35" fill="url(#grad1)" />
+
+      {/* Línies de la quadrícula blaves */}
+      <line x1="30" y1="50" x2="70" y2="50" stroke="#0072CE" strokeWidth="4" strokeLinecap="round" />
+      <line x1="50" y1="30" x2="50" y2="70" stroke="#0072CE" strokeWidth="4" strokeLinecap="round" />
+      <line x1="30" y1="30" x2="70" y2="30" stroke="#0072CE" strokeWidth="4" strokeLinecap="round" />
+      <line x1="30" y1="70" x2="70" y2="70" stroke="#0072CE" strokeWidth="4" strokeLinecap="round" />
+      <line x1="30" y1="30" x2="30" y2="70" stroke="#0072CE" strokeWidth="4" strokeLinecap="round" />
+      <line x1="70" y1="30" x2="70" y2="70" stroke="#0072CE" strokeWidth="4" strokeLinecap="round" />
     </svg>
   );
 }
