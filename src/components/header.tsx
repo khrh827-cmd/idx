@@ -36,12 +36,13 @@ export default function Header() {
     if (auth) {
         await auth.signOut();
     }
+    localStorage.removeItem('user'); // Also remove legacy user
     setIsSheetOpen(false);
     router.push('/');
   };
 
   const desktopAuthLinks = (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-2">
       {!isClient || isUserLoading ? (
          <>
             <div className="h-9 w-24 rounded-md bg-gray-200 animate-pulse" />
@@ -115,7 +116,6 @@ export default function Header() {
       <div className="container flex h-16 items-center">
         <Link href="/" className="flex items-center gap-2 mr-6">
             <Logo className="h-12 w-auto" />
-             <span className="text-xl font-bold text-primary-foreground">Global Cargocare</span>
         </Link>
         
         <nav className="hidden md:flex flex-1 items-center gap-6 text-sm font-medium">
