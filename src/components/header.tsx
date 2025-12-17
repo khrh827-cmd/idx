@@ -8,7 +8,6 @@ import { Menu, Home, Briefcase, Users, Mail, Newspaper, LogIn, UserPlus, LayoutD
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useState, Fragment, useEffect } from 'react';
-import { Logo } from './logo';
 import { useUser, useAuth } from '@/firebase';
 
 const navLinks = [
@@ -115,7 +114,6 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-primary">
       <div className="container flex h-16 items-center">
         <Link href="/" className="flex items-center gap-2 mr-6">
-            <Logo className="h-12 w-auto" />
         </Link>
         
         <nav className="hidden md:flex flex-1 items-center gap-6 text-sm font-medium">
@@ -146,7 +144,6 @@ export default function Header() {
                 <div className="border-b p-4">
                   <SheetClose asChild>
                     <Link href="/" className="flex items-center gap-2">
-                      <Logo className="h-10 w-auto" />
                     </Link>
                   </SheetClose>
                 </div>
