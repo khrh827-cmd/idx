@@ -8,6 +8,7 @@ export function Logo({ className }: { className?: string }) {
       width={160} 
       height={48} 
       className={className}
+      unoptimized
     />
   );
 }
