@@ -55,7 +55,7 @@ export default function Header() {
               <LayoutDashboard className="mr-2 h-4 w-4" /> Panell
             </Link>
           </Button>
-          <Button onClick={handleSignOut}>
+          <Button onClick={handleSignOut} variant="destructive">
             <LogOut className="mr-2 h-4 w-4" /> Sortir
           </Button>
         </>
