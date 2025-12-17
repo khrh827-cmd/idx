@@ -8,6 +8,7 @@ const Footer = () => {
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <div className="flex items-center gap-2">
             <Logo className="h-10 w-auto" />
+            <span className="font-semibold">Global Cargocare</span>
           </div>
 
           <nav className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm">

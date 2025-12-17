@@ -115,6 +115,7 @@ export default function Header() {
       <div className="container flex h-16 items-center">
         <Link href="/" className="flex items-center gap-2 mr-6">
             <Logo className="h-12 w-auto" />
+             <span className="text-xl font-bold text-primary-foreground">Global Cargocare</span>
         </Link>
         
         <nav className="hidden md:flex flex-1 items-center gap-6 text-sm font-medium">
@@ -146,6 +147,7 @@ export default function Header() {
                   <SheetClose asChild>
                     <Link href="/" className="flex items-center gap-2">
                       <Logo className="h-10 w-auto" />
+                      <span className="font-bold text-lg">Global Cargocare</span>
                     </Link>
                   </SheetClose>
                 </div>
