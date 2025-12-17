@@ -63,7 +63,7 @@ export default function Header() {
           <Button variant="ghost" className="text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground" asChild>
             <Link href="/login">Iniciar sessió</Link>
           </Button>
-          <Button className="bg-accent text-accent-foreground hover:bg-accent/90" asChild>
+          <Button variant="accent" asChild>
             <Link href="/register">Registrar-se</Link>
           </Button>
         </>
@@ -99,7 +99,7 @@ export default function Header() {
             </Button>
           </SheetClose>
           <SheetClose asChild>
-            <Button asChild className="bg-accent text-accent-foreground hover:bg-accent/90">
+            <Button asChild variant="accent">
                 <Link href="/register" className="w-full">
                 <UserPlus className="mr-2"/> Registrar-se
                 </Link>
@@ -115,7 +115,6 @@ export default function Header() {
       <div className="container flex h-16 items-center">
         <Link href="/" className="flex items-center gap-2 mr-6">
             <Logo className="h-12 w-auto" />
-             <span className="text-xl font-bold text-primary-foreground">Global Cargocare</span>
         </Link>
         
         <nav className="hidden md:flex flex-1 items-center gap-6 text-sm font-medium">
@@ -147,7 +146,6 @@ export default function Header() {
                   <SheetClose asChild>
                     <Link href="/" className="flex items-center gap-2">
                       <Logo className="h-10 w-auto" />
-                       <span className="text-xl font-bold">Global Cargocare</span>
                     </Link>
                   </SheetClose>
                 </div>
