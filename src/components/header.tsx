@@ -9,6 +9,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useState, Fragment, useEffect } from 'react';
 import { useUser, useAuth } from '@/firebase';
+import { Logo } from './logo';
 
 const navLinks = [
   { href: '/', label: 'Inici', icon: <Home className="h-5 w-5" /> },
@@ -114,6 +115,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-primary">
       <div className="container flex h-16 items-center">
         <Link href="/" className="flex items-center gap-2 mr-6">
+          <Logo />
         </Link>
         
         <nav className="hidden md:flex flex-1 items-center gap-6 text-sm font-medium">
@@ -144,6 +146,7 @@ export default function Header() {
                 <div className="border-b p-4">
                   <SheetClose asChild>
                     <Link href="/" className="flex items-center gap-2">
+                      <Logo />
                     </Link>
                   </SheetClose>
                 </div>
