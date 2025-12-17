@@ -61,10 +61,10 @@ export default function Header() {
         </>
       ) : (
         <>
-          <Button variant="ghost" className="text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground" asChild>
+          <Button variant="ghost" asChild>
             <Link href="/login">Iniciar sessió</Link>
           </Button>
-          <Button variant="accent" asChild>
+          <Button variant="default" asChild>
             <Link href="/register">Registrar-se</Link>
           </Button>
         </>
@@ -100,7 +100,7 @@ export default function Header() {
             </Button>
           </SheetClose>
           <SheetClose asChild>
-            <Button asChild variant="accent">
+            <Button asChild>
                 <Link href="/register" className="w-full">
                 <UserPlus className="mr-2"/> Registrar-se
                 </Link>
@@ -112,7 +112,7 @@ export default function Header() {
   );
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-primary">
+    <header className="sticky top-0 z-50 w-full border-b bg-background">
       <div className="container flex h-16 items-center">
         <Link href="/" className="flex items-center gap-2 mr-6">
           <Logo />
@@ -124,8 +124,8 @@ export default function Header() {
               key={link.href}
               href={link.href}
               className={cn(
-                'transition-colors text-primary-foreground/70 hover:text-primary-foreground',
-                pathname === link.href && 'text-primary-foreground'
+                'transition-colors text-foreground/70 hover:text-foreground',
+                pathname === link.href && 'text-foreground'
               )}
             >
               {link.label}
@@ -138,7 +138,7 @@ export default function Header() {
         </div>
         <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
             <SheetTrigger asChild className="md:hidden ml-auto">
-              <Button variant="ghost" size="icon" className="text-white hover:bg-white/10 hover:text-white">
+              <Button variant="ghost" size="icon" className="text-foreground hover:bg-accent hover:text-accent-foreground">
                 <Menu />
               </Button>
             </SheetTrigger>
