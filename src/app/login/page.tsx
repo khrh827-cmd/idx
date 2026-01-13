@@ -38,6 +38,12 @@ export default function LoginPage() {
     setIsLoading(true);
     setError(null);
 
+    if (!auth) {
+        setError("El servei d'autenticació no està disponible.");
+        setIsLoading(false);
+        return;
+    }
+
     try {
       await signInWithEmailAndPassword(auth, values.email, values.password);
       router.push('/dashboard');
