@@ -41,7 +41,7 @@ export default function DashboardPage() {
   const firestore = useFirestore();
 
   const userDocRef = useMemoFirebase(() => {
-    if (!firestore || !user) return null;
+    if (!firestore || !user?.uid) return null;
     return doc(firestore, 'users', user.uid);
   }, [firestore, user]);
   
