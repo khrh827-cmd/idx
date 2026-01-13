@@ -12,9 +12,11 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
+import { useAuth } from '@/firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const formSchema = z.object({
-  username: z.string().min(1, { message: 'El camp d\'usuari és obligatori.' }),
+  email: z.string().email({ message: 'El format del correu electrònic no és vàlid.' }),
   password: z.string().min(1, { message: 'El camp de contrasenya és obligatori.' }),
 });
 
@@ -22,11 +24,12 @@ export default function LoginPage() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const auth = useAuth();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: '',
+      email: '',
       password: '',
     },
   });
@@ -35,24 +38,21 @@ export default function LoginPage() {
     setIsLoading(true);
     setError(null);
 
-    const apiUrl = `https://sheetdb.io/api/v1/2kd07izw1k26k/search?usuari=${encodeURIComponent(values.username)}&password=${encodeURIComponent(values.password)}&sheet=usuaris`;
+    if (!auth) {
+      setError("El servei d'autenticació no està disponible.");
+      setIsLoading(false);
+      return;
+    }
 
     try {
-      const response = await fetch(apiUrl);
-      if (!response.ok) {
-        throw new Error('Hi ha hagut un problema amb la connexió a la base de dades.');
-      }
-      const data = await response.json();
-
-      if (data.length > 0) {
-        const user = data[0];
-        localStorage.setItem('user', JSON.stringify({ name: user.nom, company: user.empresa, role: user.rol }));
-        router.push('/dashboard');
-      } else {
+      await signInWithEmailAndPassword(auth, values.email, values.password);
+      router.push('/dashboard');
+    } catch (e: any) {
+      if (e.code === 'auth/user-not-found' || e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential') {
         setError('Les dades introduïdes són incorrectes. Si us plau, torna a intentar-ho.');
+      } else {
+         setError(e.message || 'Ha ocorregut un error inesperat.');
       }
-    } catch (e) {
-      setError(e instanceof Error ? e.message : 'Ha ocorregut un error inesperat.');
     } finally {
       setIsLoading(false);
     }
@@ -70,12 +70,12 @@ export default function LoginPage() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
                 control={form.control}
-                name="username"
+                name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Usuari</FormLabel>
+                    <FormLabel>Correu Electrònic</FormLabel>
                     <FormControl>
-                      <Input placeholder="El teu usuari" {...field} />
+                      <Input placeholder="el.teu@correu.com" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

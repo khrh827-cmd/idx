@@ -8,9 +8,12 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { initiateEmailSignUp, useAuth, setDocumentNonBlocking } from '@/firebase';
-import { doc, getFirestore } from 'firebase/firestore';
+import { useAuth } from '@/firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import { getFirestore } from 'firebase/firestore';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
   firstName: z.string().min(2, { message: 'El nom ha de tenir almenys 2 caràcters.' }),
@@ -22,7 +25,10 @@ const formSchema = z.object({
 export default function RegisterPage() {
   const { toast } = useToast();
   const auth = useAuth();
-  const firestore = getFirestore(auth.app);
+  const router = useRouter();
+  
+  // getFirestore must be called inside the component
+  const firestore = auth ? getFirestore(auth.app) : null;
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -35,35 +41,45 @@ export default function RegisterPage() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      const userCredential = await initiateEmailSignUp(auth, values.email, values.password);
-      
-      // After user is created, onAuthStateChanged will trigger.
-      // We can listen for the user to be available and then create the document.
-      // A more robust solution might use a cloud function, but for client-side this is a common pattern.
-      const unsubscribe = auth.onAuthStateChanged(user => {
-        if (user && user.email === values.email) {
-          unsubscribe(); // Stop listening
-          const userRef = doc(firestore, 'users', user.uid);
-          setDocumentNonBlocking(userRef, {
-            id: user.uid,
-            firstName: values.firstName,
-            lastName: values.lastName,
-            email: values.email,
-          }, { merge: true });
-        }
+    if (!auth || !firestore) {
+      toast({
+        variant: 'destructive',
+        title: 'Error de configuració',
+        description: 'Els serveis de Firebase no estan disponibles.',
       });
+      return;
+    }
+    
+    try {
+      // 1. Create the user in Firebase Auth
+      const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
+      const user = userCredential.user;
+
+      // 2. Create the user document in Firestore
+      if (user) {
+        const userRef = doc(firestore, 'users', user.uid);
+        await setDoc(userRef, {
+          id: user.uid,
+          firstName: values.firstName,
+          lastName: values.lastName,
+          email: values.email,
+        });
+      }
 
       toast({
         title: 'Compte creat!',
-        description: "T'hem registrat correctament. Ara seràs redirigit.",
+        description: "T'hem registrat correctament. Ara pots iniciar sessió.",
       });
+      
+      router.push('/login');
 
     } catch (error: any) {
       toast({
         variant: 'destructive',
         title: 'Error en el registre',
-        description: error.message || 'Hi ha hagut un problema en crear el teu compte.',
+        description: error.code === 'auth/email-already-in-use' 
+          ? 'Aquest correu electrònic ja està en ús.'
+          : error.message || 'Hi ha hagut un problema en crear el teu compte.',
       });
     }
   }

@@ -4,70 +4,31 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { LogOut, Users, Truck, AlertTriangle } from 'lucide-react';
+import { LogOut, Users, Truck, AlertTriangle, FileText, User as UserIcon } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useUser, useAuth, useDoc, useMemoFirebase } from '@/firebase';
+import { doc, getFirestore } from 'firebase/firestore';
 
-interface User {
-  name: string;
-  company: string;
-  role: 'Administrador' | 'Treballador' | string;
-}
-
-const AdminDashboard = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-        <Card>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium">Gestió d'Usuaris</CardTitle>
-                <Users className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-                <div className="text-2xl font-bold">Panell d'Usuaris</div>
-                <p className="text-xs text-muted-foreground">Gestiona rols i permisos.</p>
-            </CardContent>
-        </Card>
-        <Card>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium">Seguiment Global</CardTitle>
-                <Truck className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-                <div className="text-2xl font-bold">Tots els Enviaments</div>
-                <p className="text-xs text-muted-foreground">Visualitza l'estat de cada enviament.</p>
-            </CardContent>
-        </Card>
-         <Card>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium">Empreses</CardTitle>
-                <Users className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-                <div className="text-2xl font-bold">Clients Corporatius</div>
-                <p className="text-xs text-muted-foreground">Accés a dades de totes les empreses.</p>
-            </CardContent>
-        </Card>
-    </div>
-);
-
-const WorkerDashboard = () => (
+const UserDashboard = ({ userProfile }: { userProfile: any }) => (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
         <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium">Seguiment d'Enviaments</CardTitle>
+                <CardTitle className="text-sm font-medium">Els Meus Enviaments</CardTitle>
                 <Truck className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-                <div className="text-2xl font-bold">Panell de Seguiment</div>
-                <p className="text-xs text-muted-foreground">Visualitza tots els enviaments.</p>
+                <div className="text-2xl font-bold">Panell d'Enviaments</div>
+                <p className="text-xs text-muted-foreground">Consulta l'estat dels teus enviaments.</p>
             </CardContent>
         </Card>
         <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium">Registre d'Incidències</CardTitle>
-                <AlertTriangle className="h-4 w-4 text-muted-foreground" />
+                <CardTitle className="text-sm font-medium">Els Meus Documents</CardTitle>
+                <FileText className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-                <div className="text-2xl font-bold">Nova Incidència</div>
-                <p className="text-xs text-muted-foreground">Registra problemes interns.</p>
+                <div className="text-2xl font-bold">Gestió Documental</div>
+                <p className="text-xs text-muted-foreground">Accedeix a les teves factures i CMRs.</p>
             </CardContent>
         </Card>
     </div>
@@ -76,32 +37,35 @@ const WorkerDashboard = () => (
 
 export default function DashboardPage() {
   const router = useRouter();
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const { user, isUserLoading } = useUser();
+  const auth = useAuth();
+
+  const firestore = auth ? getFirestore(auth.app) : null;
+
+  const userDocRef = useMemoFirebase(() => {
+    if (!firestore || !user) return null;
+    return doc(firestore, 'users', user.uid);
+  }, [firestore, user]);
+
+  const { data: userProfile, isLoading: isProfileLoading } = useDoc(userDocRef);
 
   useEffect(() => {
-    const userString = localStorage.getItem('user');
-    if (!userString) {
+    // Redirect if not loading and no user is found
+    if (!isUserLoading && !user) {
       router.replace('/login');
-    } else {
-      try {
-        const userData = JSON.parse(userString);
-        setUser(userData);
-      } catch (error) {
-        console.error("Failed to parse user data from localStorage", error);
-        localStorage.removeItem('user');
-        router.replace('/login');
-      }
     }
-    setIsLoading(false);
-  }, [router]);
+  }, [user, isUserLoading, router]);
 
-  const handleSignOut = () => {
-    localStorage.removeItem('user');
+  const handleSignOut = async () => {
+    if (auth) {
+        await auth.signOut();
+    }
     router.push('/login');
   };
 
-  if (isLoading || !user) {
+  const isLoading = isUserLoading || isProfileLoading;
+
+  if (isLoading || !userProfile) {
     return (
         <div className="container mx-auto px-4 py-16 md:py-24">
             <div className="w-full max-w-4xl mx-auto">
@@ -111,8 +75,7 @@ export default function DashboardPage() {
                         <Skeleton className="h-4 w-1/2" />
                     </CardHeader>
                     <CardContent className="space-y-4">
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <Skeleton className="h-24 w-full" />
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <Skeleton className="h-24 w-full" />
                             <Skeleton className="h-24 w-full" />
                         </div>
@@ -126,8 +89,6 @@ export default function DashboardPage() {
     );
   }
 
-  const userRole = user.role?.toLowerCase();
-
   return (
     <div className="container mx-auto px-4 py-16 md:py-24">
         <div className="w-full max-w-4xl mx-auto">
@@ -135,9 +96,9 @@ export default function DashboardPage() {
                 <CardHeader>
                     <div className="flex justify-between items-start">
                         <div>
-                            <CardTitle className="text-4xl font-bold font-headline">Benvingut, {user.name}!</CardTitle>
+                            <CardTitle className="text-4xl font-bold font-headline">Benvingut, {userProfile.firstName}!</CardTitle>
                             <CardDescription className="text-muted-foreground pt-2">
-                                Panell de control per a {user.role}.
+                                Panell de control del client.
                             </CardDescription>
                         </div>
                         <Button onClick={handleSignOut} variant="outline">
@@ -146,11 +107,7 @@ export default function DashboardPage() {
                     </div>
                 </CardHeader>
                 <CardContent>
-                   {userRole === 'administrador' && <AdminDashboard />}
-                   {userRole === 'treballador' && <WorkerDashboard />}
-                   {userRole !== 'administrador' && userRole !== 'treballador' && (
-                       <p>Rol no reconegut. Contacta amb el suport tècnic.</p>
-                   )}
+                   <UserDashboard userProfile={userProfile} />
                 </CardContent>
             </Card>
         </div>
