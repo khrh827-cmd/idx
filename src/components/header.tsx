@@ -7,8 +7,9 @@ import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/s
 import { Menu, Home, Briefcase, Users, Mail, Newspaper, LogIn, UserPlus, LayoutDashboard, LogOut, Truck } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { useState, Fragment, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useUser, useAuth } from '@/firebase';
+import { Logo } from './logo';
 
 const navLinks = [
   { href: '/', label: 'Inici', icon: <Home className="h-5 w-5" /> },
@@ -25,7 +26,12 @@ export default function Header() {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const { user, isUserLoading } = useUser();
   const auth = useAuth();
-  
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const handleSignOut = async () => {
     if (auth) {
         await auth.signOut();
@@ -36,7 +42,7 @@ export default function Header() {
 
   const desktopAuthLinks = (
     <div className="flex items-center gap-2">
-      {isUserLoading ? (
+      {!isClient || isUserLoading ? (
          <>
             <div className="h-9 w-24 rounded-md bg-gray-200 animate-pulse" />
             <div className="h-9 w-28 rounded-md bg-gray-200 animate-pulse" />
@@ -67,7 +73,7 @@ export default function Header() {
 
   const mobileAuthLinks = (
     <>
-      {isUserLoading ? (
+      {!isClient || isUserLoading ? (
         <div className="flex flex-col gap-2 px-3">
             <div className="h-9 w-full rounded-md bg-gray-200 animate-pulse" />
             <div className="h-9 w-full rounded-md bg-gray-200 animate-pulse" />
@@ -107,8 +113,8 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background">
       <div className="container flex h-16 items-center">
-        <Link href="/" className="flex items-center gap-2 mr-6 font-bold text-lg">
-          Global Cargocare
+        <Link href="/" className="flex items-center gap-2 mr-6">
+          <Logo />
         </Link>
         
         <nav className="hidden md:flex flex-1 items-center gap-6 text-sm font-medium">
@@ -138,8 +144,8 @@ export default function Header() {
             <SheetContent side="right" className="flex flex-col p-0 bg-background">
                 <div className="border-b p-4">
                   <SheetClose asChild>
-                    <Link href="/" className="flex items-center gap-2 font-bold text-lg">
-                      Global Cargocare
+                    <Link href="/" className="flex items-center gap-2">
+                      <Logo />
                     </Link>
                   </SheetClose>
                 </div>
