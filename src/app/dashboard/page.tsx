@@ -6,8 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { LogOut, Truck, FileText } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useUser, useAuth, useDoc, useMemoFirebase } from '@/firebase';
-import { doc, getFirestore } from 'firebase/firestore';
+import { useUser, useAuth, useDoc, useMemoFirebase, useFirestore } from '@/firebase';
+import { doc } from 'firebase/firestore';
 
 const UserDashboard = () => (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
@@ -38,8 +38,7 @@ export default function DashboardPage() {
   const router = useRouter();
   const { user, isUserLoading } = useUser();
   const auth = useAuth();
-  
-  const firestore = auth ? getFirestore(auth.app) : null;
+  const firestore = useFirestore();
 
   const userDocRef = useMemoFirebase(() => {
     if (!firestore || !user) return null;
@@ -63,7 +62,7 @@ export default function DashboardPage() {
 
   const isLoading = isUserLoading || isProfileLoading;
 
-  if (isLoading || !userProfile) {
+  if (isLoading || !user) {
     return (
         <div className="container mx-auto px-4 py-16 md:py-24">
             <div className="w-full max-w-4xl mx-auto">
