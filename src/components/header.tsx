@@ -7,7 +7,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/s
 import { Menu, Home, Briefcase, Users, Mail, Newspaper, LogIn, UserPlus, LayoutDashboard, LogOut, Truck } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { useState, Fragment, useEffect } from 'react';
+import { useState } from 'react';
 import { useUser, useAuth } from '@/firebase';
 import { Logo } from './logo';
 
@@ -26,7 +26,7 @@ export default function Header() {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const { user, isUserLoading } = useUser();
   const auth = useAuth();
-  
+
   const handleSignOut = async () => {
     if (auth) {
         await auth.signOut();
