@@ -15,7 +15,7 @@ runConfig:
 # App Hosting will use 'start' by default for production.
 # To run with a different command, set the following:
 #
-# startCommand: <your command here>
+startCommand: npm run start
 #
 # If your application requires any of these reserved environment variables to be
 # set during development, you can set them here.
