@@ -6,8 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { LogOut, Truck, FileText } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useAuth, useDoc, useMemoFirebase, useFirestore } from '@/firebase';
-import { useUser } from '@/firebase/auth/use-user';
+import { useAuth, useDoc, useMemoFirebase, useFirestore, useUser } from '@/firebase';
 import { doc } from 'firebase/firestore';
 
 const UserDashboard = () => (
@@ -44,7 +43,7 @@ export default function DashboardPage() {
   const userDocRef = useMemoFirebase(() => {
     if (!firestore || !user?.uid) return null;
     return doc(firestore, 'users', user.uid);
-  }, [firestore, user]);
+  }, [firestore, user?.uid]);
   
   const { data: userProfile, isLoading: isProfileLoading } = useDoc<{firstName: string}>(userDocRef);
 

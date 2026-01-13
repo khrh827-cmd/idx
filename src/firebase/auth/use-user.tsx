@@ -20,7 +20,10 @@ export function useUser(): UserState {
 
   useEffect(() => {
     if (!auth) {
-      setUserState({ user: null, isLoading: false, error: new Error("Auth service not available.") });
+      // Set loading to false once we know auth is not available.
+      if (userState.isLoading) { // Prevents unnecessary re-renders
+        setUserState({ user: null, isLoading: false, error: new Error("Auth service not available.") });
+      }
       return;
     }
 
@@ -37,7 +40,7 @@ export function useUser(): UserState {
 
     // Cleanup subscription on unmount
     return () => unsubscribe();
-  }, [auth]);
+  }, [auth, userState.isLoading]); // Depend on auth and isLoading
 
   return userState;
 }
