@@ -6,7 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { LogOut, Truck, FileText } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useUser, useAuth, useDoc, useMemoFirebase, useFirestore } from '@/firebase';
+import { useAuth, useDoc, useMemoFirebase, useFirestore } from '@/firebase';
+import { useUser } from '@/firebase/auth/use-user';
 import { doc } from 'firebase/firestore';
 
 const UserDashboard = () => (
@@ -36,7 +37,7 @@ const UserDashboard = () => (
 
 export default function DashboardPage() {
   const router = useRouter();
-  const { user, isUserLoading } = useUser();
+  const { user, isLoading: isUserLoading } = useUser();
   const auth = useAuth();
   const firestore = useFirestore();
 

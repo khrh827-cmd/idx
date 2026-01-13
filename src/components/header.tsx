@@ -7,8 +7,9 @@ import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/s
 import { Menu, Home, Briefcase, Users, Mail, Newspaper, LogIn, UserPlus, LayoutDashboard, LogOut, Truck } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { useState, useEffect } from 'react';
-import { useUser, useAuth } from '@/firebase';
+import { useState, Fragment, useEffect } from 'react';
+import { useUser } from '@/firebase/auth/use-user';
+import { useAuth } from '@/firebase';
 import { Logo } from './logo';
 
 const navLinks = [
@@ -24,7 +25,7 @@ export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const { user, isUserLoading } = useUser();
+  const { user, isLoading } = useUser();
   const auth = useAuth();
   const [isClient, setIsClient] = useState(false);
 
@@ -42,7 +43,7 @@ export default function Header() {
 
   const desktopAuthLinks = (
     <div className="flex items-center gap-2">
-      {!isClient || isUserLoading ? (
+      {!isClient || isLoading ? (
          <>
             <div className="h-9 w-24 rounded-md bg-gray-200 animate-pulse" />
             <div className="h-9 w-28 rounded-md bg-gray-200 animate-pulse" />
@@ -73,7 +74,7 @@ export default function Header() {
 
   const mobileAuthLinks = (
     <>
-      {!isClient || isUserLoading ? (
+      {!isClient || isLoading ? (
         <div className="flex flex-col gap-2 px-3">
             <div className="h-9 w-full rounded-md bg-gray-200 animate-pulse" />
             <div className="h-9 w-full rounded-md bg-gray-200 animate-pulse" />
