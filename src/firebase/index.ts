@@ -18,7 +18,7 @@ export function initializeFirebase(): { firebaseApp: FirebaseApp, auth: Auth, fi
   return getSdks(app);
 }
 
-export function getSdks(firebaseApp: FirebaseApp) {
+function getSdks(firebaseApp: FirebaseApp) {
   return {
     firebaseApp,
     auth: getAuth(firebaseApp),
@@ -31,6 +31,5 @@ export * from './client-provider';
 export * from './firestore/use-collection';
 export * from './firestore/use-doc';
 export * from './non-blocking-updates';
-export * from './non-blocking-login';
 export * from './errors';
 export * from './error-emitter';

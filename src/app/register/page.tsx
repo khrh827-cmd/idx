@@ -27,7 +27,6 @@ export default function RegisterPage() {
   const auth = useAuth();
   const router = useRouter();
   
-  // getFirestore must be called inside the component
   const firestore = auth ? getFirestore(auth.app) : null;
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -51,11 +50,9 @@ export default function RegisterPage() {
     }
     
     try {
-      // 1. Create the user in Firebase Auth
       const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
       const user = userCredential.user;
 
-      // 2. Create the user document in Firestore
       if (user) {
         const userRef = doc(firestore, 'users', user.uid);
         await setDoc(userRef, {

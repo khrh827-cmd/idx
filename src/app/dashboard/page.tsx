@@ -1,15 +1,15 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { LogOut, Users, Truck, AlertTriangle, FileText, User as UserIcon } from 'lucide-react';
+import { LogOut, Truck, FileText } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useUser, useAuth, useDoc, useMemoFirebase } from '@/firebase';
 import { doc, getFirestore } from 'firebase/firestore';
 
-const UserDashboard = ({ userProfile }: { userProfile: any }) => (
+const UserDashboard = () => (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
         <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -34,23 +34,21 @@ const UserDashboard = ({ userProfile }: { userProfile: any }) => (
     </div>
 );
 
-
 export default function DashboardPage() {
   const router = useRouter();
   const { user, isUserLoading } = useUser();
   const auth = useAuth();
-
+  
   const firestore = auth ? getFirestore(auth.app) : null;
 
   const userDocRef = useMemoFirebase(() => {
     if (!firestore || !user) return null;
     return doc(firestore, 'users', user.uid);
   }, [firestore, user]);
-
-  const { data: userProfile, isLoading: isProfileLoading } = useDoc(userDocRef);
+  
+  const { data: userProfile, isLoading: isProfileLoading } = useDoc<{firstName: string}>(userDocRef);
 
   useEffect(() => {
-    // Redirect if not loading and no user is found
     if (!isUserLoading && !user) {
       router.replace('/login');
     }
@@ -65,7 +63,7 @@ export default function DashboardPage() {
 
   const isLoading = isUserLoading || isProfileLoading;
 
-  if (isLoading || !user) {
+  if (isLoading || !userProfile) {
     return (
         <div className="container mx-auto px-4 py-16 md:py-24">
             <div className="w-full max-w-4xl mx-auto">
@@ -107,7 +105,7 @@ export default function DashboardPage() {
                     </div>
                 </CardHeader>
                 <CardContent>
-                   <UserDashboard userProfile={userProfile} />
+                   <UserDashboard />
                 </CardContent>
             </Card>
         </div>
