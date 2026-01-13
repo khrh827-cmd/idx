@@ -7,8 +7,9 @@ import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/s
 import { Menu, Home, Briefcase, Users, Mail, Newspaper, LogIn, UserPlus, LayoutDashboard, LogOut, Truck } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { useState, useEffect } from 'react';
+import { useState, Fragment, useEffect } from 'react';
 import { useUser, useAuth } from '@/firebase';
+import { Logo } from './logo';
 
 const navLinks = [
   { href: '/', label: 'Inici', icon: <Home className="h-5 w-5" /> },
@@ -113,7 +114,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background">
       <div className="container flex h-16 items-center">
         <Link href="/" className="flex items-center gap-2 mr-6">
-          <span className="font-bold">Global Cargocare</span>
+          <Logo />
         </Link>
         
         <nav className="hidden md:flex flex-1 items-center gap-6 text-sm font-medium">
@@ -144,7 +145,7 @@ export default function Header() {
                 <div className="border-b p-4">
                   <SheetClose asChild>
                     <Link href="/" className="flex items-center gap-2">
-                       <span className="font-bold">Global Cargocare</span>
+                      <Logo />
                     </Link>
                   </SheetClose>
                 </div>
