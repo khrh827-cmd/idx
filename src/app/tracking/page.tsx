@@ -46,10 +46,10 @@ export default function TrackingPage() {
     }
   };
 
-  const getStatusDetails = (status: string | undefined) => {
-    if (!status) return { progress: 0, color: 'bg-gray-400', label: 'Desconegut', icon: <PackageSearch className="h-5 w-5" /> };
+  const getStatusDetails = (shipment: Shipment | null) => {
+    if (!shipment || !shipment.status) return { progress: 0, color: 'bg-gray-400', label: 'Desconegut', icon: <PackageSearch className="h-5 w-5" /> };
 
-    const lowerStatus = status.toLowerCase();
+    const lowerStatus = shipment.status.toLowerCase();
     
     if (lowerStatus.includes('entregat') || lowerStatus.includes('lliurat')) {
       return { progress: 100, color: 'bg-green-600', label: 'Lliurat', icon: <PackageCheck className="h-5 w-5 text-green-600" /> };
@@ -60,10 +60,10 @@ export default function TrackingPage() {
     if (lowerStatus.includes('en magatzem') || lowerStatus.includes('en espera')) {
       return { progress: 10, color: 'bg-yellow-500', label: 'En Magatzem', icon: <Warehouse className="h-5 w-5 text-yellow-500" /> };
     }
-    return { progress: 5, color: 'bg-gray-400', label: status, icon: <PackageSearch className="h-5 w-5" /> };
+    return { progress: 5, color: 'bg-gray-400', label: shipment.status, icon: <PackageSearch className="h-5 w-5" /> };
   };
 
-  const { progress, color, label: statusLabel, icon: statusIcon } = getStatusDetails(shipment?.status);
+  const { progress, color, label: statusLabel, icon: statusIcon } = getStatusDetails(shipment);
 
   return (
     <div className="container mx-auto px-4 py-16 md:py-24">
