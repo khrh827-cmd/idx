@@ -65,7 +65,7 @@ export default function DashboardPage() {
 
   const isLoading = isUserLoading || isProfileLoading;
 
-  if (isLoading || !userProfile) {
+  if (isLoading || !user) {
     return (
         <div className="container mx-auto px-4 py-16 md:py-24">
             <div className="w-full max-w-4xl mx-auto">
@@ -96,7 +96,7 @@ export default function DashboardPage() {
                 <CardHeader>
                     <div className="flex justify-between items-start">
                         <div>
-                            <CardTitle className="text-4xl font-bold font-headline">Benvingut, {userProfile.firstName}!</CardTitle>
+                            <CardTitle className="text-4xl font-bold font-headline">Benvingut, {userProfile?.firstName || ''}!</CardTitle>
                             <CardDescription className="text-muted-foreground pt-2">
                                 Panell de control del client.
                             </CardDescription>
