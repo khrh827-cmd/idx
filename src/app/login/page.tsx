@@ -14,7 +14,7 @@ const API_URL = 'https://sheetdb.io/api/v1/pxnx6b606vc93';
 export default function LoginPage() {
   const router = useRouter();
   const [usuari, setUsuari] = useState('');
-  const [contrasenya, setContrasenya] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -23,14 +23,14 @@ export default function LoginPage() {
     setIsLoading(true);
     setError(null);
 
-    if (!usuari || !contrasenya) {
+    if (!usuari || !password) {
         setError('Tots els camps són obligatoris.');
         setIsLoading(false);
         return;
     }
 
     try {
-      const response = await fetch(`${API_URL}/search?usuari=${usuari}&contrasenya=${contrasenya}&sheet=usuaris`);
+      const response = await fetch(`${API_URL}/search?usuari=${usuari}&password=${password}&sheet=usuaris`);
       if (!response.ok) {
         throw new Error('Error en la connexió amb el servidor.');
       }
@@ -40,7 +40,7 @@ export default function LoginPage() {
         const user = data[0];
         // Guardar dades a localStorage
         localStorage.setItem('user', JSON.stringify({
-          nom_usuari: user.nom_usuari,
+          nom_usuari: user.nom,
           empresa: user.empresa
         }));
         window.dispatchEvent(new Event('userChanged')); // Notifica a altres components (com el header)
@@ -82,8 +82,8 @@ export default function LoginPage() {
                 id="password"
                 type="password"
                 placeholder="La teva contrasenya"
-                value={contrasenya}
-                onChange={(e) => setContrasenya(e.target.value)}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 disabled={isLoading}
                 />
             </div>
