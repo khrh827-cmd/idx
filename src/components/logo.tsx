@@ -1,7 +1,14 @@
+import Image from 'next/image';
+
 export function Logo({ className }: { className?: string }) {
   return (
-    <span className={`font-bold text-xl ${className}`}>
-      Global Cargocare
-    </span>
+    <Image 
+      src="/logokhaoula.png" 
+      alt="Global Cargocare Logo" 
+      width={160} 
+      height={48} 
+      className={className}
+      unoptimized
+    />
   );
 }
