@@ -17,7 +17,7 @@ type Shipment = {
   ubicacio_actual: string;
 };
 
-const API_URL = 'https://sheetdb.io/api/v1/2kd07izw1k26k';
+const API_URL = 'https://sheetdb.io/api/v1/pxnx6b606vc93';
 
 export default function TrackingPage() {
   const [trackingCode, setTrackingCode] = useState('');
