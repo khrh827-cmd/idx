@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { User, Building, LogOut, Loader2, Truck, PlusCircle, BarChart } from 'lucide-react';
+import { User, Building, LogOut, Loader2, Truck, PlusCircle, BarChart, Users as UsersIcon } from 'lucide-react';
 import {
   Table,
   TableHeader,
@@ -18,7 +18,7 @@ import { cn } from '@/lib/utils';
 type LocalUser = {
   nom_usuari: string;
   empresa: string;
-  rol: 'admin' | 'user';
+  rol: 'administrador' | 'treballador';
 };
 
 type Shipment = {
@@ -65,14 +65,20 @@ export default function DashboardPage() {
   const handleFetchShipments = async () => {
     if (showShipments) {
         setShowShipments(false);
+        setShipments([]);
         return;
     }
 
     setIsFetchingShipments(true);
+    let url = SHIPMENTS_API_URL;
+    if (user?.rol === 'treballador') {
+        url = `${SHIPMENTS_API_URL}/search?client=${user.empresa}`;
+    }
+
     try {
-        const response = await fetch(SHIPMENTS_API_URL);
+        const response = await fetch(url);
         if (!response.ok) {
-            throw new Error('Error fetching shipments');
+            throw new Error('Error en obtenir els enviaments');
         }
         const data: Shipment[] = await response.json();
         setShipments(data);
@@ -97,12 +103,12 @@ export default function DashboardPage() {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <Card className="cursor-pointer hover:shadow-lg transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium">Nous Enviaments</CardTitle>
-                <PlusCircle className="h-4 w-4 text-muted-foreground" />
+                <CardTitle className="text-sm font-medium">Gestionar Usuaris</CardTitle>
+                <UsersIcon className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-                <div className="text-2xl font-bold">Crear</div>
-                <p className="text-xs text-muted-foreground">Registrar un nou paquet</p>
+                <div className="text-2xl font-bold">Usuaris</div>
+                <p className="text-xs text-muted-foreground">Administrar treballadors</p>
             </CardContent>
         </Card>
         <Card 
@@ -122,45 +128,51 @@ export default function DashboardPage() {
         </Card>
         <Card className="cursor-pointer hover:shadow-lg transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium">Estadístiques</CardTitle>
-                <BarChart className="h-4 w-4 text-muted-foreground" />
+                <CardTitle className="text-sm font-medium">Gestionar Empreses</CardTitle>
+                <Building className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-                <div className="text-2xl font-bold">Analítiques</div>
-                <p className="text-xs text-muted-foreground">Mètriques de negoci</p>
+                <div className="text-2xl font-bold">Empreses</div>
+                <p className="text-xs text-muted-foreground">Administrar empreses clients</p>
             </CardContent>
         </Card>
     </div>
   );
 
-  const renderUserDashboard = () => (
-     <Card className="w-full max-w-md shadow-lg">
-        <CardHeader>
-            <CardTitle>El Teu Perfil</CardTitle>
-            <CardDescription>Aquestes són les teves dades d'usuari i empresa.</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-            <div className="flex items-center gap-4">
-            <User className="h-5 w-5 text-muted-foreground" />
-            <div>
-                <p className="text-sm text-muted-foreground">Nom d'usuari</p>
-                <p className="font-semibold">{user.nom_usuari}</p>
-            </div>
-            </div>
-            <div className="flex items-center gap-4">
-            <Building className="h-5 w-5 text-muted-foreground" />
-            <div>
-                <p className="text-sm text-muted-foreground">Empresa</p>
-                <p className="font-semibold">{user.empresa}</p>
-            </div>
-            </div>
-        </CardContent>
-        <CardFooter>
-            <Button onClick={handleLogout} variant="destructive" className="w-full">
-            <LogOut className="mr-2 h-4 w-4" /> Tancar Sessió
-            </Button>
-        </CardFooter>
-    </Card>
+  const renderTreballadorDashboard = () => (
+     <div className='flex flex-col items-center gap-6'>
+        <Card className="w-full max-w-md shadow-lg">
+            <CardHeader>
+                <CardTitle>El Teu Perfil de Treballador</CardTitle>
+                <CardDescription>Aquestes són les teves dades i els teus enviaments assignats.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                <div className="flex items-center gap-4">
+                <User className="h-5 w-5 text-muted-foreground" />
+                <div>
+                    <p className="text-sm text-muted-foreground">Nom d'usuari</p>
+                    <p className="font-semibold">{user.nom_usuari}</p>
+                </div>
+                </div>
+                <div className="flex items-center gap-4">
+                <Building className="h-5 w-5 text-muted-foreground" />
+                <div>
+                    <p className="text-sm text-muted-foreground">Empresa Assignada</p>
+                    <p className="font-semibold">{user.empresa}</p>
+                </div>
+                </div>
+            </CardContent>
+            <CardFooter className='flex-col gap-4'>
+                 <Button onClick={handleFetchShipments} disabled={isFetchingShipments} className='w-full'>
+                    {isFetchingShipments && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    {showShipments ? 'Ocultar els meus enviaments' : 'Veure els meus enviaments'}
+                </Button>
+                <Button onClick={handleLogout} variant="destructive" className="w-full">
+                <LogOut className="mr-2 h-4 w-4" /> Tancar Sessió
+                </Button>
+            </CardFooter>
+        </Card>
+     </div>
   );
 
   return (
@@ -171,20 +183,25 @@ export default function DashboardPage() {
                     Panell de Control
                 </h1>
                 <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-                    Benvingut, {user.nom_usuari}. Gestiona els teus enviaments i perfil.
+                    Benvingut, {user.nom_usuari}. Rol: {user.rol}
                 </p>
             </div>
             
             <div className="w-full max-w-4xl">
-              {user.rol === 'admin' ? renderAdminDashboard() : renderUserDashboard()}
+              {user.rol === 'administrador' ? renderAdminDashboard() : renderTreballadorDashboard()}
             </div>
 
-            {user.rol === 'admin' && showShipments && (
+            {showShipments && (
                 <div className="w-full max-w-4xl mt-8 animate-in fade-in-50">
                     <Card>
                         <CardHeader>
                             <CardTitle>Llista d'Enviaments</CardTitle>
-                            <CardDescription>Aquí es mostren tots els enviaments registrats.</CardDescription>
+                            <CardDescription>
+                                {user.rol === 'administrador' 
+                                    ? "Aquí es mostren tots els enviaments registrats."
+                                    : `Enviaments per a l'empresa: ${user.empresa}`
+                                }
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
                             <Table>
@@ -198,7 +215,7 @@ export default function DashboardPage() {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {shipments.map((shipment) => (
+                                    {shipments.length > 0 ? shipments.map((shipment) => (
                                         <TableRow key={shipment.tracking_code}>
                                             <TableCell className="font-medium">{shipment.tracking_code}</TableCell>
                                             <TableCell>{shipment.client}</TableCell>
@@ -214,7 +231,11 @@ export default function DashboardPage() {
                                                 </span>
                                             </TableCell>
                                         </TableRow>
-                                    ))}
+                                    )) : (
+                                        <TableRow>
+                                            <TableCell colSpan={5} className="text-center">No s'han trobat enviaments.</TableCell>
+                                        </TableRow>
+                                    )}
                                 </TableBody>
                             </Table>
                         </CardContent>
