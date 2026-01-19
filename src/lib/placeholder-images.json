@@ -23,5 +23,22 @@
   "about": {
     "src": "https://picsum.photos/seed/about/600/400",
     "hint": "warehouse interior"
-  }
+  },
+  "blog": [
+    {
+      "id": "post1",
+      "src": "https://picsum.photos/seed/blog1/600/400",
+      "hint": "logistics technology"
+    },
+    {
+      "id": "post2",
+      "src": "https://picsum.photos/seed/blog2/600/400",
+      "hint": "global trade"
+    },
+    {
+      "id": "post3",
+      "src": "https://picsum.photos/seed/blog3/600/400",
+      "hint": "supply chain"
+    }
+  ]
 }
