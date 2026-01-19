@@ -10,11 +10,11 @@ import { cn } from '@/lib/utils';
 
 type Shipment = {
   tracking_code: string;
-  origen: string;
-  desti: string;
+  origin: string;
+  destination: string;
   eta: string;
-  estat: 'En magatzem' | 'En trànsit' | 'Lliurat';
-  ubicacio_actual: string;
+  status: 'En magatzem' | 'En trànsit' | 'Lliurat';
+  location: string;
 };
 
 const API_URL = 'https://sheetdb.io/api/v1/pxnx6b606vc93';
@@ -63,24 +63,24 @@ export default function TrackingPage() {
     { name: 'Lliurat', icon: <PackageCheck className="w-5 h-5" /> },
   ];
 
-  const currentStatusIndex = shipment ? statuses.findIndex(s => s.name === shipment.estat) : -1;
+  const currentStatusIndex = shipment ? statuses.findIndex(s => s.name === shipment.status) : -1;
 
   const getTimeline = () => {
     if (!shipment) return null;
 
     const activeColor = 
-      shipment.estat === 'Lliurat' ? 'bg-green-600 border-green-600' : 
-      shipment.estat === 'En trànsit' ? 'bg-blue-500 border-blue-500' :
+      shipment.status === 'Lliurat' ? 'bg-green-600 border-green-600' : 
+      shipment.status === 'En trànsit' ? 'bg-blue-500 border-blue-500' :
       'bg-primary border-primary'; // 'En magatzem'
 
     const activeLineColor = 
-      shipment.estat === 'Lliurat' ? 'border-green-600' : 
-      shipment.estat === 'En trànsit' ? 'border-blue-500' : 
+      shipment.status === 'Lliurat' ? 'border-green-600' : 
+      shipment.status === 'En trànsit' ? 'border-blue-500' : 
       'border-primary';
 
     const activeTextColor = 
-      shipment.estat === 'Lliurat' ? 'text-green-600' : 
-      shipment.estat === 'En trànsit' ? 'text-blue-500' : 
+      shipment.status === 'Lliurat' ? 'text-green-600' : 
+      shipment.status === 'En trànsit' ? 'text-blue-500' : 
       'text-primary';
 
     return (
@@ -136,7 +136,7 @@ export default function TrackingPage() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Input
                 type="text"
-                placeholder="Ex: GCC-12345"
+                placeholder="Ex: KR-2001"
                 value={trackingCode}
                 onChange={(e) => setTrackingCode(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
@@ -178,11 +178,11 @@ export default function TrackingPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 text-sm mb-6">
                     <div>
                       <p className="text-muted-foreground">Origen</p>
-                      <p className="font-semibold">{shipment.origen}</p>
+                      <p className="font-semibold">{shipment.origin}</p>
                     </div>
                     <div>
                       <p className="text-muted-foreground">Destinació</p>
-                      <p className="font-semibold">{shipment.desti}</p>
+                      <p className="font-semibold">{shipment.destination}</p>
                     </div>
                      <div>
                       <p className="text-muted-foreground">Data prevista (ETA)</p>
@@ -190,7 +190,7 @@ export default function TrackingPage() {
                     </div>
                     <div>
                       <p className="text-muted-foreground">Ubicació actual</p>
-                      <p className="font-semibold">{shipment.ubicacio_actual}</p>
+                      <p className="font-semibold">{shipment.location}</p>
                     </div>
                   </div>
                   {getTimeline()}
