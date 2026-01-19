@@ -3,7 +3,7 @@ import Image from 'next/image';
 export function Logo({ className }: { className?: string }) {
   return (
     <Image 
-      src="/logokhaoula.png" 
+      src="/LOGO NUEVO (KHAOULARHOULI).png" 
       alt="Global Cargocare Logo" 
       width={160} 
       height={48} 
