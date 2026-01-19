@@ -38,10 +38,11 @@ export default function LoginPage() {
 
       if (data.length > 0) {
         const user = data[0];
-        // Guardar dades a localStorage
+        // Guardar dades a localStorage, incloent el rol
         localStorage.setItem('user', JSON.stringify({
           nom_usuari: user.nom,
-          empresa: user.empresa
+          empresa: user.empresa,
+          rol: user.rol
         }));
         window.dispatchEvent(new Event('userChanged')); // Notifica a altres components (com el header)
         router.push('/dashboard');
