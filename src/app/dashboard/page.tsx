@@ -34,7 +34,7 @@ export default function DashboardPage() {
   const handleLogout = () => {
     localStorage.removeItem('user');
     window.dispatchEvent(new Event('userChanged')); // Notify header to update
-    router.push('/');
+    router.push('/login');
   };
 
   if (isLoading || !user) {
@@ -50,17 +50,17 @@ export default function DashboardPage() {
         <div className="container mx-auto px-4 flex flex-col items-center gap-8">
             <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl font-headline text-primary">
-                Panell de Client
+                Benvingut a la teva zona privada, {user.nom_usuari}
             </h1>
             <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-                Benvingut de nou, {user.nom_usuari}.
+                Aquí pots consultar les teves dades.
             </p>
             </div>
 
             <Card className="w-full max-w-md shadow-lg">
             <CardHeader>
                 <CardTitle>La teva Informació</CardTitle>
-                <CardDescription>Aquestes són les teves dades d'usuari.</CardDescription>
+                <CardDescription>Aquestes són les teves dades d'usuari registrades.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
                 <div className="flex items-center gap-4">

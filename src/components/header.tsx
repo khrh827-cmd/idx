@@ -65,7 +65,7 @@ export default function Header() {
     setUser(null);
     window.dispatchEvent(new Event('userChanged'));
     setIsSheetOpen(false);
-    router.push('/');
+    router.push('/login');
   };
 
   const desktopAuthLinks = (
