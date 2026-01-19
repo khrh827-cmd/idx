@@ -1,1 +1,27 @@
-{}
+{
+  "hero": {
+    "src": "https://picsum.photos/seed/picsum/1920/1080",
+    "hint": "logistics container ship"
+  },
+  "services": [
+    {
+      "id": "maritime",
+      "src": "https://picsum.photos/seed/maritime/600/400",
+      "hint": "cargo ship"
+    },
+    {
+      "id": "air",
+      "src": "https://picsum.photos/seed/air/600/400",
+      "hint": "cargo plane"
+    },
+    {
+      "id": "land",
+      "src": "https://picsum.photos/seed/land/600/400",
+      "hint": "cargo truck"
+    }
+  ],
+  "about": {
+    "src": "https://picsum.photos/seed/about/600/400",
+    "hint": "warehouse interior"
+  }
+}
