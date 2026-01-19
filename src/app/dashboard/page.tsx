@@ -50,17 +50,17 @@ export default function DashboardPage() {
         <div className="container mx-auto px-4 flex flex-col items-center gap-8">
             <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl font-headline text-primary">
-                Benvingut a la teva zona privada, {user.nom_usuari}
+                Benvingut, {user.nom_usuari}
             </h1>
             <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-                Aquí pots consultar les teves dades.
+                Aquesta és la teva zona privada per a l'empresa {user.empresa}.
             </p>
             </div>
 
             <Card className="w-full max-w-md shadow-lg">
             <CardHeader>
-                <CardTitle>La teva Informació</CardTitle>
-                <CardDescription>Aquestes són les teves dades d'usuari registrades.</CardDescription>
+                <CardTitle>El Teu Perfil</CardTitle>
+                <CardDescription>Aquestes són les teves dades d'usuari i empresa.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
                 <div className="flex items-center gap-4">
