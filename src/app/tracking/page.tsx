@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Search, Loader2, AlertCircle, Package, Truck, PackageCheck } from 'lucide-react';
+import { Search, Loader2, AlertCircle, Warehouse, Truck, PackageCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type Shipment = {
@@ -13,7 +13,8 @@ type Shipment = {
   origen: string;
   desti: string;
   eta: string;
-  estat: 'Pendent' | 'En trànsit' | 'Lliurat';
+  estat: 'En magatzem' | 'En trànsit' | 'Lliurat';
+  ubicacio_actual: string;
 };
 
 const API_URL = 'https://sheetdb.io/api/v1/2kd07izw1k26k';
@@ -46,7 +47,7 @@ export default function TrackingPage() {
       if (data && data.length > 0) {
         setShipment(data[0]);
       } else {
-        setError(`No s'ha trobat cap enviament amb el codi '${trackingCode}'.`);
+        setError('Codi no trobat.');
       }
     } catch (e) {
         setError('Ha ocorregut un error en fer la cerca.');
@@ -57,7 +58,7 @@ export default function TrackingPage() {
   };
 
   const statuses = [
-    { name: 'Pendent', icon: <Package className="w-5 h-5" /> },
+    { name: 'En magatzem', icon: <Warehouse className="w-5 h-5" /> },
     { name: 'En trànsit', icon: <Truck className="w-5 h-5" /> },
     { name: 'Lliurat', icon: <PackageCheck className="w-5 h-5" /> },
   ];
@@ -67,27 +68,24 @@ export default function TrackingPage() {
   const getTimeline = () => {
     if (!shipment) return null;
 
-    const activeColor = shipment.estat === 'Lliurat' 
-      ? 'bg-green-600 border-green-600' 
-      : shipment.estat === 'En trànsit' 
-      ? 'bg-blue-500 border-blue-500' 
-      : 'bg-primary border-primary';
+    const activeColor = 
+      shipment.estat === 'Lliurat' ? 'bg-green-600 border-green-600' : 
+      shipment.estat === 'En trànsit' ? 'bg-blue-500 border-blue-500' :
+      'bg-primary border-primary'; // 'En magatzem'
 
-    const activeLineColor = shipment.estat === 'Lliurat' 
-      ? 'border-green-600' 
-      : shipment.estat === 'En trànsit' 
-      ? 'border-blue-500' 
-      : 'border-primary';
+    const activeLineColor = 
+      shipment.estat === 'Lliurat' ? 'border-green-600' : 
+      shipment.estat === 'En trànsit' ? 'border-blue-500' : 
+      'border-primary';
 
-    const activeTextColor = shipment.estat === 'Lliurat' 
-      ? 'text-green-600' 
-      : shipment.estat === 'En trànsit' 
-      ? 'text-blue-500' 
-      : 'text-primary';
+    const activeTextColor = 
+      shipment.estat === 'Lliurat' ? 'text-green-600' : 
+      shipment.estat === 'En trànsit' ? 'text-blue-500' : 
+      'text-primary';
 
     return (
         <div className="w-full mt-6">
-            <p className="font-bold text-muted-foreground mb-4">Estat</p>
+            <h3 className="font-semibold text-lg mb-4">Estat de l'enviament</h3>
             <div className="flex items-center w-full">
                 {statuses.map((status, index) => (
                     <React.Fragment key={status.name}>
@@ -126,14 +124,14 @@ export default function TrackingPage() {
       <div className="container mx-auto px-4 flex flex-col items-center gap-8">
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl font-headline text-primary">
-            Seguiment d'Enviaments
+            Localitza el teu enviament
           </h1>
           <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
             Introdueix el teu codi de seguiment per veure l'estat actual del teu enviament.
           </p>
         </div>
 
-        <Card className="w-full max-w-2xl">
+        <Card className="w-full max-w-2xl shadow-lg">
           <CardContent className="p-6">
             <div className="flex flex-col sm:flex-row gap-4">
               <Input
@@ -142,7 +140,8 @@ export default function TrackingPage() {
                 value={trackingCode}
                 onChange={(e) => setTrackingCode(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                className="flex-grow"
+                className="flex-grow text-base"
+                aria-label="Codi de seguiment"
               />
               <Button onClick={handleSearch} disabled={isLoading} className="w-full sm:w-auto">
                 {isLoading ? (
@@ -170,13 +169,13 @@ export default function TrackingPage() {
               </div>
             )}
             {shipment && (
-              <Card className="animate-in fade-in-50">
+              <Card className="animate-in fade-in-50 shadow-lg">
                 <CardHeader>
                   <CardTitle>Detalls de l'Enviament</CardTitle>
                   <CardDescription>Codi: {shipment.tracking_code}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-2 gap-4 text-sm mb-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 text-sm mb-6">
                     <div>
                       <p className="text-muted-foreground">Origen</p>
                       <p className="font-semibold">{shipment.origen}</p>
@@ -185,9 +184,13 @@ export default function TrackingPage() {
                       <p className="text-muted-foreground">Destinació</p>
                       <p className="font-semibold">{shipment.desti}</p>
                     </div>
-                     <div className="col-span-2">
-                      <p className="text-muted-foreground">Data Estimada d'Entrega (ETA)</p>
+                     <div>
+                      <p className="text-muted-foreground">Data prevista (ETA)</p>
                       <p className="font-semibold">{shipment.eta}</p>
+                    </div>
+                    <div>
+                      <p className="text-muted-foreground">Ubicació actual</p>
+                      <p className="font-semibold">{shipment.ubicacio_actual}</p>
                     </div>
                   </div>
                   {getTimeline()}
