@@ -28,18 +28,22 @@ export default function ContactPage() {
               <p className="text-muted-foreground pt-2">Respondrem la teva consulta el més aviat possible.</p>
             </CardHeader>
             <CardContent>
-              <form className="space-y-6">
+              <form action="https://formsubmit.co/khrh827@vidalibarraquer.net" method="POST" className="space-y-6">
+                {/* Hidden Inputs for FormSubmit configuration */}
+                <input type="hidden" name="_subject" value="Nou missatge de contacte des del web!" />
+                <input type="hidden" name="_captcha" value="false" />
+                
                 <div className="space-y-2">
                   <Label htmlFor="name">Nom</Label>
-                  <Input id="name" placeholder="El teu nom" />
+                  <Input id="name" name="name" placeholder="El teu nom" required />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="email">Correu Electrònic</Label>
-                  <Input id="email" type="email" placeholder="el.teu@correu.com" />
+                  <Input id="email" type="email" name="email" placeholder="el.teu@correu.com" required />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="message">Missatge</Label>
-                  <Textarea id="message" placeholder="Com et podem ajudar?" className="min-h-[150px]" />
+                  <Textarea id="message" name="message" placeholder="Com et podem ajudar?" className="min-h-[150px]" required />
                 </div>
                 <Button type="submit" className="w-full" size="lg">Enviar Missatge</Button>
               </form>
