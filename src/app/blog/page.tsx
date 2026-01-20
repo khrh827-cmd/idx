@@ -1,25 +1,34 @@
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import Image from 'next/image';
+import Link from 'next/link';
 import placeholderImages from '@/lib/placeholder-images.json';
+import { ChevronRight } from "lucide-react";
 
 const blogPosts = [
   {
-    title: "Optimizació de Rutes: El Futur de la Logística",
-    summary: "Descobreix com la intel·ligència artificial està revolucionant la planificació de rutes per a un transport més eficient i sostenible.",
-    date: "15 de Juliol, 2024",
-    image: placeholderImages.blog[0]
+    title: "Optimització de la Cadena de Subministrament a l'Era Digital",
+    summary: "Descobreix com la digitalització està transformant la logística i com la teva empresa pot aprofitar-ho.",
+    date: "20 de Juliol, 2024",
+    author: "Dr. Logística Digital",
+    image: placeholderImages.blog[0],
+    href: "#",
   },
   {
-    title: "Tendències del Transport Marítim per al 2025",
-    summary: "Un anàlisi de les noves tecnologies i regulacions que marcaran el futur del comerç internacional per mar.",
-    date: "10 de Juliol, 2024",
-    image: placeholderImages.blog[1]
+    title: "INCOTERMS 2024: Què ha canviat i com t'afecta",
+    summary: "Anàlisi detallada de les últimes actualitzacions dels INCOTERMS i el seu impacte en el comerç internacional.",
+    date: "12 de Juliol, 2024",
+    author: "Expert en Comerç Exterior",
+    image: placeholderImages.blog[1],
+    href: "#",
   },
   {
-    title: "La Importància de la Resiliència a la Cadena de Subministrament",
-    summary: "Després dels reptes globals recents, explorem estratègies clau per construir una cadena de subministrament robusta i adaptable.",
-    date: "5 de Juliol, 2024",
-    image: placeholderImages.blog[2]
+    title: "Sostenibilitat en el Transport de Mercaderies",
+    summary: "Explorem estratègies i tecnologies per a un transport de mercaderies més ecològic i sostenible.",
+    date: "1 de Juliol, 2024",
+    author: "Consultor Ambiental",
+    image: placeholderImages.blog[2],
+    href: "#",
   }
 ];
 
@@ -38,23 +47,27 @@ export default function BlogPage() {
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {blogPosts.map((post) => (
-            <Card key={post.title} className="flex flex-col hover:shadow-lg transition-shadow duration-300">
-              <CardHeader className="p-0">
+            <Card key={post.title} className="flex flex-col overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <CardHeader className="p-0 relative h-48 w-full">
                  <Image 
                     src={post.image.src}
                     alt={post.title}
-                    width={600}
-                    height={400}
-                    className="rounded-t-lg object-cover"
+                    fill
+                    className="object-cover"
                     data-ai-hint={post.image.hint}
                   />
               </CardHeader>
               <CardContent className="flex-grow p-6">
-                <CardTitle className="mb-2 text-xl">{post.title}</CardTitle>
-                <p className="text-muted-foreground text-sm">{post.summary}</p>
+                <p className="text-xs text-muted-foreground uppercase tracking-wider">{post.date} &middot; {post.author}</p>
+                <CardTitle className="mt-2 mb-3 text-xl leading-tight">{post.title}</CardTitle>
+                <p className="text-sm text-muted-foreground line-clamp-3">{post.summary}</p>
               </CardContent>
               <CardFooter className="p-6 pt-0">
-                <p className="text-xs text-gray-500">{post.date}</p>
+                <Button asChild variant="link" className="p-0 h-auto text-primary">
+                  <Link href={post.href}>
+                    Llegir Més <ChevronRight className="w-4 h-4 ml-1" />
+                  </Link>
+                </Button>
               </CardFooter>
             </Card>
           ))}

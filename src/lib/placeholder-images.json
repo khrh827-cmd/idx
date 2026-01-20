@@ -27,18 +27,18 @@
   "blog": [
     {
       "id": "post1",
-      "src": "https://picsum.photos/seed/blog1/600/400",
-      "hint": "logistics technology"
+      "src": "https://picsum.photos/seed/supplychain/600/400",
+      "hint": "supply chain"
     },
     {
       "id": "post2",
-      "src": "https://picsum.photos/seed/blog2/600/400",
-      "hint": "global trade"
+      "src": "https://picsum.photos/seed/containers/600/400",
+      "hint": "shipping containers"
     },
     {
       "id": "post3",
-      "src": "https://picsum.photos/seed/blog3/600/400",
-      "hint": "supply chain"
+      "src": "https://picsum.photos/seed/carbonfootprint/600/400",
+      "hint": "carbon footprint"
     }
   ]
 }
