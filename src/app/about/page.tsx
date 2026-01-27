@@ -46,7 +46,7 @@ export default function AboutPage() {
               <ul className="space-y-6">
                 <li className="flex items-start gap-4">
                   <div className="flex-shrink-0 pt-1">
-                    <Target className="h-7 w-7 text-green-600" />
+                    <Target className="h-7 w-7 text-primary" />
                   </div>
                   <div>
                     <h4 className="text-lg font-semibold">Compromís</h4>
@@ -57,7 +57,7 @@ export default function AboutPage() {
                 </li>
                 <li className="flex items-start gap-4">
                   <div className="flex-shrink-0 pt-1">
-                    <Globe className="h-7 w-7 text-green-600" />
+                    <Globe className="h-7 w-7 text-primary" />
                   </div>
                   <div>
                     <h4 className="text-lg font-semibold">Integritat</h4>
@@ -68,7 +68,7 @@ export default function AboutPage() {
                 </li>
                 <li className="flex items-start gap-4">
                   <div className="flex-shrink-0 pt-1">
-                    <Zap className="h-7 w-7 text-green-600" />
+                    <Zap className="h-7 w-7 text-primary" />
                   </div>
                   <div>
                     <h4 className="text-lg font-semibold">Innovació</h4>
