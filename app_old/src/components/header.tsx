@@ -4,7 +4,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
-import { Menu, Home, Briefcase, Users, Mail, Newspaper, LogIn, LayoutDashboard, LogOut, Truck } from 'lucide-react';
+import { Menu, Home, Briefcase, Users, Mail, Newspaper, LogIn, LayoutDashboard, LogOut, Truck, UserPlus } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useState, useEffect } from 'react';
@@ -88,8 +88,11 @@ export default function Header() {
         </>
       ) : (
         <>
-          <Button variant="default" asChild>
+          <Button variant="link" asChild>
             <Link href="/login">Iniciar sessió</Link>
+          </Button>
+          <Button asChild className="bg-blue-900 text-white hover:bg-blue-900/90">
+            <Link href="/register">Registrar-se</Link>
           </Button>
         </>
       )}
@@ -114,14 +117,19 @@ export default function Header() {
           </button>
         </>
       ) : (
-        <div className="flex flex-col gap-2 px-3">
-          <SheetClose asChild>
-            <Button asChild className="w-full">
-                <Link href="/login">
-                  <LogIn className="mr-2"/> Iniciar Sessió
+        <div className="flex flex-col gap-4 px-3">
+            <SheetClose asChild>
+                <Link href="/login" className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+                    <LogIn className="h-5 w-5" /> Iniciar Sessió
                 </Link>
-            </Button>
-          </SheetClose>
+            </SheetClose>
+            <SheetClose asChild>
+                <Button asChild className="w-full bg-blue-900 text-white hover:bg-blue-900/90">
+                    <Link href="/register">
+                        <UserPlus className="mr-2 h-5 w-5"/> Registrar-se
+                    </Link>
+                </Button>
+            </SheetClose>
         </div>
       )}
     </>
