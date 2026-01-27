@@ -21,15 +21,18 @@ export default function Home() {
           />
           <div className="absolute inset-0 bg-black/50" />
           <div className="relative z-10 flex h-full flex-col items-center justify-center text-center text-white p-4">
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl font-headline">
+            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
               Solucions Logístiques Globals
             </h1>
             <p className="mt-4 max-w-2xl text-lg text-gray-200">
               Connectem el teu negoci amb el món a través de serveis de transport marítim, aeri i terrestre eficients i fiables.
             </p>
             <div className="mt-8 flex gap-4">
-              <Button asChild size="lg">
-                <Link href="/contact">Demanar Pressupost</Link>
+              <Button asChild size="lg" className="bg-blue-900 text-white hover:bg-blue-900/90">
+                <Link href="/contact" className="flex items-center">
+                  Demanar Pressupost
+                  <ChevronRight className="w-5 h-5 ml-2" />
+                </Link>
               </Button>
             </div>
           </div>
