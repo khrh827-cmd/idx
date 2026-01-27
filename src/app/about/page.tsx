@@ -13,7 +13,7 @@ export default function AboutPage() {
           className="object-cover"
           data-ai-hint="teamwork meeting"
         />
-        <div className="absolute inset-0 bg-primary/80" />
+        <div className="absolute inset-0 bg-black/60" />
         <div className="relative z-10 text-center text-primary-foreground p-4">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl font-headline">
             Sobre Global Cargocare
