@@ -22,6 +22,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'www.savinodelbene.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'us.images.westend61.de',
+      },
     ],
   },
 };
