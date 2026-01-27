@@ -7,26 +7,26 @@ import { ChevronRight } from "lucide-react";
 
 const blogPosts = [
   {
-    title: "Optimizació de Rutes: El Futur de la Logística",
-    summary: "Descobreix com la intel·ligència artificial està revolucionant la planificació de rutes per a un transport més eficient i sostenible.",
-    date: "15 de Juliol, 2024",
-    author: "Equip de Redacció",
+    title: "Optimització de la Cadena de Subministrament a l'Era Digital",
+    summary: "Descobreix com la digitalització està transformant la logística i com la teva empresa pot aprofitar-ho.",
+    date: "20 de Juliol, 2024",
+    author: "Dr. Logística Digital",
     image: placeholderImages.blog[0],
     href: "#",
   },
   {
-    title: "Tendències del Transport Marítim per al 2025",
-    summary: "Un anàlisi de les noves tecnologies i regulacions que marcaran el futur del comerç internacional per mar.",
-    date: "10 de Juliol, 2024",
-    author: "Jordi Martí",
+    title: "INCOTERMS 2024: Què ha canviat i com t'afecta",
+    summary: "Anàlisi detallada de les últimes actualitzacions dels INCOTERMS i el seu impacte en el comerç internacional.",
+    date: "12 de Juliol, 2024",
+    author: "Expert en Comerç Exterior",
     image: placeholderImages.blog[1],
     href: "#",
   },
   {
-    title: "La Importància de la Resiliència a la Cadena de Subministrament",
-    summary: "Després dels reptes globals recents, explorem estratègies clau per construir una cadena de subministrament robusta i adaptable.",
-    date: "5 de Juliol, 2024",
-    author: "Anna Puig",
+    title: "Sostenibilitat en el Transport de Mercaderies",
+    summary: "Explorem estratègies i tecnologies per a un transport de mercaderies més ecològic i sostenible.",
+    date: "1 de Juliol, 2024",
+    author: "Consultor Ambiental",
     image: placeholderImages.blog[2],
     href: "#",
   }
