@@ -29,7 +29,7 @@ export default function Home() {
             </p>
             <div className="mt-8 flex gap-4">
               <Button asChild size="lg">
-                <Link href="/services">Els Nostres Serveis</Link>
+                <Link href="/contact">Demanar Pressupost</Link>
               </Button>
             </div>
           </div>
