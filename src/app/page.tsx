@@ -117,21 +117,6 @@ export default function Home() {
                 </div>
             </div>
         </section>
-
-        {/* Contact Section */}
-        <section id="contact" className="py-12 md:py-24 bg-primary text-primary-foreground">
-            <div className="container mx-auto px-4 text-center">
-                <h2 className="text-3xl font-bold tracking-tight sm:text-4xl font-headline">Comencem a Treballar Junts?</h2>
-                <p className="mt-4 max-w-2xl mx-auto text-lg text-primary-foreground/80">
-                    Estem preparats per ajudar-te a optimitzar la teva cadena de subministrament. Contacta amb nosaltres avui mateix per a una consulta gratuïta.
-                </p>
-                <div className="mt-8">
-                    <Button asChild size="lg" variant="secondary">
-                        <Link href="/contact">Sol·licita un Pressupost</Link>
-                    </Button>
-                </div>
-            </div>
-        </section>
       </main>
     </div>
   );
