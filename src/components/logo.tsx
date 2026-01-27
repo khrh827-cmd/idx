@@ -5,8 +5,8 @@ export function Logo({ className }: { className?: string }) {
     <Image 
       src="/LOGO_K_R_MINI.png" 
       alt="Global Cargocare Logo" 
-      width={107} 
-      height={32} 
+      width={80} 
+      height={24} 
       className={className}
       unoptimized
     />
