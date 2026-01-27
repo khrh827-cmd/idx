@@ -130,7 +130,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background">
       <div className="container flex h-16 items-center">
-        <Link href="/" className="flex items-center gap-2 mr-6">
+        <Link href="/" className="flex items-center gap-2 mr-8">
           <Logo />
         </Link>
         
