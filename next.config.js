@@ -1,8 +1,24 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
   images: {
-    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+      },
+      {
+        protocol: 'https',
+        hostname: 'estonetech.eu',
+      },
+      {
+        protocol: 'https',
+        hostname: 'img.lovepik.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'arcecon.com',
+      },
+    ],
   },
 };
 
