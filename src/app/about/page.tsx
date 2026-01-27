@@ -7,11 +7,11 @@ export default function AboutPage() {
       {/* Hero Section */}
       <section className="relative h-80 w-full flex items-center justify-center">
         <Image
-          src="https://picsum.photos/seed/teamwork/1920/400"
-          alt="Team working together"
+          src="https://picsum.photos/seed/office/1920/400"
+          alt="Oficina amb gent treballant"
           fill
           className="object-cover"
-          data-ai-hint="teamwork meeting"
+          data-ai-hint="office work"
         />
         <div className="absolute inset-0 bg-black/60" />
         <div className="relative z-10 text-center text-primary-foreground p-4">
