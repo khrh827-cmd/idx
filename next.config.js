@@ -18,6 +18,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'arcecon.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.savinodelbene.com',
+      },
     ],
   },
 };
