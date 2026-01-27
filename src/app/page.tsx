@@ -31,9 +31,6 @@ export default function Home() {
               <Button asChild size="lg">
                 <Link href="/services">Els Nostres Serveis</Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-primary">
-                <Link href="/contact">Contacta'ns</Link>
-              </Button>
             </div>
           </div>
         </section>
