@@ -7,7 +7,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/s
 import { Menu, Home, Briefcase, Users, Mail, Newspaper, LogIn, LayoutDashboard, LogOut, Truck } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { useState, Fragment, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Logo } from './logo';
 
 const navLinks = [
@@ -22,6 +22,7 @@ const navLinks = [
 type LocalUser = {
   nom_usuari: string;
   empresa: string;
+  rol: 'administrador' | 'treballador';
 };
 
 export default function Header() {

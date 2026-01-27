@@ -4,11 +4,10 @@ import * as React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
-import { Menu, Home, Briefcase, Users, Mail, Newspaper, LogIn, UserPlus, LayoutDashboard, LogOut, Truck } from 'lucide-react';
+import { Menu, Home, Briefcase, Users, Mail, Newspaper, LogIn, LayoutDashboard, LogOut, Truck } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { useState, Fragment, useEffect } from 'react';
-import { useUser, useAuth } from '@/firebase';
+import { useState, useEffect } from 'react';
 import { Logo } from './logo';
 
 const navLinks = [
@@ -20,32 +19,60 @@ const navLinks = [
   { href: '/blog', label: 'Blog', icon: <Newspaper className="h-5 w-5" /> },
 ];
 
+type LocalUser = {
+  nom_usuari: string;
+  empresa: string;
+  rol: 'administrador' | 'treballador';
+};
+
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const { user, isUserLoading } = useUser();
-  const auth = useAuth();
-  const [isClient, setIsClient] = useState(false);
+  const [user, setUser] = useState<LocalUser | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setIsClient(true);
+    const checkUser = () => {
+      setIsLoading(true);
+      try {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+          setUser(JSON.parse(storedUser));
+        } else {
+          setUser(null);
+        }
+      } catch (error) {
+        console.error('Failed to parse user from localStorage', error);
+        localStorage.removeItem('user');
+        setUser(null);
+      }
+      setIsLoading(false);
+    };
+
+    checkUser();
+
+    window.addEventListener('storage', checkUser);
+    window.addEventListener('userChanged', checkUser);
+
+    return () => {
+      window.removeEventListener('storage', checkUser);
+      window.removeEventListener('userChanged', checkUser);
+    };
   }, []);
 
-  const handleSignOut = async () => {
-    if (auth) {
-        await auth.signOut();
-    }
-    localStorage.removeItem('user'); // Also remove legacy user
+  const handleSignOut = () => {
+    localStorage.removeItem('user');
+    setUser(null);
+    window.dispatchEvent(new Event('userChanged'));
     setIsSheetOpen(false);
-    router.push('/');
+    router.push('/login');
   };
 
   const desktopAuthLinks = (
     <div className="flex items-center gap-2">
-      {!isClient || isUserLoading ? (
+      {isLoading ? (
          <>
-            <div className="h-9 w-24 rounded-md bg-gray-200 animate-pulse" />
             <div className="h-9 w-28 rounded-md bg-gray-200 animate-pulse" />
         </>
       ) : user ? (
@@ -61,11 +88,8 @@ export default function Header() {
         </>
       ) : (
         <>
-          <Button variant="ghost" asChild>
-            <Link href="/login">Iniciar sessió</Link>
-          </Button>
           <Button variant="default" asChild>
-            <Link href="/register">Registrar-se</Link>
+            <Link href="/login">Iniciar sessió</Link>
           </Button>
         </>
       )}
@@ -74,9 +98,8 @@ export default function Header() {
 
   const mobileAuthLinks = (
     <>
-      {!isClient || isUserLoading ? (
+      {isLoading ? (
         <div className="flex flex-col gap-2 px-3">
-            <div className="h-9 w-full rounded-md bg-gray-200 animate-pulse" />
             <div className="h-9 w-full rounded-md bg-gray-200 animate-pulse" />
         </div>
       ) : user ? (
@@ -93,16 +116,9 @@ export default function Header() {
       ) : (
         <div className="flex flex-col gap-2 px-3">
           <SheetClose asChild>
-            <Button asChild variant="outline">
-                <Link href="/login" className="w-full">
-                <LogIn className="mr-2"/> Iniciar Sessió
-                </Link>
-            </Button>
-          </SheetClose>
-          <SheetClose asChild>
-            <Button asChild>
-                <Link href="/register" className="w-full">
-                <UserPlus className="mr-2"/> Registrar-se
+            <Button asChild className="w-full">
+                <Link href="/login">
+                  <LogIn className="mr-2"/> Iniciar Sessió
                 </Link>
             </Button>
           </SheetClose>
