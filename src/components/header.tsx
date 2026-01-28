@@ -77,7 +77,7 @@ export default function Header() {
         </>
       ) : user ? (
         <>
-          <Button variant="outline" asChild>
+          <Button variant="outline" asChild className="border-primary-foreground/50 text-primary-foreground hover:bg-primary-foreground hover:text-primary">
             <Link href="/dashboard">
               <LayoutDashboard className="mr-2 h-4 w-4" /> Panell
             </Link>
@@ -88,7 +88,7 @@ export default function Header() {
         </>
       ) : (
         <>
-          <Button variant="link" asChild>
+          <Button variant="link" asChild className="text-primary-foreground">
             <Link href="/login">Iniciar sessió</Link>
           </Button>
           <Button asChild variant="cta">
@@ -136,7 +136,7 @@ export default function Header() {
   );
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background">
+    <header className="sticky top-0 z-50 w-full border-b border-primary-foreground/20 bg-primary text-primary-foreground">
       <div className="container flex h-16 items-center">
         <Link href="/" className="flex items-center gap-2 mr-8">
           <Logo />
@@ -148,8 +148,8 @@ export default function Header() {
               key={link.href}
               href={link.href}
               className={cn(
-                'transition-colors text-foreground/70 hover:text-foreground',
-                pathname === link.href && 'text-foreground'
+                'transition-colors text-primary-foreground/80 hover:text-primary-foreground',
+                pathname === link.href && 'font-semibold text-primary-foreground'
               )}
             >
               {link.label}
@@ -162,7 +162,7 @@ export default function Header() {
         </div>
         <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
             <SheetTrigger asChild className="md:hidden ml-auto">
-              <Button variant="ghost" size="icon" className="text-foreground">
+              <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/10">
                 <Menu />
               </Button>
             </SheetTrigger>
