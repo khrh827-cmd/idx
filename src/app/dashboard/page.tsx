@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Card, CardHeader, CardTitle, CardContent, CardFooter, CardDescription } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { User, Building, LogOut, Loader2, Truck, PlusCircle, BarChart, Users as UsersIcon } from 'lucide-react';
+import { User, Building, LogOut, Loader2, Truck, Briefcase, Users as UsersIcon } from 'lucide-react';
 import {
   Table,
   TableHeader,
@@ -65,7 +65,6 @@ export default function DashboardPage() {
   const handleFetchShipments = async () => {
     if (showShipments) {
         setShowShipments(false);
-        setShipments([]);
         return;
     }
 
@@ -93,7 +92,7 @@ export default function DashboardPage() {
 
   if (isLoading || !user) {
     return (
-      <div className="flex h-screen items-center justify-center">
+      <div className="flex h-screen items-center justify-center bg-muted">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
@@ -140,59 +139,64 @@ export default function DashboardPage() {
   );
 
   const renderTreballadorDashboard = () => (
-     <div className='flex flex-col items-center gap-6'>
-        <Card className="w-full max-w-md">
-            <CardHeader>
-                <CardTitle>El Teu Perfil de Treballador</CardTitle>
-                <CardDescription>Aquestes són les teves dades i els teus enviaments assignats.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
+     <div className='flex justify-center'>
+        <Card className="w-full max-w-2xl shadow-sm bg-card">
+            <CardContent className="p-8 space-y-6">
                 <div className="flex items-center gap-4">
-                <User className="h-5 w-5 text-muted-foreground" />
-                <div>
-                    <p className="text-sm text-muted-foreground">Nom d'usuari</p>
-                    <p className="font-semibold">{user.nom_usuari}</p>
+                    <User className="h-6 w-6 text-muted-foreground" />
+                    <h3 className="text-xl font-semibold text-card-foreground">El Teu Perfil</h3>
                 </div>
+
+                <div className="pl-10">
+                    <span className="text-muted-foreground">Rol: </span>
+                    <span className="font-semibold text-primary">{user.rol}</span>
                 </div>
+                
+                <div className="border-t my-6" />
+
                 <div className="flex items-center gap-4">
-                <Building className="h-5 w-5 text-muted-foreground" />
-                <div>
-                    <p className="text-sm text-muted-foreground">Empresa Assignada</p>
-                    <p className="font-semibold">{user.empresa}</p>
+                    <Briefcase className="h-6 w-6 text-primary" />
+                    <h3 className="text-xl font-semibold text-card-foreground">Panell de Treballador</h3>
                 </div>
+
+                <p className="pl-10 text-muted-foreground">
+                    Aquí pots veure les teves tasques i enviaments assignats.
+                </p>
+
+                 <div className='pt-2 pl-10'>
+                     <Button onClick={handleFetchShipments} disabled={isFetchingShipments} variant="outline">
+                        {isFetchingShipments && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                        {showShipments ? 'Ocultar els meus enviaments' : 'Veure els meus enviaments'}
+                    </Button>
                 </div>
             </CardContent>
-            <CardFooter className='flex-col gap-4'>
-                 <Button onClick={handleFetchShipments} disabled={isFetchingShipments} className='w-full'>
-                    {isFetchingShipments && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    {showShipments ? 'Ocultar els meus enviaments' : 'Veure els meus enviaments'}
-                </Button>
-                <Button onClick={handleLogout} variant="destructive" className="w-full">
-                <LogOut className="mr-2 h-4 w-4" /> Tancar Sessió
-                </Button>
-            </CardFooter>
         </Card>
      </div>
   );
 
   return (
     <div className="bg-muted flex-grow py-12 md:py-24">
-        <div className="container mx-auto px-4 flex flex-col items-center gap-8">
-            <div className="text-center w-full">
-                <h1 className="text-4xl font-bold tracking-tight sm:text-5xl font-headline text-primary">
-                    Panell de Control
-                </h1>
-                <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-                    Benvingut, {user.nom_usuari}. Rol: {user.rol}
-                </p>
+        <div className="container mx-auto px-4">
+            <div className="flex justify-between items-start mb-8">
+                <div>
+                    <h1 className="text-3xl font-bold font-headline text-primary">
+                        Benvingut, {user.nom_usuari}
+                    </h1>
+                    <p className="mt-1 text-lg text-muted-foreground">
+                        Aquesta és la teva zona privada.
+                    </p>
+                </div>
+                <Button onClick={handleLogout} variant="outline">
+                    <LogOut className="mr-2 h-4 w-4" /> Sortir
+                </Button>
             </div>
             
-            <div className="w-full max-w-4xl">
+            <div className="w-full">
               {user.rol === 'administrador' ? renderAdminDashboard() : renderTreballadorDashboard()}
             </div>
 
             {showShipments && (
-                <div className="w-full max-w-4xl mt-8 animate-in fade-in-50">
+                <div className="w-full max-w-4xl mt-8 mx-auto animate-in fade-in-50">
                     <Card>
                         <CardHeader>
                             <CardTitle>Llista d'Enviaments</CardTitle>
