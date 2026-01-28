@@ -40,7 +40,7 @@ const services = [
 
 export default function ServicesPage() {
   return (
-    <div className="bg-gray-50/90 py-12 md:py-24">
+    <div className="bg-muted py-12 md:py-24">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl font-headline text-primary">
@@ -53,7 +53,7 @@ export default function ServicesPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
           {services.map((service) => (
-            <Card key={service.title} className="flex flex-col hover:shadow-xl transition-shadow duration-300">
+            <Card key={service.title} className="flex flex-col transition-shadow duration-300">
               <CardHeader className="flex-row items-center gap-4">
                 {service.icon}
                 <CardTitle className="text-xl">{service.title}</CardTitle>
@@ -70,7 +70,7 @@ export default function ServicesPage() {
                 </ul>
               </CardContent>
               <CardFooter>
-                <Button className="w-full">Sol·licitar Cotització</Button>
+                <Button variant="cta" className="w-full">Sol·licitar Cotització</Button>
               </CardFooter>
             </Card>
           ))}

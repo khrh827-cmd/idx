@@ -120,7 +120,7 @@ export default function TrackingPage() {
 
 
   return (
-    <div className="bg-gray-50/90 flex-grow py-12 md:py-24">
+    <div className="bg-muted flex-grow py-12 md:py-24">
       <div className="container mx-auto px-4 flex flex-col items-center gap-8">
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl font-headline text-primary">
@@ -131,7 +131,7 @@ export default function TrackingPage() {
           </p>
         </div>
 
-        <Card className="w-full max-w-2xl shadow-lg">
+        <Card className="w-full max-w-2xl">
           <CardContent className="p-6">
             <div className="flex flex-col sm:flex-row gap-4">
               <Input
@@ -169,7 +169,7 @@ export default function TrackingPage() {
               </div>
             )}
             {shipment && (
-              <Card className="animate-in fade-in-50 shadow-lg">
+              <Card className="animate-in fade-in-50">
                 <CardHeader>
                   <CardTitle>Detalls de l'Enviament</CardTitle>
                   <CardDescription>Codi: {shipment.tracking_code}</CardDescription>

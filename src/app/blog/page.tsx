@@ -34,7 +34,7 @@ const blogPosts = [
 
 export default function BlogPage() {
   return (
-    <div className="bg-gray-50/90">
+    <div className="bg-muted">
       <section className="container mx-auto px-4 py-12 md:py-24">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl font-headline text-primary">
@@ -47,7 +47,7 @@ export default function BlogPage() {
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {blogPosts.map((post) => (
-            <Card key={post.title} className="flex flex-col overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <Card key={post.title} className="flex flex-col overflow-hidden rounded-lg transition-shadow duration-300">
               <CardHeader className="p-0 relative h-48 w-full">
                  <Image 
                     src={post.image.src}

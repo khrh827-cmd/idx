@@ -60,14 +60,14 @@ export default function Home() {
           />
           <div className="absolute inset-0 bg-black/50" />
           <div className="relative z-10 flex h-full flex-col items-center justify-center text-center text-white p-4">
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl font-headline">
               Solucions Logístiques Globals
             </h1>
             <p className="mt-4 max-w-2xl text-lg text-gray-200">
               Connectem el teu negoci amb el món a través de serveis de transport marítim, aeri i terrestre eficients i fiables.
             </p>
             <div className="mt-8 flex gap-4">
-              <Button asChild size="lg" className="bg-blue-900 text-white hover:bg-blue-900/90">
+              <Button asChild size="lg" variant="cta">
                 <Link href="/contact" className="flex items-center">
                   Demanar Pressupost
                   <ChevronRight className="w-5 h-5 ml-2" />
@@ -78,7 +78,7 @@ export default function Home() {
         </section>
 
         {/* Services Section */}
-        <section id="services" className="py-12 md:py-24 bg-gray-50/90">
+        <section id="services" className="py-12 md:py-24 bg-muted">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
                     <h2 className="text-3xl font-bold tracking-tight sm:text-4xl font-headline text-primary">
@@ -91,7 +91,7 @@ export default function Home() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
                   {services.map((service) => (
-                    <Card key={service.title} className="flex flex-col hover:shadow-xl transition-shadow duration-300">
+                    <Card key={service.title} className="flex flex-col transition-shadow duration-300">
                       <CardHeader className="items-center text-center">
                         {service.icon}
                         <CardTitle className="text-xl mt-4">{service.title}</CardTitle>
@@ -108,7 +108,7 @@ export default function Home() {
                         </ul>
                       </CardContent>
                       <CardFooter>
-                        <Button asChild className="w-full">
+                        <Button asChild className="w-full" variant="cta">
                            <Link href={service.href}>Sol·licitar Cotització</Link>
                         </Button>
                       </CardFooter>

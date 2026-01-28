@@ -70,8 +70,8 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex-grow flex items-center justify-center bg-gray-50/90 py-12 px-4">
-      <Card className="w-full max-w-md shadow-xl">
+    <div className="flex-grow flex items-center justify-center bg-muted py-12 px-4">
+      <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl">Crear un Compte</CardTitle>
           <CardDescription>Introdueix les teves dades per registrar-te.</CardDescription>
@@ -107,7 +107,7 @@ export default function RegisterPage() {
                     <p>{success}</p>
                 </div>
             )}
-            <Button type="submit" className="w-full bg-blue-900 text-white hover:bg-blue-900/90" disabled={isLoading}>
+            <Button type="submit" variant="cta" className="w-full" disabled={isLoading}>
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Registrar-se
             </Button>

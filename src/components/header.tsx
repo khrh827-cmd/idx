@@ -91,7 +91,7 @@ export default function Header() {
           <Button variant="link" asChild>
             <Link href="/login">Iniciar sessió</Link>
           </Button>
-          <Button asChild className="bg-blue-900 text-white hover:bg-blue-900/90">
+          <Button asChild variant="cta">
             <Link href="/register">Registrar-se</Link>
           </Button>
         </>
@@ -124,7 +124,7 @@ export default function Header() {
                 </Link>
             </SheetClose>
             <SheetClose asChild>
-                <Button asChild className="w-full bg-blue-900 text-white hover:bg-blue-900/90">
+                <Button asChild variant="cta" className="w-full">
                     <Link href="/register">
                         <UserPlus className="mr-2 h-5 w-5"/> Registrar-se
                     </Link>
@@ -162,7 +162,7 @@ export default function Header() {
         </div>
         <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
             <SheetTrigger asChild className="md:hidden ml-auto">
-              <Button variant="ghost" size="icon" className="text-foreground hover:bg-accent hover:text-accent-foreground">
+              <Button variant="ghost" size="icon" className="text-foreground">
                 <Menu />
               </Button>
             </SheetTrigger>

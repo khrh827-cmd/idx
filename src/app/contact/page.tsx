@@ -7,7 +7,7 @@ import { MapPin, Phone, Mail } from 'lucide-react';
 
 export default function ContactPage() {
   return (
-    <div className="bg-gray-50/90 flex-grow py-12 md:py-24">
+    <div className="bg-muted flex-grow py-12 md:py-24">
       <div className="container mx-auto px-4">
         
         <div className="text-center mb-12">
@@ -22,7 +22,7 @@ export default function ContactPage() {
         <div className="grid md:grid-cols-2 gap-12">
           
           {/* Columna Esquerra: Formulari */}
-          <Card className="shadow-lg">
+          <Card>
             <CardHeader>
               <CardTitle>Envia'ns un Missatge</CardTitle>
               <p className="text-muted-foreground pt-2">Respondrem la teva consulta el més aviat possible.</p>
@@ -45,13 +45,13 @@ export default function ContactPage() {
                   <Label htmlFor="message">Missatge</Label>
                   <Textarea id="message" name="message" placeholder="Com et podem ajudar?" className="min-h-[150px]" required />
                 </div>
-                <Button type="submit" className="w-full" size="lg">Enviar Missatge</Button>
+                <Button type="submit" variant="cta" className="w-full" size="lg">Enviar Missatge</Button>
               </form>
             </CardContent>
           </Card>
 
           {/* Columna Dreta: Dades */}
-          <Card className="shadow-lg">
+          <Card>
             <CardHeader>
               <CardTitle>Informació de Contacte</CardTitle>
             </CardHeader>

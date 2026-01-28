@@ -101,7 +101,7 @@ export default function DashboardPage() {
 
   const renderAdminDashboard = () => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <Card className="cursor-pointer hover:shadow-lg transition-shadow">
+        <Card className="cursor-pointer transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">Gestionar Usuaris</CardTitle>
                 <UsersIcon className="h-4 w-4 text-muted-foreground" />
@@ -112,7 +112,7 @@ export default function DashboardPage() {
             </CardContent>
         </Card>
         <Card 
-            className="cursor-pointer hover:shadow-lg transition-shadow"
+            className="cursor-pointer transition-shadow"
             onClick={!isFetchingShipments ? handleFetchShipments : undefined}
         >
             <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -126,7 +126,7 @@ export default function DashboardPage() {
                 <p className="text-xs text-muted-foreground">Consultar tots els paquets</p>
             </CardContent>
         </Card>
-        <Card className="cursor-pointer hover:shadow-lg transition-shadow">
+        <Card className="cursor-pointer transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">Gestionar Empreses</CardTitle>
                 <Building className="h-4 w-4 text-muted-foreground" />
@@ -141,7 +141,7 @@ export default function DashboardPage() {
 
   const renderTreballadorDashboard = () => (
      <div className='flex flex-col items-center gap-6'>
-        <Card className="w-full max-w-md shadow-lg">
+        <Card className="w-full max-w-md">
             <CardHeader>
                 <CardTitle>El Teu Perfil de Treballador</CardTitle>
                 <CardDescription>Aquestes són les teves dades i els teus enviaments assignats.</CardDescription>
@@ -176,7 +176,7 @@ export default function DashboardPage() {
   );
 
   return (
-    <div className="bg-gray-50/90 flex-grow py-12 md:py-24">
+    <div className="bg-muted flex-grow py-12 md:py-24">
         <div className="container mx-auto px-4 flex flex-col items-center gap-8">
             <div className="text-center w-full">
                 <h1 className="text-4xl font-bold tracking-tight sm:text-5xl font-headline text-primary">
