@@ -39,8 +39,9 @@ export default function Header() {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
           const parsedUser = JSON.parse(storedUser);
-          if (parsedUser && typeof parsedUser === 'object') {
-            setUser(parsedUser);
+          // Stricter validation to prevent hydration mismatch
+          if (parsedUser && typeof parsedUser === 'object' && 'nom_usuari' in parsedUser && 'rol' in parsedUser) {
+            setUser(parsedUser as LocalUser);
           } else {
             localStorage.removeItem('user');
             setUser(null);
@@ -79,7 +80,7 @@ export default function Header() {
     <div className="flex items-center gap-2">
       {isLoading ? (
          <>
-            <div className="h-9 w-28 rounded-md bg-gray-200 animate-pulse" />
+            <div className="h-9 w-28 rounded-md bg-white/20 animate-pulse" />
         </>
       ) : user ? (
         <>

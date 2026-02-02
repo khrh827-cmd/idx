@@ -41,12 +41,14 @@ export default function DashboardPage() {
   const [isFetchingShipments, setIsFetchingShipments] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     try {
       const storedUser = localStorage.getItem('user');
       if (storedUser) {
         const parsedUser = JSON.parse(storedUser);
-        if (parsedUser && typeof parsedUser === 'object' && parsedUser.rol) {
-          setUser(parsedUser);
+        // Stricter validation to prevent hydration mismatch and runtime errors
+        if (parsedUser && typeof parsedUser === 'object' && 'nom_usuari' in parsedUser && 'rol' in parsedUser) {
+          setUser(parsedUser as LocalUser);
         } else {
           localStorage.removeItem('user');
           router.push('/login');
@@ -60,7 +62,7 @@ export default function DashboardPage() {
         router.push('/login');
     }
     setIsLoading(false);
-  }, []);
+  }, [router]);
 
   const handleLogout = () => {
     localStorage.removeItem('user');
@@ -146,7 +148,7 @@ export default function DashboardPage() {
 
   const renderTreballadorDashboard = () => (
      <div className='flex justify-center'>
-        <Card className="w-full max-w-2xl bg-card">
+        <Card className="w-full max-w-2xl bg-card shadow-sm">
             <CardContent className="p-8 space-y-6">
                 <div className="flex items-center gap-4">
                     <User className="h-6 w-6 text-muted-foreground" />
