@@ -38,7 +38,13 @@ export default function Header() {
       try {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
-          setUser(JSON.parse(storedUser));
+          const parsedUser = JSON.parse(storedUser);
+          if (parsedUser && typeof parsedUser === 'object') {
+            setUser(parsedUser);
+          } else {
+            localStorage.removeItem('user');
+            setUser(null);
+          }
         } else {
           setUser(null);
         }

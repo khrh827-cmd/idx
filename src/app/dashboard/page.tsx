@@ -45,16 +45,22 @@ export default function DashboardPage() {
       const storedUser = localStorage.getItem('user');
       if (storedUser) {
         const parsedUser = JSON.parse(storedUser);
-        setUser(parsedUser);
+        if (parsedUser && typeof parsedUser === 'object' && parsedUser.rol) {
+          setUser(parsedUser);
+        } else {
+          localStorage.removeItem('user');
+          router.push('/login');
+        }
       } else {
         router.push('/login');
       }
     } catch (error) {
         console.error("Could not parse user from local storage", error);
+        localStorage.removeItem('user');
         router.push('/login');
     }
     setIsLoading(false);
-  }, [router]);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('user');
@@ -70,7 +76,7 @@ export default function DashboardPage() {
 
     setIsFetchingShipments(true);
     let url = SHIPMENTS_API_URL;
-    if (user?.rol === 'treballador') {
+    if (user?.rol === 'treballador' && user.empresa) {
         url = `${SHIPMENTS_API_URL}/search?client=${user.empresa}`;
     }
 
@@ -140,7 +146,7 @@ export default function DashboardPage() {
 
   const renderTreballadorDashboard = () => (
      <div className='flex justify-center'>
-        <Card className="w-full max-w-2xl shadow-sm bg-card">
+        <Card className="w-full max-w-2xl bg-card">
             <CardContent className="p-8 space-y-6">
                 <div className="flex items-center gap-4">
                     <User className="h-6 w-6 text-muted-foreground" />
