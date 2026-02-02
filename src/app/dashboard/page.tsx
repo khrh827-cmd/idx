@@ -34,35 +34,38 @@ const SHIPMENTS_API_URL = 'https://sheetdb.io/api/v1/2kd07izw1k26k';
 export default function DashboardPage() {
   const router = useRouter();
   const [user, setUser] = useState<LocalUser | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [hasMounted, setHasMounted] = useState(false);
   
   const [shipments, setShipments] = useState<Shipment[]>([]);
   const [showShipments, setShowShipments] = useState(false);
   const [isFetchingShipments, setIsFetchingShipments] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true);
-    try {
-      const storedUser = localStorage.getItem('user');
-      if (storedUser) {
-        const parsedUser = JSON.parse(storedUser);
-        // Stricter validation to prevent hydration mismatch and runtime errors
-        if (parsedUser && typeof parsedUser === 'object' && 'nom_usuari' in parsedUser && 'rol' in parsedUser) {
-          setUser(parsedUser as LocalUser);
+    setHasMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (hasMounted) {
+      try {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+          const parsedUser = JSON.parse(storedUser);
+          if (parsedUser && typeof parsedUser === 'object' && 'nom_usuari' in parsedUser && 'rol' in parsedUser) {
+            setUser(parsedUser as LocalUser);
+          } else {
+            localStorage.removeItem('user');
+            router.push('/login');
+          }
         } else {
-          localStorage.removeItem('user');
           router.push('/login');
         }
-      } else {
-        router.push('/login');
+      } catch (error) {
+          console.error("Could not parse user from local storage", error);
+          localStorage.removeItem('user');
+          router.push('/login');
       }
-    } catch (error) {
-        console.error("Could not parse user from local storage", error);
-        localStorage.removeItem('user');
-        router.push('/login');
     }
-    setIsLoading(false);
-  }, [router]);
+  }, [hasMounted, router]);
 
   const handleLogout = () => {
     localStorage.removeItem('user');
@@ -98,7 +101,7 @@ export default function DashboardPage() {
   };
 
 
-  if (isLoading || !user) {
+  if (!hasMounted || !user) {
     return (
       <div className="flex h-screen items-center justify-center bg-muted">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />

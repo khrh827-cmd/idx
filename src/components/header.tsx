@@ -30,16 +30,16 @@ export default function Header() {
   const router = useRouter();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [user, setUser] = useState<LocalUser | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
+    setHasMounted(true);
+
     const checkUser = () => {
-      setIsLoading(true);
       try {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
           const parsedUser = JSON.parse(storedUser);
-          // Stricter validation to prevent hydration mismatch
           if (parsedUser && typeof parsedUser === 'object' && 'nom_usuari' in parsedUser && 'rol' in parsedUser) {
             setUser(parsedUser as LocalUser);
           } else {
@@ -54,7 +54,6 @@ export default function Header() {
         localStorage.removeItem('user');
         setUser(null);
       }
-      setIsLoading(false);
     };
 
     checkUser();
@@ -78,7 +77,7 @@ export default function Header() {
 
   const desktopAuthLinks = (
     <div className="flex items-center gap-2">
-      {isLoading ? (
+      {!hasMounted ? (
          <>
             <div className="h-9 w-28 rounded-md bg-white/20 animate-pulse" />
         </>
@@ -108,7 +107,7 @@ export default function Header() {
 
   const mobileAuthLinks = (
     <>
-      {isLoading ? (
+      {!hasMounted ? (
         <div className="flex flex-col gap-2 px-3">
             <div className="h-9 w-full rounded-md bg-gray-200 animate-pulse" />
         </div>
