@@ -40,7 +40,8 @@ export default function LoginPage() {
         const user = data[0];
         // Guardar dades a localStorage, incloent el rol
         localStorage.setItem('user', JSON.stringify({
-          nom_usuari: user.nom,
+          nom_usuari: user.nom, // Display name
+          usuari: user.usuari, // Login/matching name
           empresa: user.empresa,
           rol: user.rol
         }));

@@ -11,6 +11,7 @@ import { Logo } from '@/components/logo';
 // --- Tipus de dades ---
 type UserSession = {
   nom_usuari: string;
+  usuari: string;
   empresa: string;
   rol: 'administrador' | 'treballador' | 'client';
 };
@@ -80,7 +81,7 @@ export default function DocumentsPage() {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
           const parsedUser = JSON.parse(storedUser);
-          if (parsedUser && parsedUser.nom_usuari && parsedUser.rol) {
+          if (parsedUser && parsedUser.nom_usuari && parsedUser.rol && parsedUser.usuari) {
             setUser(parsedUser);
           } else {
             router.push('/login');
@@ -117,7 +118,7 @@ export default function DocumentsPage() {
         // Filtrar documents segons el rol de l'usuari
         const accessibleDocs = user.rol === 'administrador' || user.rol === 'treballador'
           ? docLines
-          : docLines.filter(doc => doc.usuari === user.nom_usuari);
+          : docLines.filter(doc => doc.usuari === user.usuari);
         
         if (accessibleDocs.length === 0) {
             setProcessedInvoices([]);

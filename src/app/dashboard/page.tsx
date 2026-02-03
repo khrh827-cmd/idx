@@ -18,6 +18,7 @@ import { cn } from '@/lib/utils';
 
 type LocalUser = {
   nom_usuari: string;
+  usuari?: string;
   empresa: string;
   rol: 'administrador' | 'treballador';
 };
