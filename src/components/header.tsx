@@ -88,7 +88,7 @@ export default function Header() {
         </>
       ) : user ? (
         <>
-          <Button variant="outline" asChild className="border-primary-foreground/50 text-primary-foreground hover:bg-primary-foreground hover:text-primary">
+          <Button variant="success" asChild>
             <Link href="/dashboard">
               <LayoutDashboard className="mr-2 h-4 w-4" /> Panell
             </Link>
