@@ -142,6 +142,15 @@ export default function DocumentsPage() {
 
           if (!clientData) continue; // No es pot processar si no hi ha dades del client
 
+          const rawDate = lines[0].data;
+          let safeDateString = rawDate;
+          if (rawDate && typeof rawDate === 'string' && rawDate.split('/').length === 3) {
+            const [day, month, year] = rawDate.split('/');
+            if(day && month && year && !isNaN(parseInt(day)) && !isNaN(parseInt(month)) && !isNaN(parseInt(year))) {
+               safeDateString = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            }
+          }
+          
           let subtotal = 0;
           const vatBreakdown: { [key: number]: { base: number; amount: number } } = {};
 
@@ -178,7 +187,7 @@ export default function DocumentsPage() {
 
           finalInvoices.push({
             id: invoiceId,
-            date: lines[0].data,
+            date: safeDateString,
             paymentMethod: lines[0].fpagament,
             clientData,
             lines: processedLines,
@@ -207,6 +216,19 @@ export default function DocumentsPage() {
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(amount);
   };
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      return 'Data invàlida';
+    }
+    return date.toLocaleDateString('ca-ES', {
+        timeZone: 'UTC',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    });
+  }
   
   if (!hasMounted || isLoading) {
     return (
@@ -266,7 +288,7 @@ export default function DocumentsPage() {
                         <span className="font-semibold text-foreground">Número:</span> {selectedInvoice.id}
                     </p>
                     <p>
-                        <span className="font-semibold text-foreground">Data:</span> {new Date(selectedInvoice.date).toLocaleDateString('ca-ES')}
+                        <span className="font-semibold text-foreground">Data:</span> {formatDate(selectedInvoice.date)}
                     </p>
                 </div>
             </header>
@@ -381,7 +403,7 @@ export default function DocumentsPage() {
                             processedInvoices.map(invoice => (
                                 <TableRow key={invoice.id}>
                                     <TableCell className="font-medium">{invoice.id}</TableCell>
-                                    <TableCell>{new Date(invoice.date).toLocaleDateString('ca-ES')}</TableCell>
+                                    <TableCell>{formatDate(invoice.date)}</TableCell>
                                     <TableCell>{invoice.clientData.empresa}</TableCell>
                                     <TableCell className="text-right font-semibold">{formatCurrency(invoice.totalAmount)}</TableCell>
                                     <TableCell className="text-right">
