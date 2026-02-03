@@ -4,7 +4,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
-import { Menu, Home, Briefcase, Users, Mail, Newspaper, LogIn, LayoutDashboard, LogOut, Truck, UserPlus } from 'lucide-react';
+import { Menu, Home, Briefcase, Users, Mail, Newspaper, LogIn, LayoutDashboard, LogOut, Truck, UserPlus, FileText } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useState, useEffect } from 'react';
@@ -15,6 +15,7 @@ const navLinks = [
   { href: '/services', label: 'Serveis', icon: <Briefcase className="h-5 w-5" /> },
   { href: '/about', label: 'Qui Som', icon: <Users className="h-5 w-5" /> },
   { href: '/tracking', label: 'Seguiment', icon: <Truck className="h-5 w-5" /> },
+  { href: '/documents', label: 'Documents', icon: <FileText className="h-5 w-5" /> },
   { href: '/contact', label: 'Contacte', icon: <Mail className="h-5 w-5" /> },
   { href: '/blog', label: 'Blog', icon: <Newspaper className="h-5 w-5" /> },
 ];
@@ -34,38 +35,42 @@ export default function Header() {
 
   useEffect(() => {
     setHasMounted(true);
+  }, []);
 
-    const checkUser = () => {
-      try {
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-          const parsedUser = JSON.parse(storedUser);
-          if (parsedUser && typeof parsedUser === 'object' && 'nom_usuari' in parsedUser && 'rol' in parsedUser) {
-            setUser(parsedUser as LocalUser);
+  useEffect(() => {
+    if (hasMounted) {
+      const checkUser = () => {
+        try {
+          const storedUser = localStorage.getItem('user');
+          if (storedUser) {
+            const parsedUser = JSON.parse(storedUser);
+            if (parsedUser && typeof parsedUser === 'object' && 'nom_usuari' in parsedUser && 'rol' in parsedUser) {
+              setUser(parsedUser as LocalUser);
+            } else {
+              localStorage.removeItem('user');
+              setUser(null);
+            }
           } else {
-            localStorage.removeItem('user');
             setUser(null);
           }
-        } else {
+        } catch (error) {
+          console.error('Failed to parse user from localStorage', error);
+          localStorage.removeItem('user');
           setUser(null);
         }
-      } catch (error) {
-        console.error('Failed to parse user from localStorage', error);
-        localStorage.removeItem('user');
-        setUser(null);
-      }
-    };
+      };
 
-    checkUser();
+      checkUser();
 
-    window.addEventListener('storage', checkUser);
-    window.addEventListener('userChanged', checkUser);
+      window.addEventListener('storage', checkUser);
+      window.addEventListener('userChanged', checkUser);
 
-    return () => {
-      window.removeEventListener('storage', checkUser);
-      window.removeEventListener('userChanged', checkUser);
-    };
-  }, []);
+      return () => {
+        window.removeEventListener('storage', checkUser);
+        window.removeEventListener('userChanged', checkUser);
+      };
+    }
+  }, [hasMounted]);
 
   const handleSignOut = () => {
     localStorage.removeItem('user');
@@ -185,7 +190,12 @@ export default function Header() {
                     <SheetClose key={link.href} asChild>
                         <Link
                         href={link.href}
-                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                        className={cn(
+                          "flex items-center gap-3 rounded-lg px-3 py-2 transition-all",
+                          pathname === link.href
+                            ? "bg-muted text-primary"
+                            : "text-muted-foreground hover:text-primary"
+                        )}
                         >
                         {link.icon}
                         {link.label}
