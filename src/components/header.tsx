@@ -4,7 +4,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
-import { Menu, Home, Briefcase, Users, Mail, Newspaper, LogIn, LayoutDashboard, LogOut, Truck, UserPlus, FileText } from 'lucide-react';
+import { Menu, Home, Briefcase, Users, Mail, Newspaper, LogIn, LayoutDashboard, LogOut, Truck, UserPlus } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useState, useEffect } from 'react';
@@ -15,7 +15,6 @@ const navLinks = [
   { href: '/services', label: 'Serveis', icon: <Briefcase className="h-5 w-5" /> },
   { href: '/about', label: 'Qui Som', icon: <Users className="h-5 w-5" /> },
   { href: '/tracking', label: 'Seguiment', icon: <Truck className="h-5 w-5" /> },
-  { href: '/documents', label: 'Documents', icon: <FileText className="h-5 w-5" /> },
   { href: '/contact', label: 'Contacte', icon: <Mail className="h-5 w-5" /> },
   { href: '/blog', label: 'Blog', icon: <Newspaper className="h-5 w-5" /> },
 ];

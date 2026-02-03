@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { User, Building, LogOut, Loader2, Truck, Briefcase, Users as UsersIcon } from 'lucide-react';
+import { User, Building, LogOut, Loader2, Truck, Briefcase, Users as UsersIcon, FileText } from 'lucide-react';
+import Link from 'next/link';
 import {
   Table,
   TableHeader,
@@ -110,8 +111,8 @@ export default function DashboardPage() {
   }
 
   const renderAdminDashboard = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <Card className="cursor-pointer transition-shadow">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card className="cursor-pointer transition-shadow hover:shadow-md">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">Gestionar Usuaris</CardTitle>
                 <UsersIcon className="h-4 w-4 text-muted-foreground" />
@@ -122,7 +123,7 @@ export default function DashboardPage() {
             </CardContent>
         </Card>
         <Card 
-            className="cursor-pointer transition-shadow"
+            className="cursor-pointer transition-shadow hover:shadow-md"
             onClick={!isFetchingShipments ? handleFetchShipments : undefined}
         >
             <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -136,7 +137,7 @@ export default function DashboardPage() {
                 <p className="text-xs text-muted-foreground">Consultar tots els paquets</p>
             </CardContent>
         </Card>
-        <Card className="cursor-pointer transition-shadow">
+        <Card className="cursor-pointer transition-shadow hover:shadow-md">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">Gestionar Empreses</CardTitle>
                 <Building className="h-4 w-4 text-muted-foreground" />
@@ -146,6 +147,18 @@ export default function DashboardPage() {
                 <p className="text-xs text-muted-foreground">Administrar empreses clients</p>
             </CardContent>
         </Card>
+        <Link href="/documents" passHref>
+            <Card className="cursor-pointer transition-shadow hover:shadow-md h-full">
+                <CardHeader className="flex flex-row items-center justify-between pb-2">
+                    <CardTitle className="text-sm font-medium">Documents</CardTitle>
+                    <FileText className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                    <div className="text-2xl font-bold">Facturació</div>
+                    <p className="text-xs text-muted-foreground">Consultar factures i albarans</p>
+                </CardContent>
+            </Card>
+        </Link>
     </div>
   );
 
@@ -171,13 +184,19 @@ export default function DashboardPage() {
                 </div>
 
                 <p className="pl-10 text-muted-foreground">
-                    Aquí pots veure les teves tasques i enviaments assignats.
+                    Aquí pots veure les teves tasques, enviaments i documents assignats.
                 </p>
 
-                 <div className='pt-2 pl-10'>
+                 <div className='pt-2 pl-10 flex flex-wrap gap-4'>
                      <Button onClick={handleFetchShipments} disabled={isFetchingShipments} variant="outline">
                         {isFetchingShipments && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                         {showShipments ? 'Ocultar els meus enviaments' : 'Veure els meus enviaments'}
+                    </Button>
+                    <Button asChild variant="outline">
+                        <Link href="/documents">
+                            <FileText className="mr-2 h-4 w-4" />
+                            Veure Documents
+                        </Link>
                     </Button>
                 </div>
             </CardContent>
