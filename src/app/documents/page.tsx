@@ -262,12 +262,12 @@ export default function DocumentsPage() {
   if (selectedInvoice) {
     return (
       <div className="bg-muted min-h-screen py-12 px-4">
-        <div className="max-w-4xl mx-auto mb-8 flex justify-between items-center print:hidden">
-            <Button variant="outline" onClick={() => setSelectedInvoice(null)}>
+        <div className="max-w-4xl mx-auto mb-8 flex justify-between items-center">
+            <Button variant="outline" onClick={() => setSelectedInvoice(null)} className="print:hidden">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Tornar al llistat
             </Button>
-            <Button variant="cta" onClick={handlePrint}>
+            <Button variant="cta" onClick={handlePrint} className="print:hidden">
                 <Printer className="mr-2 h-4 w-4" />
                 Imprimir PDF
             </Button>
