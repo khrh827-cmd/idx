@@ -145,9 +145,10 @@ export default function DocumentsPage() {
           const rawDate = lines[0].data;
           let safeDateString = rawDate;
           if (rawDate && typeof rawDate === 'string' && rawDate.split('/').length === 3) {
-            const [day, month, year] = rawDate.split('/');
-            if(day && month && year && !isNaN(parseInt(day)) && !isNaN(parseInt(month)) && !isNaN(parseInt(year))) {
-               safeDateString = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            const [day, month, shortYear] = rawDate.split('/');
+            if(day && month && shortYear && !isNaN(parseInt(day)) && !isNaN(parseInt(month)) && !isNaN(parseInt(shortYear))) {
+               const fullYear = parseInt(shortYear, 10) < 100 ? `20${shortYear}` : shortYear;
+               safeDateString = `${fullYear}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
             }
           }
           
