@@ -137,7 +137,7 @@ export default function DocumentsPage() {
         }
 
         const finalInvoices: ProcessedInvoice[] = [];
-        for (const [invoiceId, lines] of invoicesMap.entries()) {
+        for (const [invoiceId, lines] of Array.from(invoicesMap.entries())) {
           const clientUsername = lines[0].usuari;
           const clientData = usersData.find(u => u.usuari === clientUsername);
 
@@ -262,12 +262,12 @@ export default function DocumentsPage() {
   if (selectedInvoice) {
     return (
       <div className="bg-muted min-h-screen py-12 px-4">
-        <div className="max-w-4xl mx-auto mb-8 flex justify-between items-center">
-            <Button variant="outline" onClick={() => setSelectedInvoice(null)} className="print:hidden">
+        <div className="max-w-4xl mx-auto mb-8 flex justify-between items-center print:hidden">
+            <Button variant="outline" onClick={() => setSelectedInvoice(null)}>
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Tornar al llistat
             </Button>
-            <Button variant="cta" onClick={handlePrint} className="print:hidden">
+            <Button variant="cta" onClick={handlePrint}>
                 <Printer className="mr-2 h-4 w-4" />
                 Imprimir PDF
             </Button>
