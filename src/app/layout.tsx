@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "Cargocare",
   description: "Experts en transport internacional marítim, terrestre i aeri. La teva aliança estratègica per a una logística sense fronteres.",
   icons: {
-    icon: "/favicon.png",
+    icon: "/favicon.png?v=1",
   },
 };
 
