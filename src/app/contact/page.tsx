@@ -75,7 +75,7 @@ export default function ContactPage() {
                   <Mail className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
                   <div>
                     <h4 className="font-semibold text-foreground">Correu Electrònic</h4>
-                    <p>info@globalcargocare.com</p>
+                    <p>inf@globalcargocare.com</p>
                   </div>
                 </li>
               </ul>
