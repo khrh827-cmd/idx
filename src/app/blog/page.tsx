@@ -47,7 +47,7 @@ export default function BlogPage() {
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {blogPosts.map((post) => (
-            <Card key={post.title} className="flex flex-col overflow-hidden rounded-lg transition-shadow duration-300">
+            <Card key={post.title} className="flex flex-col overflow-hidden transition-shadow duration-300 hover:shadow-md">
               <CardHeader className="p-0 relative h-48 w-full">
                  <Image 
                     src={post.image.src}
