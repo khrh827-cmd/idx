@@ -11,6 +11,9 @@ const montserrat = Montserrat({ subsets: ["latin"], weight: '700', variable: '--
 export const metadata: Metadata = {
   title: "Cargocare",
   description: "Experts en transport internacional marítim, terrestre i aeri. La teva aliança estratègica per a una logística sense fronteres.",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
