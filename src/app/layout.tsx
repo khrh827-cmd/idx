@@ -13,8 +13,6 @@ export const metadata: Metadata = {
   description: "Experts en transport internacional marítim, terrestre i aeri. La teva aliança estratègica per a una logística sense fronteres.",
   icons: {
     icon: "/favicon.png",
-    shortcut: "/favicon.png",
-    apple: "/favicon.png",
   },
 };
 
