@@ -9,8 +9,8 @@ const inter = Inter({ subsets: ["latin"], variable: '--font-sans' });
 const montserrat = Montserrat({ subsets: ["latin"], weight: '700', variable: '--font-headline' });
 
 export const metadata: Metadata = {
-  title: "App Bàsica",
-  description: "Una aplicació bàsica de Next.js",
+  title: "Global Cargocare | Solucions Logístiques Globals",
+  description: "Experts en transport internacional marítim, terrestre i aeri. La teva aliança estratègica per a una logística sense fronteres.",
 };
 
 export default function RootLayout({
