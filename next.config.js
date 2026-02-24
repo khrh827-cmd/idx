@@ -26,6 +26,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'us.images.westend61.de',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.terapify.com',
+      },
     ],
   },
 };

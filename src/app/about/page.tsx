@@ -1,4 +1,3 @@
-
 import Image from 'next/image';
 import { Target, Globe, Zap } from 'lucide-react';
 import placeholderImages from '@/lib/placeholder-images.json';
