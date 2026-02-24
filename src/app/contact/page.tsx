@@ -30,8 +30,9 @@ export default function ContactPage() {
             <CardContent>
               <form action="https://formsubmit.co/khrh827@vidalibarraquer.net" method="POST" className="space-y-6">
                 {/* Hidden Inputs for FormSubmit configuration */}
-                <input type="hidden" name="_subject" value="Nou missatge de contacte des del web!" />
+                <input type="hidden" name="_subject" value="Nou missatge de contacte des de Cargocare!" />
                 <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_next" value="https://cargocare.cat/" />
                 
                 <div className="space-y-2">
                   <Label htmlFor="name">Nom</Label>
@@ -75,7 +76,7 @@ export default function ContactPage() {
                   <Mail className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
                   <div>
                     <h4 className="font-semibold text-foreground">Correu Electrònic</h4>
-                    <p>inf@globalcargocare.com</p>
+                    <p>khrh827@vidalibarraquer.net</p>
                   </div>
                 </li>
               </ul>
