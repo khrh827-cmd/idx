@@ -1,5 +1,7 @@
+
 import Image from 'next/image';
 import { Target, Globe, Zap } from 'lucide-react';
+import placeholderImages from '@/lib/placeholder-images.json';
 
 export default function AboutPage() {
   return (
@@ -7,11 +9,12 @@ export default function AboutPage() {
       {/* Hero Section */}
       <section className="relative h-80 w-full flex items-center justify-center">
         <Image
-          src="https://us.images.westend61.de/0001942309pw/grupo-de-gente-de-negocios-sonriendo-en-un-retrato-de-equipo-el-equipo-esta-compuesto-por-hombres-y-mujeres-de-negocios-son-felices-tienen-exito-y-trabajan-juntos-con-creatividad-y-tecnologia-en-una-oficina-JLPSF31186.jpg"
-          alt="Equip de negocis rient a l'oficina"
+          src={placeholderImages.about.src}
+          alt="Equip de Global Cargocare"
           fill
           className="object-cover"
-          data-ai-hint="business team laughing"
+          priority
+          data-ai-hint={placeholderImages.about.hint}
         />
         <div className="absolute inset-0 bg-black/60" />
         <div className="relative z-10 text-center text-primary-foreground p-4">
