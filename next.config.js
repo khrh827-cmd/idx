@@ -30,6 +30,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'www.terapify.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'e01-phantom-expansion.uecdn.es',
+      },
     ],
   },
 };
