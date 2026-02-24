@@ -36,11 +36,11 @@ export default function ContactPage() {
                 
                 <div className="space-y-2">
                   <Label htmlFor="name">Nom</Label>
-                  <Input id="name" name="name" placeholder="El teu nom" required />
+                  <input type="text" id="name" name="name" placeholder="El teu nom" className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" required />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="email">Correu Electrònic</Label>
-                  <Input id="email" type="email" name="email" placeholder="el.teu@correu.com" required />
+                  <input id="email" type="email" name="email" placeholder="el.teu@correu.com" className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" required />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="message">Missatge</Label>
@@ -76,7 +76,7 @@ export default function ContactPage() {
                   <Mail className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
                   <div>
                     <h4 className="font-semibold text-foreground">Correu Electrònic</h4>
-                    <p>khrh827@vidalibarraquer.net</p>
+                    <p>info@cargocare.cat</p>
                   </div>
                 </li>
               </ul>

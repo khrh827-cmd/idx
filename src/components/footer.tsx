@@ -57,7 +57,7 @@ const Footer = () => {
 
         <div className="mt-12 border-t border-primary-foreground/20 pt-6">
           <p className="text-center text-sm text-primary-foreground/70">
-            © 2025 Global Cargocare. Tots els drets reservats. ver. 1.0 – data 2 de desembre 2025
+            © 2025 Cargocare. Tots els drets reservats. ver. 1.0 – data 2 de desembre 2025
           </p>
         </div>
       </div>
