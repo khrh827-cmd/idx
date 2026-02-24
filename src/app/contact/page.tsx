@@ -32,15 +32,16 @@ export default function ContactPage() {
                 {/* Hidden Inputs for FormSubmit configuration */}
                 <input type="hidden" name="_subject" value="Nou missatge de contacte des de Cargocare!" />
                 <input type="hidden" name="_captcha" value="false" />
+                {/* Aquest camp redirigeix a l'usuari de tornada a la web després d'enviar correctament */}
                 <input type="hidden" name="_next" value="https://cargocare.cat/" />
                 
                 <div className="space-y-2">
                   <Label htmlFor="name">Nom</Label>
-                  <input type="text" id="name" name="name" placeholder="El teu nom" className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" required />
+                  <Input type="text" id="name" name="name" placeholder="El teu nom" required />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="email">Correu Electrònic</Label>
-                  <input id="email" type="email" name="email" placeholder="el.teu@correu.com" className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" required />
+                  <Input id="email" type="email" name="email" placeholder="el.teu@correu.com" required />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="message">Missatge</Label>
