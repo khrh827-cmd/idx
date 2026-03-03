@@ -44,31 +44,22 @@ export default function Header() {
           const storedUser = localStorage.getItem('user');
           if (storedUser) {
             const parsedUser = JSON.parse(storedUser);
-            if (parsedUser && typeof parsedUser === 'object' && 'nom_usuari' in parsedUser && 'rol' in parsedUser) {
+            if (parsedUser && typeof parsedUser === 'object' && 'nom_usuari' in parsedUser) {
               setUser(parsedUser as LocalUser);
             } else {
-              localStorage.removeItem('user');
               setUser(null);
             }
           } else {
             setUser(null);
           }
         } catch (error) {
-          console.error('Failed to parse user from localStorage', error);
-          localStorage.removeItem('user');
           setUser(null);
         }
       };
 
       checkUser();
-
-      window.addEventListener('storage', checkUser);
       window.addEventListener('userChanged', checkUser);
-
-      return () => {
-        window.removeEventListener('storage', checkUser);
-        window.removeEventListener('userChanged', checkUser);
-      };
+      return () => window.removeEventListener('userChanged', checkUser);
     }
   }, [hasMounted]);
 
@@ -76,58 +67,26 @@ export default function Header() {
     localStorage.removeItem('user');
     setUser(null);
     window.dispatchEvent(new Event('userChanged'));
-    setIsSheetOpen(false);
     router.push('/login');
   };
 
   const desktopAuthLinks = (
     <div className="flex items-center gap-2">
-      {!hasMounted ? (
-         <div className="h-9 w-28 rounded-md bg-white/20 animate-pulse" />
-      ) : user ? (
-        <Button onClick={handleSignOut} variant="destructive">
+      {hasMounted && user ? (
+        <Button onClick={handleSignOut} variant="destructive" size="sm">
           <LogOut className="mr-2 h-4 w-4" /> Sortir
         </Button>
       ) : (
         <>
           <Button variant="link" asChild className="text-primary-foreground">
-            <Link href="/login">Iniciar sessió</Link>
+            <Link href="/login">Entrar</Link>
           </Button>
-          <Button asChild variant="cta">
+          <Button asChild variant="cta" size="sm">
             <Link href="/register">Registrar-se</Link>
           </Button>
         </>
       )}
     </div>
-  );
-
-  const mobileAuthLinks = (
-    <>
-      {!hasMounted ? (
-        <div className="flex flex-col gap-2 px-3">
-            <div className="h-9 w-full rounded-md bg-gray-200 animate-pulse" />
-        </div>
-      ) : user ? (
-        <button onClick={handleSignOut} className="w-full text-left flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-           <LogOut className="h-5 w-5" /> Sortir
-        </button>
-      ) : (
-        <div className="flex flex-col gap-4 px-3">
-            <SheetClose asChild>
-                <Link href="/login" className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                    <LogIn className="h-5 w-5" /> Iniciar Sessió
-                </Link>
-            </SheetClose>
-            <SheetClose asChild>
-                <Button asChild variant="cta" className="w-full">
-                    <Link href="/register">
-                        <UserPlus className="mr-2 h-5 w-5"/> Registrar-se
-                    </Link>
-                </Button>
-            </SheetClose>
-        </div>
-      )}
-    </>
   );
 
   return (
@@ -155,30 +114,22 @@ export default function Header() {
         <div className="hidden md:flex items-center ml-auto">
             {desktopAuthLinks}
         </div>
+        
         <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
             <SheetTrigger asChild className="md:hidden ml-auto">
-              <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/10">
+              <Button variant="ghost" size="icon" className="text-primary-foreground">
                 <Menu />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="flex flex-col p-0 bg-background">
-                <div className="border-b p-4">
-                  <SheetClose asChild>
-                    <Link href="/" className="flex items-center gap-2">
-                      <Logo />
-                    </Link>
-                  </SheetClose>
-                </div>
-                <nav className="flex flex-col gap-1 p-4">
+            <SheetContent side="right" className="bg-background">
+                <nav className="flex flex-col gap-4 mt-8">
                   {navLinks.map((link) => (
                     <SheetClose key={link.href} asChild>
                         <Link
                         href={link.href}
                         className={cn(
-                          "flex items-center gap-3 rounded-lg px-3 py-2 transition-all",
-                          pathname === link.href
-                            ? "bg-muted text-primary"
-                            : "text-muted-foreground hover:text-primary"
+                          "flex items-center gap-3 rounded-lg px-3 py-2",
+                          pathname === link.href ? "bg-muted text-primary" : "text-muted-foreground"
                         )}
                         >
                         {link.icon}
@@ -186,12 +137,23 @@ export default function Header() {
                         </Link>
                     </SheetClose>
                   ))}
+                  <div className="border-t pt-4">
+                    {user ? (
+                      <Button onClick={handleSignOut} variant="destructive" className="w-full">
+                        <LogOut className="mr-2 h-4 w-4" /> Sortir
+                      </Button>
+                    ) : (
+                      <div className="flex flex-col gap-2">
+                        <Button asChild variant="outline" className="w-full">
+                          <Link href="/login">Entrar</Link>
+                        </Button>
+                        <Button asChild variant="cta" className="w-full">
+                          <Link href="/register">Registrar-se</Link>
+                        </Button>
+                      </div>
+                    )}
+                  </div>
                 </nav>
-                <div className="mt-auto border-t p-4">
-                    <div className="flex flex-col gap-2">
-                        {mobileAuthLinks}
-                    </div>
-                </div>
             </SheetContent>
           </Sheet>
       </div>
