@@ -6,7 +6,7 @@ import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter }
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { Loader2, Package, MapPin, Info, CheckCircle2, Clock, PlusCircle } from 'lucide-react';
+import { Loader2, Package, MapPin, Info, Clock, PlusCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 // --- Tipus de dades ---
@@ -93,8 +93,13 @@ export default function BookingPage() {
     const bookingId = `BK-${Math.floor(1000 + Math.random() * 9000)}`;
     const today = new Date().toLocaleDateString('ca-ES');
     
-    // Concatenació de detalls segons format requerit
-    const detallsConcatenats = `Servei: ${servei} | Origen: ${origen} | Destí: ${desti} | Càrrega: ${carrega}`;
+    // Lògica de concatenació adaptada al tipus de servei
+    let detallsConcatenats = '';
+    if (servei === 'Magatzem') {
+      detallsConcatenats = `Servei: Magatzem | Ubicació: Polígon de Constantí, Espanya | Càrrega: ${carrega}`;
+    } else {
+      detallsConcatenats = `Servei: ${servei} | Origen: ${origen} | Destí: ${desti} | Càrrega: ${carrega}`;
+    }
 
     const newRequest = {
       id: bookingId,
@@ -136,6 +141,8 @@ export default function BookingPage() {
     );
   }
 
+  const isWarehouse = servei === 'Magatzem';
+
   return (
     <div className="bg-muted min-h-screen py-12">
       <div className="container mx-auto px-4 max-w-5xl">
@@ -146,7 +153,7 @@ export default function BookingPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
-          {/* FORMULARI */}
+          {/* FORMULARI DINÀMIC */}
           <div className="lg:col-span-1">
             <Card className="sticky top-24">
               <CardHeader>
@@ -154,7 +161,12 @@ export default function BookingPage() {
                   <PlusCircle className="h-5 w-5 text-primary" />
                   Nova Sol·licitud
                 </CardTitle>
-                <CardDescription>Omple les dades per rebre una cotització.</CardDescription>
+                <CardDescription>
+                  {isWarehouse 
+                    ? "Reserva espai al nostre magatzem de Constantí." 
+                    : "Omple les dades per rebre una cotització de transport."
+                  }
+                </CardDescription>
               </CardHeader>
               <form onSubmit={handleSubmit}>
                 <CardContent className="space-y-4">
@@ -172,26 +184,42 @@ export default function BookingPage() {
                       <option>Magatzem</option>
                     </select>
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="origen">Origen</Label>
-                    <Input 
-                      id="origen" 
-                      placeholder="Ex: Port de Barcelona" 
-                      value={origen} 
-                      onChange={(e) => setOrigen(e.target.value)}
-                      required 
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="desti">Destí</Label>
-                    <Input 
-                      id="desti" 
-                      placeholder="Ex: Shanghai, Xina" 
-                      value={desti} 
-                      onChange={(e) => setDesti(e.target.value)}
-                      required 
-                    />
-                  </div>
+
+                  {!isWarehouse ? (
+                    <>
+                      <div className="space-y-2 animate-in fade-in slide-in-from-top-2">
+                        <Label htmlFor="origen">Origen</Label>
+                        <Input 
+                          id="origen" 
+                          placeholder="Ex: Port de Barcelona" 
+                          value={origen} 
+                          onChange={(e) => setOrigen(e.target.value)}
+                          required 
+                        />
+                      </div>
+                      <div className="space-y-2 animate-in fade-in slide-in-from-top-2">
+                        <Label htmlFor="desti">Destí</Label>
+                        <Input 
+                          id="desti" 
+                          placeholder="Ex: Shanghai, Xina" 
+                          value={desti} 
+                          onChange={(e) => setDesti(e.target.value)}
+                          required 
+                        />
+                      </div>
+                    </>
+                  ) : (
+                    <div className="bg-primary/5 p-4 rounded-lg border border-primary/20 flex flex-col gap-2 animate-in fade-in zoom-in-95">
+                      <div className="flex items-center gap-2 text-primary">
+                        <MapPin className="h-4 w-4" />
+                        <span className="text-sm font-bold uppercase tracking-wider">Ubicació Única</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground font-medium">
+                        Magatzem central: Polígon de Constantí, Tarragona (Espanya)
+                      </p>
+                    </div>
+                  )}
+
                   <div className="space-y-2">
                     <Label htmlFor="carrega">Descripció de la Càrrega</Label>
                     <Input 
