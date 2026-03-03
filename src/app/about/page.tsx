@@ -6,7 +6,7 @@ export default function AboutPage() {
   return (
     <div className="bg-background">
       {/* Hero Section */}
-      <section className="relative h-80 w-full flex items-center justify-center">
+      <section className="relative h-80 w-full flex items-center justify-center overflow-hidden">
         <Image
           src={placeholderImages.about.src}
           alt="Equip de Global Cargocare"
@@ -20,8 +20,8 @@ export default function AboutPage() {
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl font-headline">
             Sobre Global Cargocare
           </h1>
-          <p className="mt-4 max-w-2xl text-lg">
-            La teva aliança estratègica per a una logística sense fronteres.
+          <p className="mt-4 max-w-2xl text-lg mx-auto">
+            La teva aliança estratègica per a una logística sense fronteres, connectant mercats amb eficiència.
           </p>
         </div>
       </section>
@@ -35,10 +35,10 @@ export default function AboutPage() {
             <div className="prose lg:prose-lg max-w-none">
               <h2 className="text-3xl font-bold tracking-tight text-primary font-headline">La Nostra Història</h2>
               <p className="text-muted-foreground">
-                Fundada a Tarragona, un enclavament logístic clau, Global Cargocare va néixer amb la missió de simplificar la complexitat del transport global. Amb anys d'experiència, hem construït una xarxa sòlida que connecta mercats i facilita el creixement dels nostres clients.
+                Fundada a Tarragona, un enclavament logístic clau a la Mediterrània, Global Cargocare va néixer amb la missió de simplificar la complexitat del transport global. Amb anys d'experiència en el sector, hem construït una xarxa sòlida que connecta mercats i facilita el creixement internacional dels nostres clients.
               </p>
               <p className="text-muted-foreground">
-                El nostre equip està format per experts apassionats per la logística, compromesos a oferir solucions personalitzades, innovadores i fiables que superin les expectatives.
+                El nostre equip està format per experts apassionats per la logística, compromesos a oferir solucions personalitzades, innovadores i fiables que superin les expectatives en cada enviament.
               </p>
             </div>
 
@@ -46,7 +46,7 @@ export default function AboutPage() {
             <div>
               <h2 className="text-3xl font-bold tracking-tight text-primary font-headline mb-6">Els Nostres Valors</h2>
               <ul className="space-y-6">
-                <li className="flex items-start gap-4">
+                <li className="flex items-start gap-4 p-4 rounded-lg bg-muted/50 transition-colors hover:bg-muted">
                   <div className="flex-shrink-0 pt-1">
                     <Target className="h-7 w-7 text-primary" />
                   </div>
@@ -57,18 +57,18 @@ export default function AboutPage() {
                     </p>
                   </div>
                 </li>
-                <li className="flex items-start gap-4">
+                <li className="flex items-start gap-4 p-4 rounded-lg bg-muted/50 transition-colors hover:bg-muted">
                   <div className="flex-shrink-0 pt-1">
                     <Globe className="h-7 w-7 text-primary" />
                   </div>
                   <div>
                     <h4 className="text-lg font-semibold">Integritat</h4>
                     <p className="text-muted-foreground">
-                      Actuem amb transparència i honestedat en totes les nostres operacions.
+                      Actuem amb transparència i honestedat en totes les nostres operacions globals.
                     </p>
                   </div>
                 </li>
-                <li className="flex items-start gap-4">
+                <li className="flex items-start gap-4 p-4 rounded-lg bg-muted/50 transition-colors hover:bg-muted">
                   <div className="flex-shrink-0 pt-1">
                     <Zap className="h-7 w-7 text-primary" />
                   </div>
