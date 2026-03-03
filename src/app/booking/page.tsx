@@ -101,7 +101,7 @@ export default function BookingPage() {
     const bookingId = `BK-${Math.floor(1000 + Math.random() * 9000)}`;
     const today = new Date().toLocaleDateString('ca-ES');
     
-    // Lògica de concatenació adaptada
+    // Lògica de concatenació
     let detallsConcatenats = '';
     if (servei === 'Magatzem') {
       detallsConcatenats = `Servei: Magatzem | Ubicació: Polígon de Constantí, Espanya | Càrrega: ${carrega}`;
@@ -127,9 +127,15 @@ export default function BookingPage() {
         body: JSON.stringify({ data: [newRequest] })
       });
 
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Error en la resposta: ${errorText}`);
+      }
+
       const result = await response.json();
 
-      if (response.ok && (result.created === 1 || result.created === '1')) {
+      // SheetDB sol tornar {created: 1} o l'objecte creat
+      if (result && (result.created || Array.isArray(result) || result.id)) {
         // Reset formulari
         setOrigen('');
         setDesti('');
@@ -137,11 +143,11 @@ export default function BookingPage() {
         // Refresh llista
         fetchMyRequests(user.usuari);
       } else {
-        throw new Error(result.error || 'No s\'ha pogut enviar la sol·licitud. Revisa la connexió.');
+        throw new Error('No s\'ha pogut confirmar el registre a la base de dades.');
       }
     } catch (err: any) {
       console.error("Error en l'enviament:", err);
-      setError(err.message || 'Error desconegut en enviar la sol·licitud.');
+      setError(err.message || 'Error de connexió en enviar la sol·licitud.');
     } finally {
       setIsLoading(false);
     }
@@ -169,7 +175,7 @@ export default function BookingPage() {
           
           {/* FORMULARI DINÀMIC */}
           <div className="lg:col-span-1">
-            <Card className="sticky top-24">
+            <Card className="sticky top-24 shadow-md">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-xl">
                   <PlusCircle className="h-5 w-5 text-primary" />
@@ -301,7 +307,7 @@ export default function BookingPage() {
                 ))}
               </div>
             ) : (
-              <Card className="p-12 text-center">
+              <Card className="p-12 text-center bg-background/50 border-dashed">
                 <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4 opacity-20" />
                 <p className="text-muted-foreground">Encara no has realitzat cap sol·licitud.</p>
               </Card>
