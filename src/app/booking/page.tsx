@@ -25,7 +25,9 @@ type LocalUser = {
   rol: string;
 };
 
-const API_URL = 'https://sheetdb.io/api/v1/pxnx6b606vc93?sheet=solicituds';
+// Configuració de l'API
+const API_BASE_URL = 'https://sheetdb.io/api/v1/pxnx6b606vc93';
+const SHEET_NAME = 'solicituds';
 
 export default function BookingPage() {
   const router = useRouter();
@@ -53,7 +55,11 @@ export default function BookingPage() {
     if (hasMounted) {
       const storedUser = localStorage.getItem('user');
       if (storedUser) {
-        setUser(JSON.parse(storedUser));
+        try {
+          setUser(JSON.parse(storedUser));
+        } catch (e) {
+          router.push('/login');
+        }
       } else {
         router.push('/login');
       }
@@ -64,14 +70,16 @@ export default function BookingPage() {
   const fetchMyRequests = async (username: string) => {
     setIsFetching(true);
     try {
-      const response = await fetch(`${API_URL}`);
+      const response = await fetch(`${API_BASE_URL}?sheet=${SHEET_NAME}`);
       if (!response.ok) throw new Error('Error al carregar les sol·licituds');
-      const data: BookingRequest[] = await response.json();
-      // Filtrar per usuari actual
-      const filtered = data.filter(req => req.usuari === username);
-      setRequests(filtered.reverse()); // Les més recents primer
+      const data = await response.json();
+      
+      if (Array.isArray(data)) {
+        const filtered = data.filter((req: any) => req.usuari === username);
+        setRequests(filtered.reverse());
+      }
     } catch (err) {
-      console.error(err);
+      console.error("Error obtenint dades:", err);
     } finally {
       setIsFetching(false);
     }
@@ -93,7 +101,7 @@ export default function BookingPage() {
     const bookingId = `BK-${Math.floor(1000 + Math.random() * 9000)}`;
     const today = new Date().toLocaleDateString('ca-ES');
     
-    // Lògica de concatenació adaptada al tipus de servei
+    // Lògica de concatenació adaptada
     let detallsConcatenats = '';
     if (servei === 'Magatzem') {
       detallsConcatenats = `Servei: Magatzem | Ubicació: Polígon de Constantí, Espanya | Càrrega: ${carrega}`;
@@ -110,13 +118,18 @@ export default function BookingPage() {
     };
 
     try {
-      const response = await fetch(API_URL, {
+      const response = await fetch(`${API_BASE_URL}?sheet=${SHEET_NAME}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
         body: JSON.stringify({ data: [newRequest] })
       });
 
-      if (response.ok) {
+      const result = await response.json();
+
+      if (response.ok && (result.created === 1 || result.created === '1')) {
         // Reset formulari
         setOrigen('');
         setDesti('');
@@ -124,10 +137,11 @@ export default function BookingPage() {
         // Refresh llista
         fetchMyRequests(user.usuari);
       } else {
-        throw new Error('No s\'ha pogut enviar la sol·licitud');
+        throw new Error(result.error || 'No s\'ha pogut enviar la sol·licitud. Revisa la connexió.');
       }
     } catch (err: any) {
-      setError(err.message);
+      console.error("Error en l'enviament:", err);
+      setError(err.message || 'Error desconegut en enviar la sol·licitud.');
     } finally {
       setIsLoading(false);
     }
@@ -157,7 +171,7 @@ export default function BookingPage() {
           <div className="lg:col-span-1">
             <Card className="sticky top-24">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-xl">
                   <PlusCircle className="h-5 w-5 text-primary" />
                   Nova Sol·licitud
                 </CardTitle>
@@ -232,7 +246,12 @@ export default function BookingPage() {
                   </div>
                 </CardContent>
                 <CardFooter className="flex flex-col gap-3">
-                  {error && <p className="text-sm text-destructive">{error}</p>}
+                  {error && (
+                    <div className="w-full flex items-center gap-2 p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-lg">
+                      <Info className="h-4 w-4 flex-shrink-0" />
+                      <p>{error}</p>
+                    </div>
+                  )}
                   <Button type="submit" className="w-full" variant="cta" disabled={isLoading}>
                     {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Enviar Sol·licitud'}
                   </Button>
