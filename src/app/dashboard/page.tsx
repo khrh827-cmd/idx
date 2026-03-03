@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { User, Building, LogOut, Loader2, Truck, Briefcase, Users as UsersIcon, FileText } from 'lucide-react';
+import { User, Building, LogOut, Loader2, Truck, Briefcase, Users as UsersIcon, FileText, CalendarCheck } from 'lucide-react';
 import Link from 'next/link';
 import {
   Table,
@@ -112,7 +112,7 @@ export default function DashboardPage() {
   }
 
   const renderAdminDashboard = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <Card className="cursor-pointer transition-shadow hover:shadow-md">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">Gestionar Usuaris</CardTitle>
@@ -160,6 +160,18 @@ export default function DashboardPage() {
                 </CardContent>
             </Card>
         </Link>
+        <Link href="/booking" passHref>
+            <Card className="cursor-pointer transition-shadow hover:shadow-md h-full border-accent">
+                <CardHeader className="flex flex-row items-center justify-between pb-2">
+                    <CardTitle className="text-sm font-medium">Comandes</CardTitle>
+                    <CalendarCheck className="h-4 w-4 text-accent" />
+                </CardHeader>
+                <CardContent>
+                    <div className="text-2xl font-bold">Gestionar</div>
+                    <p className="text-xs text-muted-foreground">Reservar i revisar sol·licituds</p>
+                </CardContent>
+            </Card>
+        </Link>
     </div>
   );
 
@@ -185,13 +197,19 @@ export default function DashboardPage() {
                 </div>
 
                 <p className="pl-10 text-muted-foreground">
-                    Aquí pots veure les teves tasques, enviaments i documents assignats.
+                    Aquí pots veure les teves tasques, enviaments i gestionar les teves comandes.
                 </p>
 
                  <div className='pt-2 pl-10 flex flex-wrap gap-4'>
                      <Button onClick={handleFetchShipments} disabled={isFetchingShipments} variant="outline">
                         {isFetchingShipments && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                         {showShipments ? 'Ocultar els meus enviaments' : 'Veure els meus enviaments'}
+                    </Button>
+                    <Button asChild variant="outline">
+                        <Link href="/booking">
+                            <CalendarCheck className="mr-2 h-4 w-4" />
+                            Gestionar Comandes
+                        </Link>
                     </Button>
                     <Button asChild variant="outline">
                         <Link href="/documents">
@@ -217,7 +235,7 @@ export default function DashboardPage() {
                         Aquesta és la teva zona privada.
                     </p>
                 </div>
-                <Button onClick={handleLogout} variant="outline">
+                <Button onClick={handleLogout} variant="destructive">
                     <LogOut className="mr-2 h-4 w-4" /> Sortir
                 </Button>
             </div>

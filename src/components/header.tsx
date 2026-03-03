@@ -4,7 +4,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
-import { Menu, Home, Briefcase, Users, Mail, Newspaper, LogIn, LayoutDashboard, LogOut, Truck, UserPlus, CalendarCheck } from 'lucide-react';
+import { Menu, Home, Briefcase, Users, Mail, Newspaper, LogIn, LogOut, Truck, UserPlus } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useState, useEffect } from 'react';
@@ -83,25 +83,11 @@ export default function Header() {
   const desktopAuthLinks = (
     <div className="flex items-center gap-2">
       {!hasMounted ? (
-         <>
-            <div className="h-9 w-28 rounded-md bg-white/20 animate-pulse" />
-        </>
+         <div className="h-9 w-28 rounded-md bg-white/20 animate-pulse" />
       ) : user ? (
-        <>
-          <Button variant="outline" asChild className="bg-white/10 text-white border-white/20 hover:bg-white/20">
-            <Link href="/booking">
-              <CalendarCheck className="mr-2 h-4 w-4" /> Comandes
-            </Link>
-          </Button>
-          <Button variant="success" asChild>
-            <Link href="/dashboard">
-              <LayoutDashboard className="mr-2 h-4 w-4" /> Panell
-            </Link>
-          </Button>
-          <Button onClick={handleSignOut} variant="destructive">
-            <LogOut className="mr-2 h-4 w-4" /> Sortir
-          </Button>
-        </>
+        <Button onClick={handleSignOut} variant="destructive">
+          <LogOut className="mr-2 h-4 w-4" /> Sortir
+        </Button>
       ) : (
         <>
           <Button variant="link" asChild className="text-primary-foreground">
@@ -122,21 +108,9 @@ export default function Header() {
             <div className="h-9 w-full rounded-md bg-gray-200 animate-pulse" />
         </div>
       ) : user ? (
-        <>
-          <SheetClose asChild>
-            <Link href="/booking" className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-              <CalendarCheck className="h-5 w-5" /> Gestió de Comandes
-            </Link>
-          </SheetClose>
-          <SheetClose asChild>
-            <Link href="/dashboard" className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-              <LayoutDashboard className="h-5 w-5" /> Panell de Client
-            </Link>
-          </SheetClose>
-          <button onClick={handleSignOut} className="w-full text-left flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-             <LogOut className="h-5 w-5" /> Tancar Sessió
-          </button>
-        </>
+        <button onClick={handleSignOut} className="w-full text-left flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+           <LogOut className="h-5 w-5" /> Tancar Sessió
+        </button>
       ) : (
         <div className="flex flex-col gap-4 px-3">
             <SheetClose asChild>
