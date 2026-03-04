@@ -6,7 +6,7 @@ import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter }
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { Loader2, Package, MapPin, Info, Clock, PlusCircle } from 'lucide-react';
+import { Loader2, Package, MapPin, Info, Clock, PlusCircle, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 // --- Tipus de dades ---
@@ -25,7 +25,7 @@ type LocalUser = {
   rol: string;
 };
 
-// Configuració de l'API (Basat en la captura de l'usuari)
+// Configuració de l'API SheetDB
 const API_BASE_URL = 'https://sheetdb.io/api/v1/pxnx6b606vc93';
 const SHEET_NAME = 'solicituds';
 
@@ -111,7 +111,7 @@ export default function BookingPage() {
       detallsConcatenats = `Servei: ${servei} | Origen: ${origen} | Destí: ${desti} | Càrrega: ${carrega}`;
     }
 
-    // Objecte que coincideix exactament amb les columnes de l'Excel de la captura
+    // Objecte que coincideix exactament amb les columnes de l'Excel
     const newRequest = {
       id: bookingId,
       data: today,
@@ -121,6 +121,7 @@ export default function BookingPage() {
     };
 
     try {
+      // Intentem fer el POST a SheetDB
       const response = await fetch(`${API_BASE_URL}?sheet=${SHEET_NAME}`, {
         method: 'POST',
         headers: { 
@@ -130,21 +131,26 @@ export default function BookingPage() {
         body: JSON.stringify({ data: [newRequest] })
       });
 
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `Error del servidor (${response.status})`);
+      }
+
       const result = await response.json();
 
-      if (response.ok && (result.created || result.id || Array.isArray(result))) {
-        // Reset formulari si ha anat bé
+      // Verifiquem si s'ha creat correctament
+      if (result.created === 1 || result.id || (Array.isArray(result) && result.length > 0)) {
         setOrigen('');
         setDesti('');
         setCarrega('');
-        // Refresh de la llista per veure la nova sol·licitud
-        fetchMyRequests(user.usuari);
+        // Refresquem la llista
+        await fetchMyRequests(user.usuari);
       } else {
-        throw new Error(result.error || 'No s\'ha pogut confirmar el registre a la base de dades.');
+        throw new Error('L\'API no ha confirmat la creació del registre.');
       }
     } catch (err: any) {
-      console.error("Error en l'enviament:", err);
-      setError('No s\'ha pogut enviar la sol·licitud. Verifica la connexió.');
+      console.error("Error detallat en l'enviament:", err);
+      setError(`Error: ${err.message || 'No s\'ha pogut enviar la sol·licitud. Verifica la teva connexió.'}`);
     } finally {
       setIsLoading(false);
     }
@@ -250,8 +256,8 @@ export default function BookingPage() {
                 </CardContent>
                 <CardFooter className="flex flex-col gap-3">
                   {error && (
-                    <div className="w-full flex items-center gap-2 p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-lg">
-                      <Info className="h-4 w-4 flex-shrink-0" />
+                    <div className="w-full flex items-center gap-2 p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-lg animate-in shake">
+                      <AlertCircle className="h-4 w-4 flex-shrink-0" />
                       <p>{error}</p>
                     </div>
                   )}

@@ -4,7 +4,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
-import { Menu, Home, Briefcase, Users, Mail, Newspaper, LogIn, LogOut, Truck, UserPlus } from 'lucide-react';
+import { Menu, Home, Briefcase, Users, Mail, Newspaper, LogOut, Truck } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useState, useEffect } from 'react';
@@ -70,24 +70,7 @@ export default function Header() {
     router.push('/login');
   };
 
-  const desktopAuthLinks = (
-    <div className="flex items-center gap-2">
-      {hasMounted && user ? (
-        <Button onClick={handleSignOut} variant="destructive" size="sm">
-          <LogOut className="mr-2 h-4 w-4" /> Sortir
-        </Button>
-      ) : (
-        <>
-          <Button variant="link" asChild className="text-primary-foreground">
-            <Link href="/login">Entrar</Link>
-          </Button>
-          <Button asChild variant="cta" size="sm">
-            <Link href="/register">Registrar-se</Link>
-          </Button>
-        </>
-      )}
-    </div>
-  );
+  const isUserLoggedIn = !!user;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-primary-foreground/20 bg-primary text-primary-foreground">
@@ -96,25 +79,42 @@ export default function Header() {
           <Logo />
         </Link>
         
-        <nav className="hidden md:flex flex-1 items-center gap-6 text-sm font-medium">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                'transition-colors text-primary-foreground/80 hover:text-primary-foreground',
-                pathname === link.href && 'font-semibold text-primary-foreground'
-              )}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+        {/* Només mostrem la navegació si l'usuari NO està loguejat */}
+        {!isUserLoggedIn && (
+          <nav className="hidden md:flex flex-1 items-center gap-6 text-sm font-medium">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  'transition-colors text-primary-foreground/80 hover:text-primary-foreground',
+                  pathname === link.href && 'font-semibold text-primary-foreground'
+                )}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+        )}
 
         <div className="hidden md:flex items-center ml-auto">
-            {desktopAuthLinks}
+          {hasMounted && isUserLoggedIn ? (
+            <Button onClick={handleSignOut} variant="destructive" size="sm">
+              <LogOut className="mr-2 h-4 w-4" /> Sortir
+            </Button>
+          ) : (
+            <div className="flex items-center gap-2">
+              <Button variant="link" asChild className="text-primary-foreground">
+                <Link href="/login">Entrar</Link>
+              </Button>
+              <Button asChild variant="cta" size="sm">
+                <Link href="/register">Registrar-se</Link>
+              </Button>
+            </div>
+          )}
         </div>
         
+        {/* Mobile Menu */}
         <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
             <SheetTrigger asChild className="md:hidden ml-auto">
               <Button variant="ghost" size="icon" className="text-primary-foreground">
@@ -123,7 +123,8 @@ export default function Header() {
             </SheetTrigger>
             <SheetContent side="right" className="bg-background">
                 <nav className="flex flex-col gap-4 mt-8">
-                  {navLinks.map((link) => (
+                  {/* Només mostrem els links si NO està loguejat al mòbil també */}
+                  {!isUserLoggedIn && navLinks.map((link) => (
                     <SheetClose key={link.href} asChild>
                         <Link
                         href={link.href}
@@ -137,8 +138,9 @@ export default function Header() {
                         </Link>
                     </SheetClose>
                   ))}
+                  
                   <div className="border-t pt-4">
-                    {user ? (
+                    {isUserLoggedIn ? (
                       <Button onClick={handleSignOut} variant="destructive" className="w-full">
                         <LogOut className="mr-2 h-4 w-4" /> Sortir
                       </Button>
