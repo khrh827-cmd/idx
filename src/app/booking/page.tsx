@@ -75,9 +75,8 @@ export default function BookingPage() {
       const data = await response.json();
       
       if (Array.isArray(data)) {
-        // Filtrem per la columna 'usuari' de l'Excel
         const filtered = data.filter((req: any) => req.usuari === username);
-        setRequests(filtered.reverse()); // Més recents primer
+        setRequests(filtered.reverse());
       }
     } catch (err) {
       console.error("Error obtenint dades:", err);
@@ -99,11 +98,9 @@ export default function BookingPage() {
     setIsLoading(true);
     setError(null);
 
-    // Generació d'ID i Data segons requeriment
     const bookingId = `BK-${Math.floor(1000 + Math.random() * 9000)}`;
     const today = new Date().toLocaleDateString('ca-ES');
     
-    // Concatenació de detalls segons el tipus de servei
     let detallsConcatenats = '';
     if (servei === 'Magatzem') {
       detallsConcatenats = `Servei: Magatzem | Ubicació: Polígon de Constantí, Espanya | Càrrega: ${carrega}`;
@@ -111,7 +108,6 @@ export default function BookingPage() {
       detallsConcatenats = `Servei: ${servei} | Origen: ${origen} | Destí: ${desti} | Càrrega: ${carrega}`;
     }
 
-    // Objecte que coincideix exactament amb les columnes de l'Excel
     const newRequest = {
       id: bookingId,
       data: today,
@@ -121,7 +117,6 @@ export default function BookingPage() {
     };
 
     try {
-      // Intentem fer el POST a SheetDB
       const response = await fetch(`${API_BASE_URL}?sheet=${SHEET_NAME}`, {
         method: 'POST',
         headers: { 
@@ -138,12 +133,10 @@ export default function BookingPage() {
 
       const result = await response.json();
 
-      // Verifiquem si s'ha creat correctament
       if (result.created === 1 || result.id || (Array.isArray(result) && result.length > 0)) {
         setOrigen('');
         setDesti('');
         setCarrega('');
-        // Refresquem la llista
         await fetchMyRequests(user.usuari);
       } else {
         throw new Error('L\'API no ha confirmat la creació del registre.');
@@ -176,7 +169,6 @@ export default function BookingPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
-          {/* FORMULARI DE SOL·LICITUD */}
           <div className="lg:col-span-1">
             <Card className="sticky top-24 shadow-md border-t-4 border-t-accent">
               <CardHeader>
@@ -269,7 +261,6 @@ export default function BookingPage() {
             </Card>
           </div>
 
-          {/* LLISTAT HISTÒRIC (LES MEVES SOL·LICITUDS) */}
           <div className="lg:col-span-2 space-y-6">
             <h2 className="text-2xl font-bold font-headline text-primary flex items-center gap-2">
               <Clock className="h-6 w-6" />
@@ -316,7 +307,6 @@ export default function BookingPage() {
               </Card>
             )}
           </div>
-
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
-import { Menu, Home, Briefcase, Users, Mail, Newspaper, LogOut, Truck } from 'lucide-react';
+import { Menu, Home, Briefcase, Users, Mail, Newspaper, LogOut, Truck, LayoutDashboard } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useState, useEffect } from 'react';
@@ -79,7 +79,6 @@ export default function Header() {
           <Logo />
         </Link>
         
-        {/* Només mostrem la navegació si l'usuari NO està loguejat */}
         {!isUserLoggedIn && (
           <nav className="hidden md:flex flex-1 items-center gap-6 text-sm font-medium">
             {navLinks.map((link) => (
@@ -97,11 +96,19 @@ export default function Header() {
           </nav>
         )}
 
-        <div className="hidden md:flex items-center ml-auto">
+        <div className="hidden md:flex items-center ml-auto gap-4">
           {hasMounted && isUserLoggedIn ? (
-            <Button onClick={handleSignOut} variant="destructive" size="sm">
-              <LogOut className="mr-2 h-4 w-4" /> Sortir
-            </Button>
+            <>
+              <Button asChild variant="link" className="text-primary-foreground hover:no-underline font-semibold">
+                <Link href="/dashboard" className="flex items-center gap-2">
+                  <LayoutDashboard className="h-4 w-4" />
+                  Panell
+                </Link>
+              </Button>
+              <Button onClick={handleSignOut} variant="destructive" size="sm">
+                <LogOut className="mr-2 h-4 w-4" /> Sortir
+              </Button>
+            </>
           ) : (
             <div className="flex items-center gap-2">
               <Button variant="link" asChild className="text-primary-foreground">
@@ -114,7 +121,6 @@ export default function Header() {
           )}
         </div>
         
-        {/* Mobile Menu */}
         <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
             <SheetTrigger asChild className="md:hidden ml-auto">
               <Button variant="ghost" size="icon" className="text-primary-foreground">
@@ -123,7 +129,6 @@ export default function Header() {
             </SheetTrigger>
             <SheetContent side="right" className="bg-background">
                 <nav className="flex flex-col gap-4 mt-8">
-                  {/* Només mostrem els links si NO està loguejat al mòbil també */}
                   {!isUserLoggedIn && navLinks.map((link) => (
                     <SheetClose key={link.href} asChild>
                         <Link
@@ -141,9 +146,18 @@ export default function Header() {
                   
                   <div className="border-t pt-4">
                     {isUserLoggedIn ? (
-                      <Button onClick={handleSignOut} variant="destructive" className="w-full">
-                        <LogOut className="mr-2 h-4 w-4" /> Sortir
-                      </Button>
+                      <div className="flex flex-col gap-2">
+                         <SheetClose asChild>
+                            <Button asChild variant="outline" className="w-full justify-start">
+                              <Link href="/dashboard">
+                                <LayoutDashboard className="mr-2 h-4 w-4" /> Panell
+                              </Link>
+                            </Button>
+                         </SheetClose>
+                        <Button onClick={handleSignOut} variant="destructive" className="w-full">
+                          <LogOut className="mr-2 h-4 w-4" /> Sortir
+                        </Button>
+                      </div>
                     ) : (
                       <div className="flex flex-col gap-2">
                         <Button asChild variant="outline" className="w-full">
