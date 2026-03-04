@@ -9,7 +9,6 @@ import { Button } from '@/components/ui/button';
 import { Loader2, Package, MapPin, Info, Clock, PlusCircle, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-// --- Tipus de dades ---
 type BookingRequest = {
   id: string;
   data: string;
@@ -25,7 +24,6 @@ type LocalUser = {
   rol: string;
 };
 
-// Configuració de l'API SheetDB
 const API_BASE_URL = 'https://sheetdb.io/api/v1/pxnx6b606vc93';
 const SHEET_NAME = 'solicituds';
 
@@ -34,13 +32,11 @@ export default function BookingPage() {
   const [user, setUser] = useState<LocalUser | null>(null);
   const [hasMounted, setHasMounted] = useState(false);
   
-  // Estats del formulari
   const [servei, setServei] = useState('Transport Marítim');
   const [origen, setOrigen] = useState('');
   const [desti, setDesti] = useState('');
   const [carrega, setCarrega] = useState('');
   
-  // Estats de l'aplicació
   const [requests, setRequests] = useState<BookingRequest[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
@@ -50,7 +46,6 @@ export default function BookingPage() {
     setHasMounted(true);
   }, []);
 
-  // Verificar sessió
   useEffect(() => {
     if (hasMounted) {
       const storedUser = localStorage.getItem('user');
@@ -66,7 +61,6 @@ export default function BookingPage() {
     }
   }, [hasMounted, router]);
 
-  // Carregar històric filtrat per l'usuari actual
   const fetchMyRequests = async (username: string) => {
     setIsFetching(true);
     try {
@@ -120,30 +114,23 @@ export default function BookingPage() {
       const response = await fetch(`${API_BASE_URL}?sheet=${SHEET_NAME}`, {
         method: 'POST',
         headers: { 
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({ data: [newRequest] })
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || `Error del servidor (${response.status})`);
+        throw new Error(`Error de servidor (${response.status})`);
       }
 
-      const result = await response.json();
-
-      if (result.created === 1 || result.id || (Array.isArray(result) && result.length > 0)) {
-        setOrigen('');
-        setDesti('');
-        setCarrega('');
-        await fetchMyRequests(user.usuari);
-      } else {
-        throw new Error('L\'API no ha confirmat la creació del registre.');
-      }
+      setOrigen('');
+      setDesti('');
+      setCarrega('');
+      await fetchMyRequests(user.usuari);
+      
     } catch (err: any) {
-      console.error("Error detallat en l'enviament:", err);
-      setError(`Error: ${err.message || 'No s\'ha pogut enviar la sol·licitud. Verifica la teva connexió.'}`);
+      console.error("Error en l'enviament:", err);
+      setError(`No s'ha pogut enviar la sol·licitud. Verifica que el full "solicituds" existeixi al teu Excel.`);
     } finally {
       setIsLoading(false);
     }
@@ -168,7 +155,6 @@ export default function BookingPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
           <div className="lg:col-span-1">
             <Card className="sticky top-24 shadow-md border-t-4 border-t-accent">
               <CardHeader>

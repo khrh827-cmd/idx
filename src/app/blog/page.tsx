@@ -12,7 +12,7 @@ const blogPosts = [
     date: "20 de Juliol, 2024",
     author: "Dr. Logística Digital",
     image: placeholderImages.blog[0],
-    href: "#",
+    href: "/contact",
   },
   {
     title: "INCOTERMS 2024: Què ha canviat i com t'afecta",
@@ -20,7 +20,7 @@ const blogPosts = [
     date: "12 de Juliol, 2024",
     author: "Expert en Comerç Exterior",
     image: placeholderImages.blog[1],
-    href: "#",
+    href: "/contact",
   },
   {
     title: "Sostenibilitat en el Transport de Mercaderies",
@@ -28,7 +28,7 @@ const blogPosts = [
     date: "1 de Juliol, 2024",
     author: "Consultor Ambiental",
     image: placeholderImages.blog[2],
-    href: "#",
+    href: "/contact",
   }
 ];
 
