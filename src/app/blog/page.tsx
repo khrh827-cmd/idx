@@ -7,28 +7,28 @@ import { ChevronRight } from "lucide-react";
 
 const blogPosts = [
   {
+    id: "0",
     title: "Optimització de la Cadena de Subministrament a l'Era Digital",
     summary: "Descobreix com la digitalització està transformant la logística i com la teva empresa pot aprofitar-ho.",
     date: "20 de Juliol, 2024",
     author: "Dr. Logística Digital",
     image: placeholderImages.blog[0],
-    href: "/contact",
   },
   {
+    id: "1",
     title: "INCOTERMS 2024: Què ha canviat i com t'afecta",
     summary: "Anàlisi detallada de les últimes actualitzacions dels INCOTERMS i el seu impacte en el comerç internacional.",
     date: "12 de Juliol, 2024",
     author: "Expert en Comerç Exterior",
     image: placeholderImages.blog[1],
-    href: "/contact",
   },
   {
+    id: "2",
     title: "Sostenibilitat en el Transport de Mercaderies",
     summary: "Explorem estratègies i tecnologies per a un transport de mercaderies més ecològic i sostenible.",
     date: "1 de Juliol, 2024",
     author: "Consultor Ambiental",
     image: placeholderImages.blog[2],
-    href: "/contact",
   }
 ];
 
@@ -47,7 +47,7 @@ export default function BlogPage() {
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {blogPosts.map((post) => (
-            <Card key={post.title} className="flex flex-col overflow-hidden transition-shadow duration-300 hover:shadow-md">
+            <Card key={post.id} className="flex flex-col overflow-hidden transition-shadow duration-300 hover:shadow-md">
               <CardHeader className="p-0 relative h-48 w-full">
                  <Image 
                     src={post.image.src}
@@ -64,7 +64,7 @@ export default function BlogPage() {
               </CardContent>
               <CardFooter className="p-6 pt-0">
                 <Button asChild variant="link" className="p-0 h-auto text-primary">
-                  <Link href={post.href}>
+                  <Link href={`/blog/${post.id}`}>
                     Llegir Més <ChevronRight className="w-4 h-4 ml-1" />
                   </Link>
                 </Button>

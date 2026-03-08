@@ -111,9 +111,11 @@ export default function BookingPage() {
     };
 
     try {
+      // Per fer POST a SheetDB s'ha d'enviar com a objecte "data"
       const response = await fetch(`${API_BASE_URL}?sheet=${SHEET_NAME}`, {
         method: 'POST',
         headers: { 
+          'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ data: [newRequest] })
@@ -130,7 +132,7 @@ export default function BookingPage() {
       
     } catch (err: any) {
       console.error("Error en l'enviament:", err);
-      setError(`No s'ha pogut enviar la sol·licitud. Verifica que el full "solicituds" existeixi al teu Excel.`);
+      setError("No s'ha pogut enviar la sol·licitud. Verifica que la pestanya 'solicituds' existeixi a l'Excel i tingui les columnes: id, data, usuari, estat, detalls.");
     } finally {
       setIsLoading(false);
     }
@@ -149,7 +151,7 @@ export default function BookingPage() {
   return (
     <div className="bg-muted min-h-screen py-12">
       <div className="container mx-auto px-4 max-w-5xl">
-        <div className="mb-8">
+        <div className="mb-8 text-center md:text-left">
           <h1 className="text-4xl font-bold font-headline text-primary">Gestió de Comandes</h1>
           <p className="text-muted-foreground mt-2 text-lg">Reserva el teu transport i segueix les teves sol·licituds en temps real.</p>
         </div>
