@@ -92,7 +92,7 @@ export default function BookingPage() {
     setIsLoading(true);
     setError(null);
 
-    const bookingId = `BK-${Math.floor(1000 + Math.random() * 9000)}`;
+    const bookingId = `BK-${Math.floor(100000000 + Math.random() * 900000000)}`;
     const today = new Date().toLocaleDateString('ca-ES');
     
     let detallsConcatenats = '';
@@ -147,24 +147,25 @@ export default function BookingPage() {
 
   const isWarehouse = servei === 'Magatzem';
 
-  // Funció per determinar el color de l'estat
+  // Funció millorada per determinar el color de l'estat
   const getStatusConfig = (status: string) => {
     const s = status.toLowerCase();
-    if (s.includes('aprovat') || s.includes('acceptat') || s.includes('finalitzat') || s.includes('lliurat')) {
+    // Afegim 'acceptat' i 'acceptada' a la llista de color verd
+    if (s.includes('aprovat') || s.includes('acceptat') || s.includes('acceptada') || s.includes('finalitzat') || s.includes('lliurat')) {
       return { 
         color: '#22c55e', 
-        classes: 'bg-green-100 text-green-700' 
+        classes: 'bg-green-100 text-green-700 border-green-200' 
       };
     }
     if (s.includes('pendent')) {
       return { 
         color: '#eab308', 
-        classes: 'bg-yellow-100 text-yellow-700' 
+        classes: 'bg-yellow-100 text-yellow-700 border-yellow-200' 
       };
     }
     return { 
       color: '#ef4444', 
-      classes: 'bg-red-100 text-red-700' 
+      classes: 'bg-red-100 text-red-700 border-red-200' 
     };
   };
 
@@ -292,7 +293,7 @@ export default function BookingPage() {
                             <p className="text-xs text-muted-foreground">{req.data}</p>
                           </div>
                           <div className={cn(
-                            "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest",
+                            "px-3 py-1 rounded-full border text-[10px] font-bold uppercase tracking-widest",
                             statusConfig.classes
                           )}>
                             {req.estat}
