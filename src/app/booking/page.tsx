@@ -13,7 +13,7 @@ type BookingRequest = {
   id: string;
   data: string;
   usuari: string;
-  estat: 'Pendent' | 'Aprovat' | 'Rebutjat';
+  estat: string;
   detalls: string;
 };
 
@@ -111,7 +111,6 @@ export default function BookingPage() {
     };
 
     try {
-      // Per fer POST a SheetDB s'ha d'enviar com a objecte "data"
       const response = await fetch(`${API_BASE_URL}?sheet=${SHEET_NAME}`, {
         method: 'POST',
         headers: { 
@@ -132,7 +131,7 @@ export default function BookingPage() {
       
     } catch (err: any) {
       console.error("Error en l'enviament:", err);
-      setError("No s'ha pogut enviar la sol·licitud. Verifica que la pestanya 'solicituds' existeixi a l'Excel i tingui les columnes: id, data, usuari, estat, detalls.");
+      setError("No s'ha pogut enviar la sol·licitud. Revisa la connexió o les columnes de l'Excel.");
     } finally {
       setIsLoading(false);
     }
@@ -147,6 +146,27 @@ export default function BookingPage() {
   }
 
   const isWarehouse = servei === 'Magatzem';
+
+  // Funció per determinar el color de l'estat
+  const getStatusConfig = (status: string) => {
+    const s = status.toLowerCase();
+    if (s.includes('aprovat') || s.includes('acceptat') || s.includes('finalitzat') || s.includes('lliurat')) {
+      return { 
+        color: '#22c55e', 
+        classes: 'bg-green-100 text-green-700' 
+      };
+    }
+    if (s.includes('pendent')) {
+      return { 
+        color: '#eab308', 
+        classes: 'bg-yellow-100 text-yellow-700' 
+      };
+    }
+    return { 
+      color: '#ef4444', 
+      classes: 'bg-red-100 text-red-700' 
+    };
+  };
 
   return (
     <div className="bg-muted min-h-screen py-12">
@@ -261,32 +281,33 @@ export default function BookingPage() {
               </div>
             ) : requests.length > 0 ? (
               <div className="grid gap-4">
-                {requests.map((req) => (
-                  <Card key={req.id} className="overflow-hidden border-l-4 transition-shadow hover:shadow-md bg-background" style={{ borderLeftColor: req.estat === 'Aprovat' ? '#22c55e' : req.estat === 'Pendent' ? '#eab308' : '#ef4444' }}>
-                    <CardHeader className="pb-2">
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <CardTitle className="text-lg font-bold text-primary">{req.id}</CardTitle>
-                          <p className="text-xs text-muted-foreground">{req.data}</p>
+                {requests.map((req) => {
+                  const statusConfig = getStatusConfig(req.estat);
+                  return (
+                    <Card key={req.id} className="overflow-hidden border-l-4 transition-shadow hover:shadow-md bg-background" style={{ borderLeftColor: statusConfig.color }}>
+                      <CardHeader className="pb-2">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <CardTitle className="text-lg font-bold text-primary">{req.id}</CardTitle>
+                            <p className="text-xs text-muted-foreground">{req.data}</p>
+                          </div>
+                          <div className={cn(
+                            "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest",
+                            statusConfig.classes
+                          )}>
+                            {req.estat}
+                          </div>
                         </div>
-                        <div className={cn(
-                          "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest",
-                          req.estat === 'Pendent' ? "bg-yellow-100 text-yellow-700" :
-                          req.estat === 'Aprovat' ? "bg-green-100 text-green-700" :
-                          "bg-red-100 text-red-700"
-                        )}>
-                          {req.estat}
+                      </CardHeader>
+                      <CardContent className="pt-2">
+                        <div className="flex items-start gap-3 bg-muted/30 p-4 rounded-lg border">
+                          <Info className="h-5 w-5 text-primary/50 flex-shrink-0 mt-0.5" />
+                          <p className="text-sm leading-relaxed text-foreground/80">{req.detalls}</p>
                         </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="pt-2">
-                      <div className="flex items-start gap-3 bg-muted/30 p-4 rounded-lg border">
-                        <Info className="h-5 w-5 text-primary/50 flex-shrink-0 mt-0.5" />
-                        <p className="text-sm leading-relaxed text-foreground/80">{req.detalls}</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+                      </CardContent>
+                    </Card>
+                  );
+                })}
               </div>
             ) : (
               <Card className="p-12 text-center bg-background/50 border-dashed">
