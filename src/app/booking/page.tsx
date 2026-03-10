@@ -131,7 +131,7 @@ export default function BookingPage() {
       
     } catch (err: any) {
       console.error("Error en l'enviament:", err);
-      setError("No s'ha pogut enviar la sol·licitud. Revisa la connexió o les columnes de l'Excel.");
+      setError("No s'ha pogut enviar la sol·licitud. Revisa la connexió.");
     } finally {
       setIsLoading(false);
     }
@@ -147,10 +147,9 @@ export default function BookingPage() {
 
   const isWarehouse = servei === 'Magatzem';
 
-  // Funció millorada per determinar el color de l'estat
   const getStatusConfig = (status: string) => {
     const s = status.toLowerCase();
-    // Afegim 'acceptat' i 'acceptada' a la llista de color verd
+    // Afegim variants de color verd per a estats d'èxit
     if (s.includes('aprovat') || s.includes('acceptat') || s.includes('acceptada') || s.includes('finalitzat') || s.includes('lliurat')) {
       return { 
         color: '#22c55e', 

@@ -30,7 +30,8 @@ export default function LoginPage() {
     }
 
     try {
-      const response = await fetch(`${API_URL}/search?usuari=${usuari}&password=${password}&sheet=usuaris`);
+      // Cerquem a la pestanya 'usuaris' segons les columnes del teu Excel
+      const response = await fetch(`${API_URL}/search?usuari=${encodeURIComponent(usuari)}&password=${encodeURIComponent(password)}&sheet=usuaris`);
       if (!response.ok) {
         throw new Error('Error en la connexió amb el servidor.');
       }
@@ -38,14 +39,14 @@ export default function LoginPage() {
 
       if (data.length > 0) {
         const user = data[0];
-        // Guardar dades a localStorage, incloent el rol
+        // Guardar dades a localStorage. Utilitzem 'treballador' com a nom de visualització.
         localStorage.setItem('user', JSON.stringify({
-          nom_usuari: user.nom, // Display name
-          usuari: user.usuari, // Login/matching name
+          nom_usuari: user.treballador || user.usuari, 
+          usuari: user.usuari,
           empresa: user.empresa,
           rol: user.rol
         }));
-        window.dispatchEvent(new Event('userChanged')); // Notifica a altres components (com el header)
+        window.dispatchEvent(new Event('userChanged')); 
         router.push('/dashboard');
       } else {
         setError('Dades incorrectes. Si us plau, verifica el teu usuari i contrasenya.');

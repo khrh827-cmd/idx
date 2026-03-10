@@ -23,7 +23,7 @@ type LocalUser = {
   nom_usuari: string;
   usuari?: string;
   empresa: string;
-  rol: 'administrador' | 'treballador';
+  rol: 'administrador' | 'treballador' | 'client';
 };
 
 export default function Header() {
@@ -79,6 +79,7 @@ export default function Header() {
           <Logo />
         </Link>
         
+        {/* Nav links only shown if NOT logged in */}
         {!isUserLoggedIn && (
           <nav className="hidden md:flex flex-1 items-center gap-6 text-sm font-medium">
             {navLinks.map((link) => (
@@ -99,6 +100,7 @@ export default function Header() {
         <div className="hidden md:flex items-center ml-auto gap-4">
           {hasMounted && isUserLoggedIn ? (
             <>
+              {/* Panell button visible when logged in */}
               <Button asChild variant="link" className="text-primary-foreground hover:no-underline font-semibold">
                 <Link href="/dashboard" className="flex items-center gap-2">
                   <LayoutDashboard className="h-4 w-4" />
