@@ -149,7 +149,7 @@ export default function BookingPage() {
 
   const getStatusConfig = (status: string) => {
     const s = status.toLowerCase();
-    // Afegim variants de color verd per a estats d'èxit
+    // Afegim variants de color verd per a estats d'èxit, incloent 'acceptada'
     if (s.includes('aprovat') || s.includes('acceptat') || s.includes('acceptada') || s.includes('finalitzat') || s.includes('lliurat')) {
       return { 
         color: '#22c55e', 
@@ -202,7 +202,6 @@ export default function BookingPage() {
                       className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     >
                       <option>Transport Marítim</option>
-                      <option>Transport Aeri</option>
                       <option>Transport Terrestre</option>
                       <option>Magatzem</option>
                     </select>
