@@ -21,7 +21,6 @@ export default function ContactPage() {
     const data = Object.fromEntries(formData.entries());
 
     try {
-      // Endpoint de Formspree proporcionat per l'usuari
       const response = await fetch('https://formspree.io/f/xeoykrej', {
         method: 'POST',
         body: JSON.stringify(data),
@@ -60,7 +59,6 @@ export default function ContactPage() {
 
         <div className="grid md:grid-cols-2 gap-12">
           
-          {/* Columna Esquerra: Formulari */}
           <Card className="shadow-lg border-t-4 border-t-accent">
             <CardHeader>
               <CardTitle>Envia'ns un Missatge</CardTitle>
@@ -140,7 +138,6 @@ export default function ContactPage() {
             </CardContent>
           </Card>
 
-          {/* Columna Dreta: Dades */}
           <Card className="shadow-md">
             <CardHeader>
               <CardTitle>Informació de Contacte</CardTitle>
@@ -153,7 +150,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-foreground text-lg">Adreça</h4>
-                    <p>Carrer de la Indústria, 12 – 43006 Tarragona, Espanya</p>
+                    <p>Magatzem: Polígon de Constantí, Tarragona (Espanya)</p>
                   </div>
                 </li>
                 <li className="flex items-start gap-4">

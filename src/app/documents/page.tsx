@@ -8,7 +8,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Loader2, Printer, ArrowLeft, AlertCircle } from 'lucide-react';
 import { Logo } from '@/components/logo';
 
-// --- Tipus de dades ---
 type UserSession = {
   nom_usuari: string;
   usuari: string;
@@ -57,11 +56,9 @@ type ProcessedInvoice = {
   totalAmount: number;
 };
 
-// --- Constants ---
 const USERS_API_URL = 'https://sheetdb.io/api/v1/pxnx6b606vc93?sheet=usuaris';
 const DOCUMENTS_API_URL = 'https://sheetdb.io/api/v1/pxnx6b606vc93?sheet=documents';
 
-// --- Component Principal ---
 export default function DocumentsPage() {
   const [user, setUser] = useState<UserSession | null>(null);
   const [processedInvoices, setProcessedInvoices] = useState<ProcessedInvoice[]>([]);
@@ -115,7 +112,6 @@ export default function DocumentsPage() {
         const docLines: DocumentLine[] = await docsResponse.json();
         const usersData: UserData[] = await usersResponse.json();
 
-        // Filtrar documents segons el rol de l'usuari
         const accessibleDocs = user.rol === 'administrador' || user.rol === 'treballador'
           ? docLines
           : docLines.filter(doc => doc.usuari === user.usuari);
@@ -126,7 +122,6 @@ export default function DocumentsPage() {
             return;
         }
 
-        // Processar les factures
         const invoicesMap = new Map<string, DocumentLine[]>();
         for (const line of accessibleDocs) {
           if (!line.num_factura) continue;
@@ -141,7 +136,7 @@ export default function DocumentsPage() {
           const clientUsername = lines[0].usuari;
           const clientData = usersData.find(u => u.usuari === clientUsername);
 
-          if (!clientData) continue; // No es pot processar si no hi ha dades del client
+          if (!clientData) continue;
 
           const rawDate = lines[0].data;
           let safeDateString = rawDate;
@@ -258,7 +253,6 @@ export default function DocumentsPage() {
     );
   }
 
-  // --- Vista de Detall de Factura ---
   if (selectedInvoice) {
     return (
       <div className="bg-muted min-h-screen py-12 px-4">
@@ -273,13 +267,12 @@ export default function DocumentsPage() {
             </Button>
         </div>
         <div id="zona-factura" className="max-w-4xl mx-auto bg-white p-8 sm:p-12 shadow-md rounded-lg border">
-            {/* Header de la factura */}
             <header className="flex justify-between items-start pb-8 border-b">
                 <div>
                     <Logo />
                     <p className="mt-4 text-sm text-muted-foreground">
                         Global Cargocare, S.L.<br/>
-                        Carrer de la Indústria, 12<br/>
+                        Magatzem: Polígon de Constantí<br/>
                         Tarragona, Espanya<br/>
                         NIF: B12345678
                     </p>
@@ -295,7 +288,6 @@ export default function DocumentsPage() {
                 </div>
             </header>
 
-            {/* Dades del Client */}
             <section className="mt-8 grid grid-cols-2 gap-8">
                 <div>
                     <h2 className="text-sm font-semibold uppercase text-muted-foreground tracking-wider">Facturar a</h2>
@@ -308,7 +300,6 @@ export default function DocumentsPage() {
                 </div>
             </section>
 
-            {/* Línies de la factura */}
             <section className="mt-10">
                 <Table>
                     <TableHeader>
@@ -334,7 +325,6 @@ export default function DocumentsPage() {
                 </Table>
             </section>
 
-            {/* Totals */}
             <section className="mt-8 flex justify-end">
                 <div className="w-full max-w-xs">
                     <div className="flex justify-between py-2 border-b">
@@ -354,7 +344,6 @@ export default function DocumentsPage() {
                 </div>
             </section>
             
-            {/* Peu de factura */}
             <footer className="mt-12 pt-8 border-t text-xs text-muted-foreground">
                 <p><span className='font-semibold'>Forma de pagament:</span> {selectedInvoice.paymentMethod}</p>
                 <p className="mt-4">
@@ -369,7 +358,6 @@ export default function DocumentsPage() {
     );
   }
   
-  // --- Vista de Llistat de Factures ---
   return (
     <div className="bg-muted min-h-screen">
       <div className="container mx-auto px-4 py-12 md:py-16">
