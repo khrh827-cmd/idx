@@ -272,7 +272,7 @@ export default function DocumentsPage() {
                     <Logo />
                     <p className="mt-4 text-sm text-muted-foreground">
                         Global Cargocare, S.L.<br/>
-                        Magatzem: Polígon de Constantí<br/>
+                        Polígon de Constantí<br/>
                         Tarragona, Espanya<br/>
                         NIF: B12345678
                     </p>

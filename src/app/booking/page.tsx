@@ -149,7 +149,6 @@ export default function BookingPage() {
 
   const getStatusConfig = (status: string) => {
     const s = status.toLowerCase();
-    // Afegim variants de color verd per a estats d'èxit, incloent 'acceptada'
     if (s.includes('aprovat') || s.includes('acceptat') || s.includes('acceptada') || s.includes('finalitzat') || s.includes('lliurat')) {
       return { 
         color: '#22c55e', 
@@ -237,7 +236,7 @@ export default function BookingPage() {
                         <span className="text-sm font-bold uppercase tracking-wider">Ubicació</span>
                       </div>
                       <p className="text-sm text-muted-foreground font-medium">
-                        Magatzem: Polígon de Constantí, Tarragona (Espanya)
+                        Polígon de Constantí, Tarragona (Espanya)
                       </p>
                     </div>
                   )}

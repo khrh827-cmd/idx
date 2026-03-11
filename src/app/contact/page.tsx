@@ -150,7 +150,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-foreground text-lg">Adreça</h4>
-                    <p>Magatzem: Polígon de Constantí, Tarragona (Espanya)</p>
+                    <p>Polígon de Constantí, Tarragona (Espanya)</p>
                   </div>
                 </li>
                 <li className="flex items-start gap-4">
