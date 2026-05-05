@@ -97,7 +97,7 @@ export default function BookingPage() {
     
     let detallsConcatenats = '';
     if (servei === 'Magatzem') {
-      detallsConcatenats = `Servei: Magatzem | Ubicació: Polígon de Constantí, Espanya | Càrrega: ${carrega}`;
+      detallsConcatenats = `Servei: Magatzem | Ubicació: Polígon de Constantí, Tarragona (Espanya) | Càrrega: ${carrega}`;
     } else {
       detallsConcatenats = `Servei: ${servei} | Origen: ${origen} | Destí: ${desti} | Càrrega: ${carrega}`;
     }
@@ -122,6 +122,11 @@ export default function BookingPage() {
 
       if (!response.ok) {
         throw new Error(`Error de servidor (${response.status})`);
+      }
+
+      const result = await response.json();
+      if (result.created !== 1) {
+        throw new Error("No s'ha pogut confirmar el registre.");
       }
 
       setOrigen('');
