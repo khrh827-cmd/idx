@@ -1,10 +1,11 @@
+
 'use client';
 
 import * as React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
-import { Menu, Home, Briefcase, Users, Mail, Newspaper, LogOut, Truck, LayoutDashboard } from 'lucide-react';
+import { Menu, Home, Briefcase, Users, Mail, Newspaper, LogOut, Truck, LayoutDashboard, Leaf } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useState, useEffect } from 'react';
@@ -15,6 +16,7 @@ const navLinks = [
   { href: '/services', label: 'Serveis', icon: <Briefcase className="h-5 w-5" /> },
   { href: '/about', label: 'Qui Som', icon: <Users className="h-5 w-5" /> },
   { href: '/tracking', label: 'Seguiment', icon: <Truck className="h-5 w-5" /> },
+  { href: '/sostenibilitat', label: 'Sostenibilitat', icon: <Leaf className="h-5 w-5" /> },
   { href: '/contact', label: 'Contacte', icon: <Mail className="h-5 w-5" /> },
   { href: '/blog', label: 'Blog', icon: <Newspaper className="h-5 w-5" /> },
 ];
@@ -129,7 +131,7 @@ export default function Header() {
                 <Menu />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="bg-background">
+            <SheetContent side="right" className="bg-background text-foreground">
                 <nav className="flex flex-col gap-4 mt-8">
                   {!isUserLoggedIn && navLinks.map((link) => (
                     <SheetClose key={link.href} asChild>

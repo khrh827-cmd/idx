@@ -40,5 +40,9 @@
       "src": "https://arcecon.com/wp-content/uploads/2023/11/La-importancia-de-la-reduccion-de-la-huella-de-carbono-.jpg",
       "hint": "carbon footprint"
     }
-  ]
+  ],
+  "sustainability": {
+    "src": "https://picsum.photos/seed/sustainable/1200/600",
+    "hint": "sustainable logistics"
+  }
 }
