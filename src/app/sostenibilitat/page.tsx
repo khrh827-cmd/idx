@@ -6,8 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { 
   Cloud, Zap, Trash2, ShieldCheck, TrendingUp, AlertTriangle, 
-  MapRoute, Smartphone, Truck, BarChart3, Briefcase, Lightbulb, 
-  CloudSun, Users, CheckCircle2, ChevronRight, PieChart
+  Map as MapIcon, Smartphone, Truck, BarChart3, Briefcase, Lightbulb, 
+  CloudSun, Users, CheckCircle2, ChevronRight, PieChart, Route
 } from 'lucide-react';
 import placeholderImages from '@/lib/placeholder-images.json';
 
@@ -63,11 +63,13 @@ export default function SostenibilitatPage() {
                   <Cloud className="h-6 w-6 text-primary" /> Impactes
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
-                <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-green-500" /> Emissions de CO₂</li>
-                <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-green-500" /> Consum energètic</li>
-                <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-green-500" /> Residus d’embalatge</li>
-                <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-green-500" /> Seguretat laboral</li>
+              <CardContent>
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-green-500" /> Emissions de CO₂</li>
+                  <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-green-500" /> Consum energètic</li>
+                  <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-green-500" /> Residus d’embalatge</li>
+                  <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-green-500" /> Seguretat laboral</li>
+                </ul>
               </CardContent>
             </Card>
 
@@ -76,12 +78,14 @@ export default function SostenibilitatPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <AlertTriangle className="h-6 w-6 text-destructive" /> Riscos
-                </AlertTriangle>
+                </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
-                <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-destructive" /> Increment del cost del combustible</li>
-                <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-destructive" /> Normatives ambientals més estrictes</li>
-                <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-destructive" /> Competència del sector</li>
+              <CardContent>
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-destructive" /> Increment del cost del combustible</li>
+                  <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-destructive" /> Normatives ambientals més estrictes</li>
+                  <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-destructive" /> Competència del sector</li>
+                </ul>
               </CardContent>
             </Card>
 
@@ -92,11 +96,13 @@ export default function SostenibilitatPage() {
                   <TrendingUp className="h-6 w-6 text-accent" /> Oportunitats
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
-                <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-accent" /> Optimització de rutes</li>
-                <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-accent" /> Digitalització</li>
-                <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-accent" /> Vehicles eficients</li>
-                <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-accent" /> Reducció de costos</li>
+              <CardContent>
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-accent" /> Optimització de rutes</li>
+                  <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-accent" /> Digitalització</li>
+                  <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-accent" /> Vehicles eficients</li>
+                  <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-accent" /> Reducció de costos</li>
+                </ul>
               </CardContent>
             </Card>
 
@@ -158,7 +164,7 @@ export default function SostenibilitatPage() {
           <h2 className="text-3xl font-bold font-headline text-primary mb-12 text-center">Accions Concretes</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 text-center">
             {[
-              { icon: <Truck className="h-8 w-8" />, label: "Sistema d’optimització de rutes" },
+              { icon: <Route className="h-8 w-8" />, label: "Sistema d’optimització de rutes" },
               { icon: <Zap className="h-8 w-8" />, label: "Instal·lació d’il·luminació LED" },
               { icon: <Trash2 className="h-8 w-8" />, label: "Punts de reciclatge" },
               { icon: <ShieldCheck className="h-8 w-8" />, label: "Formació en seguretat laboral" },
