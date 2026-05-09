@@ -34,6 +34,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'e01-phantom-expansion.uecdn.es',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.prod.website-files.com',
+      },
     ],
   },
 };

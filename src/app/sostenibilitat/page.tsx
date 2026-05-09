@@ -1,4 +1,3 @@
-
 'use client';
 
 import Image from 'next/image';
@@ -45,7 +44,7 @@ export default function SostenibilitatPage() {
           <h2 className="text-3xl font-bold font-headline text-primary mb-8">El Nostre Compromís</h2>
           <div className="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-sm border">
             <p className="text-lg md:text-xl leading-relaxed text-muted-foreground">
-              Global CargoCare opera des del Polígon Industrial de Constantí, un enclavament logístic estratègic gràcies a la seva proximitat amb el Port de Tarragona i l’Aeroport de Reus. La nostra activitat es basa en l’eficiència operativa, la innovació i el compromís amb la sostenibilitat.
+              Global CargoCare opera des del Polígon de Constantí, Tarragona (Espanya), un enclavament logístic estratègic gràcies a la seva proximitat amb el Port de Tarragona i l’Aeroport de Reus. La nostra activitat es basa en l’eficiència operativa, la innovació i el compromís amb la sostenibilitat.
             </p>
           </div>
         </div>
@@ -77,7 +76,7 @@ export default function SostenibilitatPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <AlertTriangle className="h-6 w-6 text-destructive" /> Riscos
-                </CardTitle>
+                </AlertTriangle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-destructive" /> Increment del cost del combustible</li>
